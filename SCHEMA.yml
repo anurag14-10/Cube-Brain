@@ -1,0 +1,992 @@
+# SCHEMA.yml — Cube-Brain
+#
+# The machine-readable model of everything worth knowing about the Diffusion
+# Cube project (product name "Diffusion Cube | 100 Pathways", repo
+# `diffusion-cube`): the AI Diffusion Pathway Framework it operationalises,
+# the pathway corpus it is grounded in, the people and organisations around
+# it, the application that delivers it, and the decisions, debt, risks and
+# milestones that shape how it evolves.
+#
+# The validator (scripts/validate_wiki.py), the site (scripts/build_site.py)
+# and the cube-brain skill all read their model out of THIS file. Adding an
+# entity type, a field or a rule is an edit here — never an edit to a script.
+#
+# ---------------------------------------------------------------------------
+# How to read this file
+# ---------------------------------------------------------------------------
+# Six layers, each a group of entity types. A layer is a reading aid only —
+# the validator sees a flat list of types.
+#
+#   1. FRAMEWORK  dimension · sub_category · stage · cell · concept
+#   2. CORPUS     pathway · unit · pattern · corpus
+#   3. ACTORS     organisation · person · team · role
+#   4. PRODUCT    feature · workflow · page · endpoint · chat_mode · prompt ·
+#                 contract · table · migration · module · integration ·
+#                 config_var · environment
+#   5. KNOWLEDGE  rule · decision
+#   6. DELIVERY   requirement · milestone · release · tech_debt · risk · incident
+#
+# Field-spec keys understood by the tooling:
+#   type:      str | int | bool | list | map | date
+#   required:  true            — absent/blank is an error
+#   ref:       <folder>        — a single slug that must exist in <folder>
+#   list_ref:  <folder>        — a list of slugs that must exist in <folder>
+#   vocab:     "<n>"           — value must be a term of MASTERS.md master <n>
+#   list_vocab:"<n>"           — every list item must be a term of master <n>
+#
+# ONE FOLDER PER REFERENCE FIELD. The site builder cannot render a reference
+# that may resolve in several folders, so where a thing can point at two kinds
+# of entity it gets two typed fields (e.g. `owner_team` and `owner_people`),
+# never one polymorphic one.
+#
+# REFERENCES RUN ONE WAY. Each edge is stored on exactly one side — usually
+# the more specific / more volatile entity points at the more stable one (a
+# unit names its pathway; a pathway does not list its units). The reverse
+# direction is derived (`## Related`, the site graph). Storing both sides is
+# how two files come to disagree with nobody able to say which is right.
+# The direction of every edge is stated in CONVENTIONS.md § "Edge directions".
+#
+# `common` below is a YAML anchor merged into every entity's fields: the
+# bookkeeping, provenance, traceability and lifecycle fields every entry
+# carries. Anything entity-specific is declared under that entity.
+# ---------------------------------------------------------------------------
+
+schema_version: 1
+
+site:
+  title: Cube-Brain
+  subtitle: The Diffusion Cube (100 Pathways) — framework, corpus, product, and delivery knowledge in one graph
+
+publish:
+  # Nothing in this brain is cleared for publication. Listed so a future
+  # `--public` build strips them even if somebody adds them by mistake.
+  redact: [email, phone, value, contact_info, poc_email]
+
+x-common-fields: &common
+  # -- identity ------------------------------------------------------------
+  name:              { type: str, required: true }
+  type:              { type: str, required: true }
+  schema_version:    { type: int, required: true }
+  aliases:           { type: list }        # other names this thing is called by (code ids, old names)
+  summary:           { type: str }         # one or two sentences; the body holds the detail
+  tags:              { type: list }        # free tags; controlled values belong in vocab fields
+  # -- traceability ---------------------------------------------------------
+  code_refs:         { type: list }        # repo-relative paths in diffusion-cube, optionally #Lnn-Lmm
+  doc_refs:          { type: list }        # repo-relative paths to docs/specs/wiki pages/raw documents
+  verified_at_commit: { type: str }        # diffusion-cube commit SHA this entry was last checked against
+  # -- provenance (see CONVENTIONS.md § Provenance) ------------------------
+  sources:           { type: list }        # [{system, method, date, ref?}]
+  external_refs:     { type: list }        # [{store, id, verified}] — store must be a SOURCES.md id
+  contested:         { type: list }        # [{field, readings: [...], note}] — disagreements kept, not arbitrated
+  # -- bookkeeping ---------------------------------------------------------
+  first_logged:      { type: str }
+  last_updated:      { type: str }
+  # -- lifecycle -----------------------------------------------------------
+  superseded_by:     { type: str }         # <folder>/<slug>
+  superseded_on:     { type: str }
+  supersession_note: { type: str }
+  deprecated:        { type: bool }        # tombstone: the entry no longer describes a live thing
+  last_reviewed:     { type: str }
+  review_interval:   { type: int }         # months
+
+entities:
+
+  # =========================================================================
+  # 1. FRAMEWORK — the AI Diffusion Pathway Framework (content/framework.md,
+  #    lib/dimensions.ts). Small, closed, slow-changing. Seeded in full.
+  # =========================================================================
+
+  dimension:
+    folder: dimensions
+    description: >
+      One of the framework's four lenses on the same deployment — Persona,
+      Solution, Institution, Ecosystem. Four different QUESTIONS about one
+      deployment, never four project phases. A closed set of exactly four;
+      adding one is a framework change, not a capture. The four dimension
+      names are public vocabulary and may appear in user-facing prose.
+    orphan_exempt: true
+    fields:
+      <<: *common
+      code:              { type: str, required: true }    # app code id: persona | solution | institution | ecosystem
+      central_question:  { type: str, required: true }
+      shift:             { type: str }                     # e.g. "From starting with AI to starting with a specific human outcome"
+      thesis_group:      { type: str, vocab: "4" }         # 30/70 thesis half this dimension belongs to
+      ui_color:          { type: str }                     # brand colour token from lib/dimensions.ts
+      data_concern:      { type: str }                     # cross-cutting Data concern as it applies here
+      trust_concern:     { type: str }                     # cross-cutting Trust concern as it applies here
+      order:             { type: int }
+
+  sub_category:
+    folder: sub-categories
+    description: >
+      A lettered subdivision of a dimension (Persona A–D, Solution A–E,
+      Institution A–G, Ecosystem A–F; 22 in all). Each carries a weight per
+      stage — primary (ask directly), secondary (only if surfaced), dormant
+      (never initiate). Weights are behaviour: the companion decides what to
+      probe from them. Sub-category CODES are internal-only and must never
+      appear in user-facing prose.
+    fields:
+      <<: *common
+      dimension:         { type: str, required: true, ref: dimensions }
+      code:              { type: str, required: true }    # A, B, C …
+      weight_explore:    { type: str, required: true, vocab: "2" }
+      weight_define:     { type: str, required: true, vocab: "2" }
+      weight_pilot:      { type: str, required: true, vocab: "2" }
+      weight_scale:      { type: str, required: true, vocab: "2" }
+      questions:         { type: list }                    # the exhaustive question list for this sub-category
+
+  stage:
+    folder: stages
+    description: >
+      One of the four adopter stages a deployment moves through — Explore →
+      Define → Pilot → Scale. Each has a central question and "done when"
+      criteria. Public vocabulary. A deployment's stage is only ever taken
+      from what the user/contributor states, never assigned by the model.
+    orphan_exempt: true
+    fields:
+      <<: *common
+      order:             { type: int, required: true }
+      central_question:  { type: str, required: true }
+      done_when:         { type: list }
+      previous_stage:    { type: str, ref: stages }
+      next_stage:        { type: str, ref: stages }
+
+  cell:
+    folder: cells
+    description: >
+      One of the 16 dimension × stage intersections of the 4×4 grid, as the
+      question bank defines it: the core question asked at that cell, what to
+      listen for, the insight form a good answer takes, and the corpus example
+      that illustrates it. Also the unit of the grid's density (0–3, ○/●/●●/●●●)
+      in both a user's adoption and a pathway's coverage map.
+    orphan_exempt: true
+    fields:
+      <<: *common
+      dimension:         { type: str, required: true, ref: dimensions }
+      stage:             { type: str, required: true, ref: stages }
+      grid_key:          { type: str, required: true }    # exactly as stored in designs.grid_state, e.g. persona:Explore
+      core_question:     { type: str, required: true }
+      listening_for:     { type: str }
+      insight_form:      { type: str }
+      corpus_example:    { type: str }
+      example_pathway:   { type: str, ref: pathways }
+      primary_sub_categories: { type: list, list_ref: sub-categories }  # derived from weights; kept for retrieval
+
+  concept:
+    folder: concepts
+    description: >
+      Any named idea in the Cube that needs a definition and is not one of
+      the closed framework sets above: the five unit types, the cross-cutting
+      concerns (Data, Trust), the pathway-document sections (0–6 + Source
+      Trace), density and weight levels, the 30/70 thesis, the synthesis
+      test, and every glossary term of the product (Adoption/Design, Flow,
+      flowStep, Assemble, Publish, Micro-innovation …). The single place a
+      term is defined — a glossary and a concept map at once. `audience`
+      records the framework-naming rule: whether the term may appear in
+      user-facing prose.
+    orphan_exempt: true
+    fields:
+      <<: *common
+      concept_kind:      { type: str, required: true, vocab: "3" }
+      definition:        { type: str, required: true }
+      audience:          { type: str, vocab: "5" }
+      what_makes_it_reusable: { type: str }               # unit-type concepts only
+      broader:           { type: str, ref: concepts }      # the concept this one is a kind/part of
+      see_also:          { type: list, list_ref: concepts }
+      code_identifier:   { type: str }                     # how the code spells it, if it does
+
+  # =========================================================================
+  # 2. CORPUS — the knowledge the Cube is grounded in
+  # =========================================================================
+
+  pathway:
+    folder: pathways
+    description: >
+      One real AI deployment's documented journey, written for the NEXT
+      adopter (a marked trail, not a case study). Exists as a markdown
+      document in one or more corpora (in-repo grounding corpus, in-repo
+      library corpus, the published_pathways table) and, while being
+      contributed, as a `pathways` workspace row. A pathway entry here
+      records identity, effort, coverage and lifecycle; its reusable
+      knowledge lives in `units/` entries that point at it. A pathway is the
+      contributor's account — attribute it, never present it as the Cube's
+      own assertion.
+    orphan_exempt: true
+    fields:
+      <<: *common
+      title:             { type: str }                     # display title as in the document frontmatter
+      pathway_kind:      { type: str, vocab: "6" }         # single deployment vs cross-deployment synthesis
+      sector:            { type: str, vocab: "7" }
+      use_case_category: { type: str }                     # the second half of the matching test (sector AND category)
+      geography:         { type: str }
+      population_served: { type: str }
+      stage_reached:     { type: str, ref: stages }
+      contributing_organisations: { type: list, list_ref: organisations }
+      deploying_organisations:    { type: list, list_ref: organisations }
+      partner_organisations:      { type: list, list_ref: organisations }
+      contributors:      { type: list, list_ref: people }
+      key_dates:         { type: str }
+      scale_impact:      { type: str }                     # headline usage/outcome numbers WITH as-of date
+      cost_anchor:       { type: str }                     # order of magnitude WITH as-of date
+      build_effort:      { type: str }                     # time, team size, partner count
+      downstream_adoptions: { type: list }                 # who built on it and how much faster
+      synthesises:       { type: list, list_ref: pathways } # for synthesis pathways: the deployments drawn on
+      related_pathways:  { type: list, list_ref: pathways }
+      coverage:          { type: map }                     # cell grid_key → density 0-3, from the document's Section 2
+      gaps:              { type: list }                    # open questions the pathway itself names
+      corpora:           { type: list, list_ref: corpora } # where a copy of the document lives
+      corpus_files:      { type: list }                    # repo paths of those copies
+      lifecycle:         { type: str, vocab: "8" }
+      published_on:      { type: date }
+      document_version:  { type: str }
+
+  unit:
+    folder: units
+    description: >
+      A micro-innovation: one individually tagged, reusable piece of corpus
+      knowledge extracted from a pathway — a Strategic Decision, Tactical
+      Decision, Failure and Fix, Playbook or Toolkit Asset. Every unit is
+      tagged Dimension + Sub-category + Stage + Type + Condition (applies
+      when / fails when). It must pass the synthesis test: could someone who
+      never saw the raw material make a different decision because of it?
+      Units are always SUGGESTIONS from another adoption's lived experience,
+      never recommendations. A Toolkit Asset unit may carry the actual file
+      or link (the app's contribution_units row).
+    fields:
+      <<: *common
+      pathway:           { type: str, required: true, ref: pathways }
+      unit_type:         { type: str, required: true, vocab: "1" }
+      dimension:         { type: str, required: true, ref: dimensions }
+      sub_category:      { type: str, required: true, ref: sub-categories }
+      stage:             { type: str, required: true, ref: stages }     # stage of ORIGIN — counts in the grid
+      also_relevant_at:  { type: list, list_ref: stages }               # retrieval only — never counts in the grid
+      source_unit_id:    { type: str }                     # how the pathway document numbers it, e.g. "Unit 7"
+      # -- condition tag (required on every unit) ----------------------------
+      applies_when:      { type: str }
+      fails_when:        { type: str }
+      # -- decision units ---------------------------------------------------
+      decision:          { type: str }
+      alternative_considered: { type: str }
+      reason:            { type: str }
+      context:           { type: str }
+      before:            { type: str }
+      after:             { type: str }
+      # -- failure and fix --------------------------------------------------
+      failure:           { type: str }
+      fix:               { type: str }
+      insight:           { type: str }
+      # -- playbook ---------------------------------------------------------
+      steps:             { type: list }                    # ordered, with the gate between each
+      common_failure_mode: { type: str }
+      # -- toolkit asset ----------------------------------------------------
+      purpose:           { type: str }
+      reuse_condition:   { type: str }
+      asset_kind:        { type: str, vocab: "9" }
+      asset_link:        { type: str }
+      share_consent:     { type: bool }
+      # -- retrieval --------------------------------------------------------
+      adopter_intents:   { type: list }                    # Section 6 retrieval-guide intents this unit answers
+      related_units:     { type: list, list_ref: units }
+
+  pattern:
+    folder: patterns
+    description: >
+      A problem→solution pattern (pathway document Section 5): problem → root
+      cause → solution → result → condition, built from Failure-and-Fix units
+      and other clear problem→fix evidence. May span several pathways — that
+      is the point of lifting it out of any one of them. A pattern with one
+      piece of evidence is a candidate, not yet a pattern.
+    fields:
+      <<: *common
+      problem:           { type: str, required: true }
+      root_cause:        { type: str }
+      solution:          { type: str }
+      result:            { type: str }
+      condition:         { type: str }
+      evidence_units:    { type: list, list_ref: units }
+      pathways:          { type: list, list_ref: pathways }
+      dimensions:        { type: list, list_ref: dimensions }
+      stages:            { type: list, list_ref: stages }
+
+  corpus:
+    folder: corpora
+    description: >
+      A body of pathway documents the app loads and grounds the model in.
+      Three exist today and they are NOT one source of truth: the grounding
+      corpus (content/wiki/pathways, whole-corpus grounding for Explorer and
+      Contributor), the library corpus (content/library-wiki/pathways,
+      one-document-at-a-time /explore chat), and the published_pathways table
+      (community content, merged into both at read time, DB wins by slug).
+    orphan_exempt: true
+    fields:
+      <<: *common
+      corpus_kind:       { type: str, vocab: "10" }
+      location:          { type: str }                     # folder path or table name
+      loader_modules:    { type: list, list_ref: modules }
+      index_file:        { type: str }                     # discovery file, if any (index.md gates the grounding corpus)
+      grounding_scope:   { type: str }                     # whole-corpus vs one-document
+      voice:             { type: str }
+      merges_with:       { type: list, list_ref: corpora }
+
+  # =========================================================================
+  # 3. ACTORS — who is involved, and the access roles the app defines
+  # =========================================================================
+
+  organisation:
+    folder: organisations
+    description: >
+      Any organisation the Cube has a relationship with, in any capacity —
+      product owner (EkStep), implementation partner (Tekdi), a pathway's
+      contributing or deploying organisation, an ecosystem partner, a
+      vendor. The relationship kind lives on the referencing field (a
+      pathway's contributing_organisations vs deploying_organisations), so
+      the same body can play several roles. Distinct from the app's own
+      `organisations` table, which is a TABLE entity.
+    fields:
+      <<: *common
+      org_kinds:         { type: list, list_vocab: "11" }
+      website:           { type: str }
+      parent_organisation: { type: str, ref: organisations }
+      geography:         { type: str }
+
+  person:
+    folder: people
+    description: >
+      An individual involved with the Cube — solution/program team member,
+      pathway contributor, stakeholder. Professional role and involvement
+      ONLY: no email, phone, or anything personal. A relationship record, not
+      a directory entry.
+    fields:
+      <<: *common
+      affiliations:      { type: list, list_ref: organisations }
+      teams:             { type: list, list_ref: teams }
+      project_roles:     { type: list }                    # free text: "Lead Architect, Blue Dots", "Solution lead"
+      github_handle:     { type: str }
+
+  team:
+    folder: teams
+    description: >
+      A working group with a defined responsibility on the Cube — e.g. the
+      Solution Team (functionality, UI/UX, architecture; builds the app) and
+      the Program Team (stakeholders, pathway content lifecycle, onboarding).
+      Teams own features, milestones and risks.
+    fields:
+      <<: *common
+      organisations:     { type: list, list_ref: organisations }
+      members:           { type: list, list_ref: people }
+      responsibilities:  { type: list }
+      cadence:           { type: str }
+
+  role:
+    folder: roles
+    description: >
+      An access role or persona the application recognises — adopter
+      (Explorer), pathway_contributor (Contributor), admin, general_user,
+      and the anonymous visitor. `role_key` is the exact user_roles.role value.
+      A user may hold several roles; each adoption is still locked to one flow.
+    orphan_exempt: true
+    fields:
+      <<: *common
+      role_key:          { type: str }                     # exact DB value; blank for anonymous
+      persona_name:      { type: str }                     # product name: Explorer, Contributor …
+      granted_by:        { type: str }
+      auto_granted:      { type: bool }
+      prerequisites:     { type: list }                    # e.g. approved contributor_registrations row
+
+  # =========================================================================
+  # 4. PRODUCT — the application that delivers the Cube
+  # =========================================================================
+
+  feature:
+    folder: features
+    description: >
+      A user-facing capability of the app, at the granularity a product
+      owner talks about — Diffusion Library, Analyse own adoption, Analysis
+      Document, Contribute a pathway, Two-step publish, Toolkit asset files,
+      OTP signup, Account deletion … Ties together the pages, endpoints,
+      workflows, tables and modules that implement it. `status` says whether
+      it is live; a planned feature is intent, never evidence it exists.
+    fields:
+      <<: *common
+      status:            { type: str, required: true, vocab: "12" }
+      roles:             { type: list, list_ref: roles }
+      pages:             { type: list, list_ref: pages }
+      endpoints:         { type: list, list_ref: endpoints }
+      workflows:         { type: list, list_ref: workflows }
+      tables:            { type: list, list_ref: tables }
+      modules:           { type: list, list_ref: modules }
+      owner_team:        { type: str, ref: teams }
+      parent_feature:    { type: str, ref: features }
+
+  workflow:
+    folder: workflows
+    description: >
+      An end-to-end flow through the system with an ID and ordered steps —
+      a user journey (companion chat turn, Explorer analysis, Contributor
+      pipeline, signup), an admin process (approve registration, publish
+      pathway) or a planned future flow (W5–W7). Steps are the substance:
+      each says what happens and where. The `flow_id` matches the project
+      wiki's W-numbers where one exists.
+    fields:
+      <<: *common
+      flow_id:           { type: str }                     # W1, W2 …
+      workflow_kind:     { type: str, vocab: "13" }
+      status:            { type: str, required: true, vocab: "12" }
+      trigger:           { type: str }
+      steps:             { type: list, required: true }
+      actors:            { type: list, list_ref: roles }
+      pages:             { type: list, list_ref: pages }
+      endpoints:         { type: list, list_ref: endpoints }
+      chat_modes:        { type: list, list_ref: chat-modes }
+      tables:            { type: list, list_ref: tables }
+      contracts:         { type: list, list_ref: contracts }
+      next_workflows:    { type: list, list_ref: workflows }
+      diagram_ref:       { type: str }
+
+  page:
+    folder: pages
+    description: >
+      A UI route a person can open (/explore, /analyse, /contribute, /admin,
+      /login, /account, /adoptions, /wiki, /terms, /privacy …), with who may
+      see it and what it renders. Page-level role checks are UX only — the
+      real gate is always the API route.
+    fields:
+      <<: *common
+      route:             { type: str, required: true }
+      file:              { type: str }
+      access:            { type: str, vocab: "14" }
+      roles:             { type: list, list_ref: roles }
+      components:        { type: list, list_ref: modules }
+      calls_endpoints:   { type: list, list_ref: endpoints }
+      status:            { type: str, vocab: "12" }
+
+  endpoint:
+    folder: endpoints
+    description: >
+      An HTTP route handler under app/api (or an external hook the app
+      exposes). Records method, path, the REAL access enforcement, and which
+      tables, integrations and chat modes it touches. Where a route is broken
+      or dead (e.g. it queries a dropped table), `status` says so.
+    fields:
+      <<: *common
+      path:              { type: str, required: true }
+      methods:           { type: list, list_vocab: "15" }
+      file:              { type: str }
+      access:            { type: str, vocab: "14" }
+      roles:             { type: list, list_ref: roles }
+      tables_read:       { type: list, list_ref: tables }
+      tables_written:    { type: list, list_ref: tables }
+      integrations:      { type: list, list_ref: integrations }
+      request_shape:     { type: str }
+      response_shape:    { type: str }
+      status:            { type: str, vocab: "12" }
+
+  chat_mode:
+    folder: chat-modes
+    description: >
+      One of the `mode` values POST /api/chat accepts (companion, library,
+      extract-insights, analysis-doc, executive-summary, plan-document,
+      pathway-draft, pathway-exec-summary). Each is a distinct LLM behaviour:
+      its prompt, its token budget, which corpus it is grounded in, what
+      triggers it and what it produces.
+    fields:
+      <<: *common
+      mode_key:          { type: str, required: true }
+      endpoint:          { type: str, ref: endpoints }
+      prompt:            { type: str, ref: prompts }
+      model:             { type: str }
+      max_tokens:        { type: int }
+      streaming:         { type: bool }
+      access:            { type: str, vocab: "14" }
+      roles:             { type: list, list_ref: roles }
+      corpora:           { type: list, list_ref: corpora }
+      contract:          { type: str, ref: contracts }
+      produces_doc_type: { type: str, vocab: "16" }
+      triggered_by:      { type: str }
+      status:            { type: str, vocab: "12" }
+
+  prompt:
+    folder: prompts
+    description: >
+      A system-prompt builder or fixed prompt text — the true source of
+      runtime behaviour for every flow (lib/system-prompts.ts and the content
+      files it injects). Records what it is for, what it injects, which rules
+      it carries, and which contract it ends with.
+    fields:
+      <<: *common
+      function_name:     { type: str }
+      module:            { type: str, ref: modules }
+      injects:           { type: list }                    # framework doc, corpus, resources, progress block …
+      contract:          { type: str, ref: contracts }
+      carries_rules:     { type: list, list_ref: rules }
+      status:            { type: str, vocab: "12" }
+
+  contract:
+    folder: contracts
+    description: >
+      A data shape two parts of the system must agree on and that is NOT a
+      database table — the <grid_update> block the model must emit, the
+      designs.meta / grid_state JSON, pathway-document frontmatter, the
+      toolkit-asset storage path layout, an API payload. Breaking one breaks
+      a producer/consumer pair silently, so they are recorded explicitly.
+    fields:
+      <<: *common
+      contract_kind:     { type: str, vocab: "17" }
+      fields:            { type: list }                    # "name: type — meaning"
+      defined_in:        { type: list, list_ref: modules }
+      producers:         { type: list, list_ref: modules }
+      consumers:         { type: list, list_ref: modules }
+      stored_in:         { type: str, ref: tables }
+
+  table:
+    folder: tables
+    description: >
+      A Postgres table (or storage bucket) in the Supabase project, with its
+      status — live, inert (exists, nothing uses it) or dropped (gone, but
+      possibly still referenced by dead code). Records key columns, RLS
+      posture and FK relationships. Schema of record is supabase/migrations.
+    fields:
+      <<: *common
+      table_name:        { type: str, required: true }
+      store_kind:        { type: str, vocab: "18" }
+      status:            { type: str, required: true, vocab: "12" }
+      key_columns:       { type: list }
+      rls:               { type: str }
+      references_tables: { type: list, list_ref: tables }
+      created_in:        { type: str, ref: migrations }
+      dropped_in:        { type: str, ref: migrations }
+
+  migration:
+    folder: migrations
+    description: >
+      One numbered SQL migration under supabase/migrations. Small, but each is
+      a dated, irreversible decision about the data model — destructive ones
+      especially. Records what it touched and why.
+    fields:
+      <<: *common
+      number:            { type: str, required: true }     # zero-padded, e.g. "0027"
+      file:              { type: str }
+      tables_touched:    { type: list, list_ref: tables }
+      destructive:       { type: bool }
+      decision:          { type: str, ref: decisions }
+
+  module:
+    folder: modules
+    description: >
+      A source file or cohesive code unit in the repo — a lib/ module, a
+      React component, middleware (proxy.ts), a script, or a content file
+      that drives behaviour (content/framework.md). Records responsibility,
+      dependencies and the external services and tables it reaches.
+    fields:
+      <<: *common
+      path:              { type: str, required: true }
+      module_kind:       { type: str, vocab: "19" }
+      status:            { type: str, vocab: "12" }
+      responsibilities:  { type: list }
+      exports:           { type: list }
+      depends_on:        { type: list, list_ref: modules }
+      integrations:      { type: list, list_ref: integrations }
+      tables:            { type: list, list_ref: tables }
+      lines:             { type: int }
+
+  integration:
+    folder: integrations
+    description: >
+      An external service or platform the app depends on — Anthropic (Claude),
+      Supabase (Postgres/Auth/Storage), GitHub Contents API, SMTP, Google
+      Sheets, Vercel, AWS. Records what it is used for, the SDK and the
+      account posture. NEVER holds credentials.
+    fields:
+      <<: *common
+      integration_kind:  { type: str, vocab: "20" }
+      provider:          { type: str }
+      sdk:               { type: str }                     # package@range
+      account_notes:     { type: str }                     # plan / ownership / expiry, never secrets
+      config_vars:       { type: list, list_ref: config }
+
+  config_var:
+    folder: config
+    description: >
+      An environment variable the app reads. Name, whether required, whether
+      secret, whether exposed to the browser (NEXT_PUBLIC_), and who reads
+      it. A VALUE is never recorded — not even a non-secret one — so this
+      folder can never become the place a key leaks.
+    fields:
+      <<: *common
+      var_name:          { type: str, required: true }
+      required:          { type: bool }
+      secret:            { type: bool }
+      browser_exposed:   { type: bool }
+      read_by:           { type: list, list_ref: modules }
+      integration:       { type: str, ref: integrations }
+      environments:      { type: list, list_ref: environments }
+
+  environment:
+    folder: environments
+    description: >
+      A place the app runs — Vercel production (the live path), the
+      Docker/AWS EC2 path (built, not wired to CI), local development.
+      Records how it is deployed and from what.
+    fields:
+      <<: *common
+      env_kind:          { type: str, vocab: "21" }
+      status:            { type: str, vocab: "12" }
+      host:              { type: str }
+      deploy_mechanism:  { type: str }
+      branch:            { type: str }
+      integrations:      { type: list, list_ref: integrations }
+
+  # =========================================================================
+  # 5. KNOWLEDGE — the rules the product keeps and the decisions behind it
+  # =========================================================================
+
+  rule:
+    folder: rules
+    description: >
+      A product or business rule the Cube must keep — matching discipline
+      (same sector AND use-case category), absence stated plainly, micro-
+      innovations as suggestions, provenance contributor-only, framework never
+      named as a process, stage only from the user, two-step publish … Records
+      WHERE it is enforced: prompt-only rules are the fragile ones.
+    fields:
+      <<: *common
+      statement:         { type: str, required: true }
+      enforcement:       { type: list, list_vocab: "22" }
+      enforced_in:       { type: list, list_ref: modules }
+      applies_to_modes:  { type: list, list_ref: chat-modes }
+      rationale:         { type: str }
+
+  decision:
+    folder: decisions
+    description: >
+      An architecture or product decision record: what was decided, when, the
+      context, the alternatives, and the consequences — e.g. collapsing the
+      four-intent Explorer menu into one Analyse flow, auto-granting adopter
+      on signup, dropping pathway_submissions, whole-document GitHub commit
+      instead of contribution units. A superseded decision stays, pointing at
+      what replaced it; the reasoning is the thing worth keeping.
+    fields:
+      <<: *common
+      decided_on:        { type: date }
+      status:            { type: str, required: true, vocab: "23" }
+      context:           { type: str }
+      decision:          { type: str, required: true }
+      alternatives:      { type: list }
+      consequences:      { type: list }
+      decided_by:        { type: list, list_ref: people }
+      supersedes:        { type: str, ref: decisions }
+      affects_features:  { type: list, list_ref: features }
+      affects_tables:    { type: list, list_ref: tables }
+      affects_modules:   { type: list, list_ref: modules }
+
+  # =========================================================================
+  # 6. DELIVERY — what is planned, shipped, owed, at risk, or broke
+  # =========================================================================
+
+  requirement:
+    folder: requirements
+    description: >
+      A requirement from the Product Charter backlog, a spec, or a task
+      (docs/tasks) — functional or non-functional, with its charter status.
+      A requirement is intent; a feature with status live is delivery.
+      Never cite a requirement as evidence something exists.
+    fields:
+      <<: *common
+      req_type:          { type: str, required: true, vocab: "24" }
+      status:            { type: str, required: true, vocab: "25" }
+      priority:          { type: str }
+      milestone:         { type: str, ref: milestones }
+      features:          { type: list, list_ref: features }
+      acceptance_criteria: { type: list }
+
+  milestone:
+    folder: milestones
+    description: >
+      A dated Product Charter milestone (e.g. "Cube Web App fully functional
+      with ≥20 pathways", 15-Nov-26) with its expected outcome and status.
+    fields:
+      <<: *common
+      target_date:       { type: date, required: true }
+      status:            { type: str, required: true, vocab: "26" }
+      outcome:           { type: str }
+      owner_team:        { type: str, ref: teams }
+      order:             { type: int }
+
+  release:
+    folder: releases
+    description: >
+      A shipped change set — a merged PR or a deploy — with what it brought:
+      features, migrations, decisions. The project's changelog in graph form.
+      Not the brain's own activity log, which records captures.
+    fields:
+      <<: *common
+      released_on:       { type: date, required: true }
+      pr_number:         { type: int }
+      branch:            { type: str }
+      commits:           { type: list }
+      authors:           { type: list, list_ref: people }
+      features:          { type: list, list_ref: features }
+      migrations:        { type: list, list_ref: migrations }
+      decisions:         { type: list, list_ref: decisions }
+
+  tech_debt:
+    folder: tech-debt
+    description: >
+      A known gap, dead code path, missing safeguard or stale artefact (the
+      TD register): severity P0–P3, what it affects, the remediation, and
+      whether it is resolved. Roadmap-acknowledged gaps link their requirement.
+    fields:
+      <<: *common
+      td_id:             { type: str }                     # TD-01 …
+      severity:          { type: str, required: true, vocab: "27" }
+      status:            { type: str, required: true, vocab: "28" }
+      affected_modules:  { type: list, list_ref: modules }
+      affected_tables:   { type: list, list_ref: tables }
+      affected_endpoints: { type: list, list_ref: endpoints }
+      remediation:       { type: str }
+      requirement:       { type: str, ref: requirements }
+      resolved_on:       { type: date }
+      resolution:        { type: str }
+
+  risk:
+    folder: risks
+    description: >
+      A forward-looking threat to the project with a date attached where one
+      exists — e.g. the Anthropic API account backing the whole app expiring
+      28-Oct-2026, the AWS account expiring Dec-2026. Open risks past their
+      due date are flagged by the validator.
+    fields:
+      <<: *common
+      status:            { type: str, required: true, vocab: "29" }
+      likelihood:        { type: str, vocab: "30" }
+      impact:            { type: str, vocab: "30" }
+      due_date:          { type: date }
+      mitigation:        { type: str }
+      integration:       { type: str, ref: integrations }
+      owner_team:        { type: str, ref: teams }
+      affects_features:  { type: list, list_ref: features }
+
+  incident:
+    folder: incidents
+    description: >
+      Something that actually broke — in production or in development — with
+      the root cause and the fix (e.g. every Contributor draft insert silently
+      failing a doc_type constraint until migration 0027). The project's own
+      Failure-and-Fix record.
+    fields:
+      <<: *common
+      occurred_on:       { type: date }
+      detected_on:       { type: date }
+      severity:          { type: str, vocab: "31" }
+      status:            { type: str, required: true, vocab: "32" }
+      symptom:           { type: str }
+      root_cause:        { type: str }
+      fix:               { type: str }
+      fixed_by_migration: { type: str, ref: migrations }
+      fixed_in_release:  { type: str, ref: releases }
+      affected_features: { type: list, list_ref: features }
+
+# Edge roles are carried by typed field names (contributing_organisations vs
+# deploying_organisations), not by role objects on edges.
+role_masters: {}
+
+# ---------------------------------------------------------------------------
+# Rules — shapes: require, forbid, one_of, pattern, not_self, unique,
+# stale_after; narrowed by when:, applies_to:, each:. severity: warn | error.
+# ---------------------------------------------------------------------------
+rules:
+
+  # -- Retiring a page ------------------------------------------------------
+  - id: supersession-without-successor
+    when: { field: superseded_on, present: true }
+    require: superseded_by
+    message: "marked superseded but nothing says what replaced it"
+
+  - id: supersession-without-reason
+    when: { field: superseded_by, present: true }
+    require: supersession_note
+    message: "superseded, but no note says why — the reasoning is the thing worth keeping"
+
+  - id: invalid-superseded-by
+    pattern: { field: superseded_by, matches: "[a-z0-9-]+/[a-z0-9-]+" }
+    message: "`superseded_by` must read <folder>/<slug>"
+
+  - id: self-supersession
+    not_self: superseded_by
+    message: "`superseded_by` points at this page itself"
+
+  # -- Keeping a page true --------------------------------------------------
+  - id: review-interval-never-reviewed
+    when: { field: review_interval, present: true }
+    require: last_reviewed
+    message: "a review interval is set but nothing records when it was last reviewed"
+
+  - id: unreadable-review-date
+    pattern: { field: last_reviewed, matches: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
+    message: "`last_reviewed` is not a YYYY-MM-DD date"
+
+  - id: review-overdue
+    stale_after: { date: last_reviewed, interval_months: review_interval }
+
+  - id: unreadable-bookkeeping-date
+    pattern: { field: last_updated, matches: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
+    message: "`last_updated` is not a YYYY-MM-DD date"
+
+  - id: unreadable-first-logged
+    pattern: { field: first_logged, matches: "[0-9]{4}-[0-9]{2}-[0-9]{2}" }
+    message: "`first_logged` is not a YYYY-MM-DD date"
+
+  # -- Traceability to the code ---------------------------------------------
+  - id: commit-sha-shape
+    pattern: { field: verified_at_commit, matches: "[0-9a-f]{7,40}" }
+    message: "`verified_at_commit` must be a git SHA (7–40 hex chars)"
+
+  - id: code-ref-shape
+    pattern: { field: code_refs, matches: "[A-Za-z0-9_.()\\[\\]/ -]+(#L[0-9]+(-L[0-9]+)?)?" }
+    message: "`code_refs` entries are repo-relative paths, optionally #L10-L20 — no URLs, no leading slash"
+
+  - id: code-traced-entities-need-a-ref
+    applies_to: [pages, endpoints, chat-modes, prompts, modules, tables, migrations, config]
+    require: code_refs
+    message: "an entry describing code must point at the code (`code_refs`) — trust the code over any doc"
+
+  # -- Corpus discipline (framework.md § Extraction discipline) -------------
+  - id: unit-condition-applies-when
+    applies_to: units
+    require: applies_when
+    message: "every unit carries a condition tag — `applies_when` is missing (write \"Not documented in the source\" rather than inventing one)"
+
+  - id: unit-condition-fails-when
+    applies_to: units
+    require: fails_when
+    message: "every unit carries a condition tag — `fails_when` is missing (write \"Not documented in the source\" rather than inventing one)"
+
+  - id: decision-unit-needs-outcome
+    applies_to: units
+    when: { field: unit_type, in: [Strategic Decision, Tactical Decision] }
+    require: [decision, before, after]
+    message: "a decision unit needs the decision and its before→after — without it it is a lesson, not a finding"
+
+  - id: failure-unit-needs-fix-and-insight
+    applies_to: units
+    when: { field: unit_type, equals: Failure and Fix }
+    require: [failure, fix, insight]
+    message: "a Failure-and-Fix unit names the failure, the fix, and what the fix revealed — the insight is the reusable part"
+
+  - id: playbook-needs-gated-steps
+    applies_to: units
+    when: { field: unit_type, equals: Playbook }
+    require: steps
+    message: "a Playbook is a gated multi-step sequence — record the steps; a single procedural-sounding decision is a Decision"
+
+  - id: toolkit-asset-needs-purpose
+    applies_to: units
+    when: { field: unit_type, equals: Toolkit Asset }
+    require: [purpose, reuse_condition]
+    message: "a Toolkit Asset says what it is for and when it can be lifted as-is"
+
+  - id: asset-needs-consent
+    applies_to: units
+    when: { field: asset_kind, present: true }
+    one_of: { field: share_consent, values: [true] }
+    severity: error
+    message: "an attached asset exists only after an explicit Yes to sharing publicly — `share_consent` must be true"
+
+  - id: asset-link-https
+    applies_to: units
+    pattern: { field: asset_link, matches: "https://.+" }
+    severity: error
+    message: "asset links must be https:// (the app's own constraint)"
+
+  - id: pathway-needs-stage-and-sector
+    applies_to: pathways
+    require: [stage_reached, sector]
+    message: "a pathway without stage and sector cannot be matched (relevance = same sector AND use-case category)"
+
+  - id: published-pathway-dated
+    applies_to: pathways
+    when: { field: lifecycle, equals: published }
+    require: published_on
+    message: "published pathways carry the date they went live"
+
+  - id: pattern-needs-evidence
+    applies_to: patterns
+    require: evidence_units
+    message: "a pattern is built from units — name the evidence"
+
+  - id: cell-key-shape
+    applies_to: cells
+    pattern: { field: grid_key, matches: "(persona|solution|institution|ecosystem):(Explore|Define|Pilot|Scale)" }
+    severity: error
+    message: "`grid_key` must match designs.grid_state keys exactly, e.g. persona:Explore"
+
+  # -- Product layer -------------------------------------------------------
+  - id: endpoint-path-shape
+    applies_to: endpoints
+    pattern: { field: path, matches: "/.*" }
+    message: "endpoint `path` starts with /"
+
+  - id: endpoint-access-declared
+    applies_to: endpoints
+    require: access
+    message: "say how the endpoint is actually gated — the API route is the real enforcement layer"
+
+  - id: page-route-shape
+    applies_to: pages
+    pattern: { field: route, matches: "/.*" }
+    message: "page `route` starts with /"
+
+  - id: migration-number-shape
+    applies_to: migrations
+    pattern: { field: number, matches: "[0-9]{4}" }
+    severity: error
+    message: "migration `number` is the zero-padded file prefix, e.g. 0027"
+
+  - id: dropped-table-says-when
+    applies_to: tables
+    when: { field: status, equals: dropped }
+    require: dropped_in
+    message: "a dropped table names the migration that dropped it"
+
+
+  - id: config-var-shape
+    applies_to: config
+    pattern: { field: var_name, matches: "[A-Z][A-Z0-9_]*" }
+    message: "`var_name` is the exact upper-case environment variable name"
+
+
+  - id: rule-enforcement-declared
+    applies_to: rules
+    require: enforcement
+    message: "say where the rule is enforced (prompt / code / rls …) — prompt-only rules are the fragile ones"
+
+  # -- Delivery layer -------------------------------------------------------
+  - id: resolved-debt-says-how
+    applies_to: tech-debt
+    when: { field: status, equals: resolved }
+    require: [resolved_on, resolution]
+    message: "resolved debt records when and how"
+
+  - id: superseded-decision-points-on
+    applies_to: decisions
+    when: { field: status, equals: superseded }
+    require: superseded_by
+    message: "a superseded decision names its successor"
+
+  - id: open-risk-past-due
+    applies_to: risks
+    when: { field: status, equals: open }
+    stale_after: { date: due_date }
+    message: "this risk is still open and its due date has passed — act or re-date it"
+
+  - id: milestone-past-target
+    applies_to: milestones
+    when: { field: status, in: [planned, in-progress, at-risk] }
+    stale_after: { date: target_date }
+    message: "the milestone's target date has passed and it is not marked done or missed"
+
+  - id: fixed-incident-says-how
+    applies_to: incidents
+    when: { field: status, equals: fixed }
+    require: [root_cause, fix]
+    message: "a fixed incident records root cause and fix — that is the reusable part"
