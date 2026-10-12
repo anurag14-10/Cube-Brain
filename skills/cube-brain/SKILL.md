@@ -1,24 +1,21 @@
 ---
 name: cube-brain
 description: >
-  Reads and writes the Cube-Brain — the structured knowledge graph of the
-  Diffusion Cube / 100 Pathways project (repo `diffusion-cube`). Use it to
-  ANSWER any question about the project's knowledge: the AI Diffusion Pathway
-  Framework (dimensions, sub-categories and their stage weights, stages, grid
-  cells, unit types, product rules), the pathway corpus (pathways,
-  micro-innovation units, problem→solution patterns, who contributed what),
-  the people and organisations involved, and delivery (decisions, risks,
-  milestones) — "which units cover Institution at Pilot", "what does
-  Persona C weigh at Define", "who contributed MahaVISTAAR", "what is due
-  before the next milestone". Use it to CAPTURE whenever such knowledge
-  appears — a framework or programme decision, a new pathway contributed, a
-  risk or deadline, a milestone — and when the user says "log this to the
-  cube brain", "update the brain", "ingest this pathway". Also runs the
-  brain's validation, reports and local site. The app's code level (routes,
-  tables, migrations, env vars) is NOT in this brain — answer those from the
-  repo directly.
+  Reads and writes the Cube-Brain, the knowledge graph of the Diffusion Cube /
+  100 Pathways project (repo diffusion-cube). Use it to ANSWER questions about
+  the AI Diffusion Pathway Framework (dimensions, sub-categories and stage
+  weights, stages, grid cells, unit types, product rules), the pathway corpus
+  (pathways, micro-innovation units, patterns, contributors), the people and
+  organisations involved, and delivery (decisions, risks, milestones), e.g.
+  "which units cover Institution at Pilot", "who contributed MahaVISTAAR",
+  "what is due before the next milestone". Use it to CAPTURE such knowledge
+  whenever it comes up (a framework or programme decision, a new pathway, a
+  risk or deadline, a milestone) and when the user says "log this to the cube
+  brain", "update the brain" or "ingest this pathway". Works from a local
+  clone or, on Claude Desktop/web, through the GitHub connector. The app's
+  code level (routes, tables, env vars) is not in this brain.
 metadata:
-  version: 1.0.0
+  version: 2.0.0
   brain_schema: 2
 ---
 
@@ -26,28 +23,47 @@ metadata:
 
 The Cube-Brain is a git repository of markdown entities with YAML frontmatter
 that models the Diffusion Cube project's knowledge as one graph — 8 entity
-types in three layers, with the framework's closed sets as variables. This skill is how an agent reads it faithfully and writes to it
-without degrading it.
+types in three layers, with the framework's closed sets as variables. This
+skill is how an agent reads it faithfully and writes to it without degrading
+it.
 
-## Locations
+## Configuration
 
-| What | Path | Override |
-|---|---|---|
-| The brain | `/home/ttpl-rt-259/brain/Cube-Brain` | env `CUBE_BRAIN` |
-| The project repo | `/home/ttpl-rt-259/brain/diffusion-cube` | env `CUBE_REPO` |
-| Brain scripts | `$CUBE_BRAIN/scripts/` | — |
+```yaml
+repo: anurag14-10/Cube-Brain     # GitHub owner/name of the brain
+branch: main
+commit_prefix: "cube-brain:"
+local_brain: /home/ttpl-rt-259/brain/Cube-Brain     # env CUBE_BRAIN overrides
+local_project: /home/ttpl-rt-259/brain/diffusion-cube   # env CUBE_REPO overrides
+```
 
-Every command below runs from the brain root. If the brain path does not
-exist, say so and stop — never write brain entries anywhere else.
+## Pick the storage for this surface
+
+- **A shell AND a local clone exist** (Claude Code in a terminal, VS Code, or
+  the Desktop app's Code tab): work in `$CUBE_BRAIN` (else `local_brain`)
+  with git. Every command below runs from the brain root.
+- **No shell, or no local clone** (Claude Desktop chat, web, mobile): read and
+  write `repo` on `branch` through the GitHub connector. Follow
+  **`references/adapter-github-connector.md`** — it replaces the shell steps
+  (git pull, scripts, commit) with connector calls.
+- **Neither** (no shell and no GitHub tools): say so, name the fix (add the
+  GitHub connector — see the adapter file), and offer drafted markdown inline.
+  **Never write brain entries to local or sandbox files as a fallback** — on a
+  chat surface they vanish and the user believes the knowledge was saved.
+
+If both are available, prefer the local clone.
 
 ## Step 0 — Orient (once per session)
 
-1. `cd $CUBE_BRAIN && git pull --rebase` if it has a remote (others write here).
+1. Local clone: `cd $CUBE_BRAIN && git pull --rebase` if it has a remote
+   (others write here). Connector: nothing to pull — fetch each file fresh
+   right before you rely on it.
 2. Read `CONVENTIONS.md` (rules, slugs, edge directions, body skeletons) and
    skim `SCHEMA.yml` (the entity model — each type's `description:` says what
    that type MEANS and may be used for). Read `MASTERS.md` before writing any
    vocab field. Do not rely on memory of these files; they evolve.
-3. `INDEX.md` lists every slug and alias — grep it before creating anything.
+3. `INDEX.md` lists every slug and alias — search it before creating
+   anything (on the connector, fetch it and search the text).
 
 ## The model in one table
 
@@ -132,6 +148,8 @@ Y — log them?"). Do not interrupt; do not re-offer after a no.
    the same commit or keep the name in prose. Respect edge directions (store
    the reference on the side `CONVENTIONS.md` § Edge directions says).
    Set `last_updated` to today.
+   On the connector, steps 6–8 are different — follow the adapter file
+   (one multi-file push; CI regenerates and validates).
 6. **Log** — one activity entry per capture:
    `python3 scripts/log_activity.py . --scope "$(git config user.name)" --text "- $(date +%F): [decision] <name> — <one line>"`
 7. **Regenerate + validate**:
@@ -171,6 +189,7 @@ commit if a dimension, stage, sub-category or unit type changed.
 | Duplicates | grep `INDEX.md`; `python3 scripts/find_duplicates.py .` |
 | Re-derive framework from the repo | `python3 scripts/seed_from_repo.py --only framework --dry-run` (then `--force` deliberately) |
 | Every entry on the current schema? | `python3 scripts/migrate_v1_to_v2.py . --check` |
+| Package the skill for Claude Desktop / web | `python3 scripts/build_skill.py [--repo owner/name]` → `dist/cube-brain.skill`, upload via Customize → Skills |
 | Local website (graph, tabs, search) | `python3 scripts/add_site.py .` once, then `python3 scripts/build_site.py . && python3 -m http.server -d site 8000` |
 | Schema change | see `references/schema-change.md` |
 
@@ -207,3 +226,4 @@ never set it up as a side effect.
 |---|---|
 | `references/ingest-pathway.md` | Mode C — turning a pathway document into units/patterns |
 | `references/schema-change.md` | Adding a type/field/vocab term or bumping the schema version |
+| `references/adapter-github-connector.md` | No shell or no local clone — reading and writing through the GitHub connector |

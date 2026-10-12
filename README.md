@@ -35,6 +35,7 @@ python3 scripts/validate_wiki.py .              # must exit 0 before every commi
 python3 scripts/cube_report.py                  # project status: corpus coverage, risks, milestones
 python3 scripts/seed_from_repo.py --dry-run     # re-derive framework concepts / pathway stubs from the repo
 python3 scripts/migrate_v1_to_v2.py . --check   # every entry is on schema v2
+python3 scripts/build_skill.py                  # dist/cube-brain.skill for Claude Desktop / web upload
 python3 scripts/build_index.py . && python3 scripts/build_backlinks.py . && python3 scripts/build_activity_log.py .
 python3 scripts/add_site.py . && python3 scripts/build_site.py . && python3 -m http.server -d site 8000
 ```
