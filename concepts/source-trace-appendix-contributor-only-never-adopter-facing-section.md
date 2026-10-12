@@ -1,7 +1,7 @@
 ---
 name: 'Pathway section: Source Trace appendix (contributor-only — never adopter-facing)'
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Source Trace appendix (contributor-only — never adopter-facing)
 concept_kind: pathway-section
@@ -10,9 +10,8 @@ definition: 'Traces what was used to build the pathway, for future reconciliatio
   by source file → which Sections/fields/units it covers, and whether it''s primary or confirms-only'
 audience: contributor-only
 broader: pathway-document
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

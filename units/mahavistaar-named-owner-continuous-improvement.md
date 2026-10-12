@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — a named owner on continuous improvement from day one
 type: unit
-schema_version: 1
+schema_version: 2
 summary: A named owner monitors failed calls, misunderstood queries, drop-offs, unsafe responses, latency,
   cost and data errors and feeds them back on a cadence.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — prove state-level, then federate nationally
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Sequence national federation (Bharat-VISTAAR) only after the state-level architecture is proven
   at scale, so failure modes aren't propagated nationally.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

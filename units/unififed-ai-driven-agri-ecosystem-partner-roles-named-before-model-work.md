@@ -1,11 +1,11 @@
 ---
 name: 30+ named partner roles resolved before model work begins
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Map every ecosystem role — technology, domain, data, language, delivery, financing, research
   — and assign a named organisation to each before architecture work, because unnamed dependencies are
   unmanaged risks.
-code_refs:
+doc_refs:
 - content/wiki/pathways/unififed-ai-driven-agri-ecosystem.md
 sources:
 - system: diffusion_cube_code

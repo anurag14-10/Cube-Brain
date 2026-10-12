@@ -1,12 +1,12 @@
 ---
 name: MahaVISTAAR — two-endpoint moderation, decoupled from the advisory engine
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Run the moderation model on infrastructure entirely separate from the advisory model so the safety
   layer cannot fail together with the model it moderates.
 tags:
 - relevant-to-technologist
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

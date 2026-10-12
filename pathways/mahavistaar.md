@@ -1,7 +1,7 @@
 ---
 name: MahaVISTAAR
 type: pathway
-schema_version: 1
+schema_version: 2
 aliases:
 - MahaVISTAAR
 summary: Maharashtra's state-run AI voice advisory for smallholder farmers — federated data ownership,
@@ -39,13 +39,11 @@ coverage:
 corpora:
 - grounding-corpus
 - library-corpus
-corpus_files: &id001
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 - content/library-wiki/pathways/mahavistaar.md
 lifecycle: published
 published_on: '2026-07-31'
-code_refs: *id001
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document
@@ -92,4 +90,4 @@ create its `units/`.
 - `content/wiki/pathways/mahavistaar.md`
 - `content/library-wiki/pathways/mahavistaar.md`
 
-Exists in **both** in-repo corpora as independently maintained documents (TD-02) — same slug, different text.
+Exists in **both** in-repo corpora as independently maintained documents — same slug, different text.

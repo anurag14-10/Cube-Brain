@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — institutional authorisation is the critical path
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Treat institutional authorisation and named ownership (sponsor + nodal officers) as the critical
   path before any code — no vendor can grant cross-departmental data-sharing.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

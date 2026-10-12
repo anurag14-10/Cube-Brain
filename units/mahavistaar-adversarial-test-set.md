@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — adversarial test set (500 attack patterns)
 type: unit
-schema_version: 1
+schema_version: 2
 summary: A living safety-testing bank covering in-scope, out-of-scope, distress, abuse, complaint and
   jailbreak scenarios so the system refuses well.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

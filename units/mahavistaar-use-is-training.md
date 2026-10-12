@@ -1,10 +1,10 @@
 ---
 name: 'MahaVISTAAR — ''use is training'': no separate onboarding step'
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Design the interface so using it is the only training needed — farmers called, asked and got
   an answer with no onboarding programme.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

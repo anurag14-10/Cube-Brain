@@ -1,10 +1,10 @@
 ---
 name: Federal-by-design — states and institutions plug in side by side, not stacked
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Make the national instance one peer among state and institutional instances on a shared network,
   each with its own registry and two-way contracts, instead of a hub that sub-deployments inherit from.
-code_refs:
+doc_refs:
 - content/wiki/pathways/unififed-ai-driven-agri-ecosystem.md
 sources:
 - system: diffusion_cube_code

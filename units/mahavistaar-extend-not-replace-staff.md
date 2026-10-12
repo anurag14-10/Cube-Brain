@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — frame AI as extending human capacity, not replacing it
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Extension officers own the relationship; the system handles the off-hours, on-demand question
   — so staff don't see it as a threat.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

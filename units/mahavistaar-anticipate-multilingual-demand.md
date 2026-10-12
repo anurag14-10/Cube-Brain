@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — anticipate multilingual demand rather than retrofitting it
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Plan for languages beyond the launch language before going live; MahaVISTAAR launched Marathi-only
   and Hindi, Bhili and English demand surfaced after launch.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

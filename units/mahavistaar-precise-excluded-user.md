@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — define the excluded user precisely, not as a demographic
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Target a precisely described excluded user (women farmers in Marathwada) rather than 'farmers'
   — the precise user fixes channel, model, data, language and testing.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

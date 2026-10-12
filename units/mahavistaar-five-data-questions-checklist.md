@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — five data questions checklist
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Availability, Sovereignty, Accountability, Residency and Update cadence — five questions run
   against every candidate data source before code.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

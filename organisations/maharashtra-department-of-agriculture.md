@@ -1,7 +1,7 @@
 ---
 name: Department of Agriculture, Government of Maharashtra
 type: organisation
-schema_version: 1
+schema_version: 2
 aliases:
 - GoM Agriculture Department
 org_kinds:

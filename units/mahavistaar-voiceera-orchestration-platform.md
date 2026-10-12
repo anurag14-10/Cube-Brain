@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — Voiceera open-source orchestration platform
 type: unit
-schema_version: 1
+schema_version: 2
 summary: A model-, language- and telephony-provider-agnostic orchestration platform — the orchestration
   layer, not another model, is what most deployments lack.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

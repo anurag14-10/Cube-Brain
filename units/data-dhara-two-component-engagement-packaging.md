@@ -1,10 +1,10 @@
 ---
 name: Package every engagement as a technical toolkit plus the non-technical mechanisms
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Package each engagement into a reusable technical toolkit and the institutional anchoring, coordination
   and playbook that make it land — the document puts the second at roughly 70% of the value.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 sources:
 - system: diffusion_cube_code

@@ -1,12 +1,12 @@
 ---
 name: MahaVISTAAR — inventory what already exists before specifying what to build
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Map every institution, dataset and service already serving the population before writing a spec,
   so feasibility becomes 'what can be joined'.
 tags:
 - relevant-to-social-sector-enterprise
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

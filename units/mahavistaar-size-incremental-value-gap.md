@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — size the incremental value gap, not the technology
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Before committing, size the gap between the AI use case and the current state (including doing
   nothing); a fixed staffing constraint is what made the case here.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

@@ -1,11 +1,11 @@
 ---
 name: Build iteratively instead of waiting for a complete policy repository
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Velocity came from in-person engagement with the CEO as central decision-maker, framed as a broader
   vision rather than a standalone technical deliverable, and from building iteratively as gaps surfaced
   — MoU to live pilot took about 3–4 months.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 sources:
 - system: diffusion_cube_code

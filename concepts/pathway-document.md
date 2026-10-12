@@ -1,7 +1,7 @@
 ---
 name: Pathway document
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - pathway write-up
 summary: 'A document written for the next adopter — what they would need to decide, the alternatives,
@@ -12,9 +12,8 @@ definition: 'A document written for the next adopter — what they would need to
   and the conditions under which different choices are correct. Not a case study: a marked trail, not
   the pioneer''s route. Sections 0–6 plus a contributor-only Source Trace appendix.'
 audience: public-vocabulary
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

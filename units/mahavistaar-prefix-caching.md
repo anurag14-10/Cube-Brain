@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — prefix caching to avoid re-paying for conversation history
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Serving-stack prefix caching so repeated system prompt and prior-turn context aren't recomputed
   — input tokens were 79.7% of spend.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

@@ -1,11 +1,11 @@
 ---
 name: Deploy before models and data are perfect, and let deployment improve the data
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Deploy early with imperfect models and data, as iterative learning with feedback loops — for
   the dengue early-warning system this created incentives for government departments to strengthen their
   own disease surveillance and reporting.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/ceew-climate-intelligence.md
 sources:
 - system: diffusion_cube_code

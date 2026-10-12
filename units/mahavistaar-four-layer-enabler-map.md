@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — named four-layer enabler map
 type: unit
-schema_version: 1
+schema_version: 2
 summary: A 54-item inventory of funders, orchestrators, government bodies, research institutions, models,
   data feeds and documents in four layers; the structure is what travels.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

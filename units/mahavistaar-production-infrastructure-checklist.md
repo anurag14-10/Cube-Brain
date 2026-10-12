@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — cross-cutting production infrastructure checklist
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Checklist across GPU sizing for peak voice concurrency, HSMs/rate-limiting, an observability
   stack separate from inference, and redundant rural telephony.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

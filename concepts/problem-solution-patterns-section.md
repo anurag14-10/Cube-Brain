@@ -1,7 +1,7 @@
 ---
 name: 'Pathway section: Problem→solution patterns'
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Problem→solution patterns
 - Section 5
@@ -11,9 +11,8 @@ definition: 'Maps recurring problems to known fixes. Contents: Problem → root 
   → condition. Built from Failure-and-Fix units and other clear problem→fix patterns across deployments.'
 audience: public-vocabulary
 broader: pathway-document
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

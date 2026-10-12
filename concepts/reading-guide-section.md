@@ -1,7 +1,7 @@
 ---
 name: 'Pathway section: Reading guide'
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Reading guide
 - Section 0
@@ -11,9 +11,8 @@ definition: 'Orients the adopter. Contents: What a pathway is. How retrieval wor
   concentrates. How to navigate by dimension/stage.'
 audience: public-vocabulary
 broader: pathway-document
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

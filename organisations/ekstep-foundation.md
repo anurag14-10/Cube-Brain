@@ -1,7 +1,7 @@
 ---
 name: EkStep Foundation
 type: organisation
-schema_version: 1
+schema_version: 2
 aliases:
 - EkStep
 org_kinds:

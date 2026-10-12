@@ -1,10 +1,10 @@
 ---
 name: Define the problem as heterogeneity, not content scarcity
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Frame foundational-learning failure as unaddressed proficiency heterogeneity within one classroom,
   not a shortage of content, devices or teachers — the framing decided what to build and what not to build.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

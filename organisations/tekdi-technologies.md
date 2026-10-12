@@ -1,7 +1,7 @@
 ---
 name: Tekdi Technologies
 type: organisation
-schema_version: 1
+schema_version: 2
 aliases:
 - Tekdi
 - Tekdi Team
@@ -30,7 +30,7 @@ last_updated: '2026-10-08'
 
 ## Relationship to the Cube
 
-The Product Charter's execution model names the **Solution Team** as "Kamesh + Tekdi Team". It owns solution functionality, UI/UX and the data and technical architecture, builds and maintains the web app and the planned Claude Skill integration, and handles product and technical user issues. See [Solution Team](../teams/solution-team.md).
+The Product Charter's execution model names the **Solution Team** as "Kamesh + Tekdi Team". It owns solution functionality, UI/UX and the data and technical architecture, builds and maintains the web app and the planned Claude Skill integration, and handles product and technical user issues. See Solution Team.
 
 ## Notes
 

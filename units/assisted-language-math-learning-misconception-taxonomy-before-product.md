@@ -1,11 +1,11 @@
 ---
 name: Build the misconception taxonomy before building the product
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Map learners' specific error patterns through pen-and-paper data collection at scale before any
   digital product exists, and make that taxonomy the data architecture all AI personalisation is built
   on.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — bilingual Marathi↔English agricultural glossary
 type: unit
-schema_version: 1
+schema_version: 2
 summary: A terminology bridge for crop, pest, scheme and mandi terms that keeps ASR/TTS accurate without
   translating the whole advisory corpus.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

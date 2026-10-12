@@ -1,11 +1,11 @@
 ---
 name: AI-readiness document schema for government policy documents
 type: unit
-schema_version: 1
+schema_version: 2
 summary: A metadata schema that turns unstructured circulars, manuals and government orders into AI-usable
   records — title, summary, text, category, sub-category, document type, tags, policy year, issuing department,
   fee, timelines, approval phase.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 sources:
 - system: diffusion_cube_code

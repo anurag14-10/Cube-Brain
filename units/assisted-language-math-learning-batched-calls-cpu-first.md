@@ -1,10 +1,10 @@
 ---
 name: Batch API calls to survive intermittent connectivity — and run on CPUs
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Group 10–20 questions into one API call per set, run nearly all compute on CPUs, and deliver
   as a PWA — so sessions survive intermittent school-lab connectivity at under ₹10 per child per year.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

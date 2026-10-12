@@ -1,12 +1,12 @@
 ---
 name: MahaVISTAAR — start bundled to learn fast; design so you can unbundle later
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Launch on a bundled commercial provider for speed while designing modularity in from day one;
   the later move to self-hosting cut cost per question about 180x.
 tags:
 - relevant-to-government
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

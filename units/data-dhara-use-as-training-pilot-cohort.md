@@ -1,10 +1,10 @@
 ---
 name: Let use be the training for the first frontline pilot cohort
 type: unit
-schema_version: 1
+schema_version: 2
 summary: The first 20 Udyami Mitras got access without prior training; query complexity rose on its own
   from simple policy questions to scheme eligibility, routing support and subsidy calculations.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 sources:
 - system: diffusion_cube_code

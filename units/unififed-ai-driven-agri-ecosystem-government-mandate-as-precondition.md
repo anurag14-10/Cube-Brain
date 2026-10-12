@@ -1,11 +1,11 @@
 ---
 name: Government mandate as the irreplaceable precondition — not a procurement relationship
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Position the deployment inside the Ministry of Agriculture's mission with a ministerial launch
   and an active mandate, because for consequential advice the accountable public authority is inseparable
   from user trust — and it unlocks data access.
-code_refs:
+doc_refs:
 - content/wiki/pathways/unififed-ai-driven-agri-ecosystem.md
 sources:
 - system: diffusion_cube_code

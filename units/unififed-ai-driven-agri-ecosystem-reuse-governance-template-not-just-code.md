@@ -1,11 +1,11 @@
 ---
 name: Reuse the governance template across instances, not just the code
 type: unit
-schema_version: 1
+schema_version: 2
 summary: When federating to new states, cooperatives or countries, transfer the institutional ownership
   structure, data accountability model and content-authority assignment along with the open-source code
   — local adaptation then happens inside it.
-code_refs:
+doc_refs:
 - content/wiki/pathways/unififed-ai-driven-agri-ecosystem.md
 sources:
 - system: diffusion_cube_code

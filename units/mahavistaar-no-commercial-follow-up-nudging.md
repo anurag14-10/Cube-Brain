@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — drop commercial-style follow-up nudging on a public-service line
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Replace 'Would you like to know more?' with a lighter close or nothing — on a public service
   line, answering and stopping is often better.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

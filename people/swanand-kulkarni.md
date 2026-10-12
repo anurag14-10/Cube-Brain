@@ -1,7 +1,7 @@
 ---
 name: Swanand Kulkarni
 type: person
-schema_version: 1
+schema_version: 2
 summary: 'Contributor (git SwanandAI) whose fork carries the PR flow into diffusion-cube main. Merged
   PRs #1–#7 (repo agents/skills, Terms, toolkit assets); authored the repo''s code-review/testing skills
   and agents.'

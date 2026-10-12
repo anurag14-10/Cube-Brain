@@ -1,7 +1,7 @@
 ---
 name: Strategic Decision
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Strategic Decision
 summary: A framing, governance, or design decision that shaped what got built. Usually invisible in the
@@ -12,11 +12,9 @@ definition: A framing, governance, or design decision that shaped what got built
 audience: internal-only
 what_makes_it_reusable: The condition tag — when does this apply, when doesn't it?
 broader: unit
-code_identifier: Strategic Decision
-code_refs:
+doc_refs:
 - content/framework.md
 - lib/dimensions.ts
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

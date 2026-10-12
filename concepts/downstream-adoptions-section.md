@@ -1,7 +1,7 @@
 ---
 name: 'Pathway section: Downstream Adoptions'
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Downstream Adoptions
 concept_kind: pathway-section
@@ -10,9 +10,8 @@ definition: 'Known downstream adopters / reuse record. Contents: Who has since b
   and how much faster — pathway-level metadata, not a tagged unit'
 audience: public-vocabulary
 broader: pathway-document
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

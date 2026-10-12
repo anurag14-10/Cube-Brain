@@ -1,7 +1,7 @@
 ---
 name: AI-assisted Job Matching for Rural Youth
 type: pathway
-schema_version: 1
+schema_version: 2
 aliases:
 - AI-assisted Job Matching for Rural Youth
 title: AI-assisted Job Matching for Rural Youth
@@ -11,12 +11,10 @@ use_case_category: skill development and employment support
 stage_reached: pilot
 corpora:
 - grounding-corpus
-corpus_files: &id001
+doc_refs:
 - content/wiki/pathways/ai-assisted-job-matching.md
 lifecycle: unindexed
 document_version: v2
-code_refs: *id001
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document
@@ -49,4 +47,4 @@ create its `units/`.
 
 - `content/wiki/pathways/ai-assisted-job-matching.md`
 
-On disk in the grounding corpus but **not linked from `content/wiki/pathways/index.md`**, so excluded from grounding and the /wiki listing (TD-07). It may still be live via `published_pathways` — check the DB before calling it unpublished.
+On disk in the grounding corpus but **not linked from `content/wiki/pathways/index.md`**, so excluded from grounding and the /wiki listing. It may still be live via `published_pathways` — check the DB before calling it unpublished.

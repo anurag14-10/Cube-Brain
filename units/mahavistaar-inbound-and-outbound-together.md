@@ -1,12 +1,12 @@
 ---
 name: MahaVISTAAR — design inbound and outbound reach together
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Build inbound question-answering and proactive outbound advisory into the initial design together;
   an inbound-only build needs major rearchitecting to add outbound later.
 tags:
 - relevant-to-technologist
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

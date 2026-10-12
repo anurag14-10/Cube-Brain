@@ -1,11 +1,11 @@
 ---
 name: Build on public cloud for speed, then migrate to the institution's own cloud
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Build on AWS for speed, then migrate to Invest UP's own cloud with full data and code ownership,
   keeping a cloud-agnostic open-source foundation layer separable from the vendor's instance to avoid
   lock-in.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 sources:
 - system: diffusion_cube_code

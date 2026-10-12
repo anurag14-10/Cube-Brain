@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — don't over-commit to voice as the only channel
 type: unit
-schema_version: 1
+schema_version: 2
 summary: 'Cross-deployment failure: voice was assumed to carry the whole journey, but some users need
   images, text in noisy settings, or human escalation.'
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

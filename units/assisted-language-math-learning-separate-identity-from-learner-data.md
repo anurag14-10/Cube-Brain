@@ -1,10 +1,10 @@
 ---
 name: Separate the learner's identity from the learner's data
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Key all telemetry and progression to pseudonymous learner identifiers, restrict identifiable
   data by role, and plan from day one for states — not the foundation — to host PII-bearing services.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

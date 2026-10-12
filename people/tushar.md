@@ -1,7 +1,7 @@
 ---
 name: Tushar
 type: person
-schema_version: 1
+schema_version: 2
 summary: Primary source of the Blue Dots pathway material — the full narrative pathway document, executive
   summary and follow-up interview it is built from.
 doc_refs:

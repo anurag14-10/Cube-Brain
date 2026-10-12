@@ -1,11 +1,11 @@
 ---
 name: Name a nodal officer for data sourcing before work begins
 type: unit
-schema_version: 1
+schema_version: 2
 summary: With no nodal officer and no internal digital-transformation leadership, momentum depended entirely
   on the CEO and data sourcing meant chasing many stakeholders; the stated fix for the next use case is
   a designated nodal officer and owner commitments upfront.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 sources:
 - system: diffusion_cube_code

@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — cost modelling framework (bundled vs self-hosted)
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Azure-vs-self-hosted cost comparison, prefix-caching strategy and GPU allocation guidance for
   TP=4→TP=8; stated to apply above 100K queries/month.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — narrow scope to a single answerable question
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Scope the system to one concrete question type needing synthesis across live sources (e.g. 'should
   I harvest my paddy now?'), not a whole domain.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

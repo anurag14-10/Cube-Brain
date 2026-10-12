@@ -1,7 +1,7 @@
 ---
 name: 'Pathway section: The 4×4 grid'
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - The 4×4 grid
 - Section 2
@@ -12,9 +12,8 @@ definition: 'Shows where knowledge is dense and where gaps remain. Contents: Cov
   not raw count.'
 audience: public-vocabulary
 broader: pathway-document
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

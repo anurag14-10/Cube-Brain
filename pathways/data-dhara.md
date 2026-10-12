@@ -1,7 +1,7 @@
 ---
 name: AI for Government Data Interoperability — National
 type: pathway
-schema_version: 1
+schema_version: 2
 aliases:
 - AI for Government Data Interoperability — National
 summary: A horizontal data-unlock pathway (Data DHARA) turning fragmented, siloed government records into
@@ -16,12 +16,10 @@ sector: Data Infrastructure
 stage_reached: define
 corpora:
 - library-corpus
-corpus_files: &id001
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 lifecycle: published
 published_on: '2026-09-01'
-code_refs: *id001
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

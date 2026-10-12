@@ -1,11 +1,11 @@
 ---
 name: Seven reusable AI use-case categories for investor-facing services
 type: unit
-schema_version: 1
+schema_version: 2
 summary: 'From UPSIDA''s 43 investor-facing services: verification, eligibility scoring, policy intelligence,
   calculation, decision support, certificate generation, incentive assessment — a taxonomy for finding
   AI use cases in manual, hard-to-audit government services.'
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 sources:
 - system: diffusion_cube_code

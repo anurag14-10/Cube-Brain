@@ -1,11 +1,11 @@
 ---
 name: The state deployment sequence is fixed and largely non-compressible
 type: unit
-schema_version: 1
+schema_version: 2
 summary: A six-step gated sequence for each new state — leadership buy-in, infrastructure assessment,
   naming and MOU, train-the-trainer, student selection, sessions with troubleshooting — where compressing
   or reordering produces predictable failures.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

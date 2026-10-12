@@ -1,7 +1,7 @@
 ---
 name: UNDP AI Hub for Sustainable Development
 type: organisation
-schema_version: 1
+schema_version: 2
 aliases:
 - UNDP AI Hub
 org_kinds:

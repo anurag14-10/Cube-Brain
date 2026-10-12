@@ -1,7 +1,7 @@
 ---
 name: 'Pathway section: Micro-innovations'
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Micro-innovations
 - Section 3
@@ -12,9 +12,8 @@ definition: 'The core reusable content. Contents: Tagged units organised by dime
   context of the decision in the adoption, before→after outcome.'
 audience: public-vocabulary
 broader: pathway-document
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — federated data ownership with four named external relationships
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Federate with each legitimate external data owner (ICAR, IMD, APMC, NIPHM) at query time rather
   than centralising data in an AI-owned repository.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

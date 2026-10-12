@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — fix dead silence with a hold message plus a latency investment
 type: unit
-schema_version: 1
+schema_version: 2
 summary: 3–4 seconds of silence during a multi-source fetch read as a dropped call; a hold message plus
   latency work (to ~1s) fixed it — in voice, perceived failure is silence.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

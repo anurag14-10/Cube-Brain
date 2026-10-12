@@ -1,10 +1,10 @@
 ---
 name: The smallest unit of failure is the learner interaction, not the model call
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Technically correct model outputs did not guarantee a useful intervention for the learner; monitoring
   moved from model-level accuracy to whether each learner, in each session, received a useful intervention.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

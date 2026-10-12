@@ -1,10 +1,10 @@
 ---
 name: Ownership transfers fully to the state; plan for a narrow ongoing role
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Design the post-deployment operating model so the state education department owns implementation
   entirely, with the founding foundation narrowed to training the trainers and troubleshooting support.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

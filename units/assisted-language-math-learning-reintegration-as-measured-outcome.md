@@ -1,11 +1,11 @@
 ---
 name: Reintegration into the classroom as the measured outcome, not test scores alone
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Measure behavioural reintegration — attendance, confidence, participation, willingness to attempt
   questions — as a primary outcome alongside diagnostic scores, because scores undercount the change that
   drives sustained learning.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

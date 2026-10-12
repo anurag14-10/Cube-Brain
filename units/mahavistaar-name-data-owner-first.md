@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — name the data owner before naming the data source
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Every data source formalised before launch gets a named institutional owner accountable for accuracy,
   update frequency and correction (ICAR, IMD, APMC, NIPHM).
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

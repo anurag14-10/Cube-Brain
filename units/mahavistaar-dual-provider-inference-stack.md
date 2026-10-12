@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — dual-provider inference stack (abstraction layer + latency over queue depth)
 type: unit
-schema_version: 1
+schema_version: 2
 summary: A provider-abstraction layer resolved at configuration time plus a policy that routes instantly
   to a fallback provider on saturation instead of queuing.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

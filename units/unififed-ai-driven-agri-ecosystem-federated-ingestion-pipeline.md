@@ -1,11 +1,11 @@
 ---
 name: Federated data ingestion pipeline (parse → OCR → chunk → embed → scope/version)
 type: unit
-schema_version: 1
+schema_version: 2
 summary: 'The ingestion pipeline that lets many owners feed one AI layer without embedding knowledge in
   the model: documents are parsed, OCR''d, chunked, embedded and stamped with scope, validity and version
   by the data owner.'
-code_refs:
+doc_refs:
 - content/wiki/pathways/unififed-ai-driven-agri-ecosystem.md
 sources:
 - system: diffusion_cube_code

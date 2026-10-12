@@ -1,12 +1,12 @@
 ---
 name: MahaVISTAAR — the registered farmer isn't always the decision-maker
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Design around who actually makes crop decisions, not who is listed in land records — registry
   data can point at the wrong user.
 tags:
 - relevant-to-government
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

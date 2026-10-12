@@ -1,11 +1,11 @@
 ---
 name: Staged data-unlock pipeline from departmental PDFs to agent access
 type: unit
-schema_version: 1
+schema_version: 2
 summary: The Delhi vital-statistics sibling pathway's staged sequence — dataset inventory → metadata tagging
   → schema transformation → dissemination-ready datasets → API access → discoverable catalogue → agent/MCP
   access — runnable inside a department's own infrastructure.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 sources:
 - system: diffusion_cube_code

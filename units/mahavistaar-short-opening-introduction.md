@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — keep the opening introduction under 30 seconds
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Cap the opening message length rather than explaining full capability upfront; long introductions
   disengage callers with a specific need.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

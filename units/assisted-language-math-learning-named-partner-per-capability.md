@@ -1,11 +1,11 @@
 ---
 name: No single organisation can supply every needed capability
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Name, before building, which capabilities the deploying organisation cannot supply — pedagogy
   validation, specialised language technology, independent measurement, field implementation, government
   legitimacy — and a partner for each.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

@@ -1,7 +1,7 @@
 ---
 name: Failure and Fix
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Failure and Fix
 summary: Something that broke, the fix, and what the fix revealed about the system.
@@ -10,11 +10,9 @@ definition: Something that broke, the fix, and what the fix revealed about the s
 audience: internal-only
 what_makes_it_reusable: The fix reveals the structural insight — not the failure alone.
 broader: unit
-code_identifier: Failure and Fix
-code_refs:
+doc_refs:
 - content/framework.md
 - lib/dimensions.ts
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

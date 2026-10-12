@@ -1,11 +1,11 @@
 ---
 name: Design teacher workflow as a constraint, not a feature
 type: unit
-schema_version: 1
+schema_version: 2
 summary: 'Treat any added teacher effort as a design failure: the teacher''s role is reduced to identifying
   eligible students, finding a timetable period and getting students to the lab — no teaching, no change
   to classroom practice.'
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

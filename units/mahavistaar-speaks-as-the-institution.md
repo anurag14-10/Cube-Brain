@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — the system speaks as the institution, never as an AI
 type: unit
-schema_version: 1
+schema_version: 2
 summary: The bot (Vasudha) speaks explicitly as the Department of Agriculture, Maharashtra, so trust and
   accountability sit with a recognisable public institution.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

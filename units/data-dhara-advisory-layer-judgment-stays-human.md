@@ -1,10 +1,10 @@
 ---
 name: Design the AI as an advisory layer — judgment and accountability stay with officers
 type: unit
-schema_version: 1
+schema_version: 2
 summary: The AI surfaces information and options; policy interpretation, scheme eligibility, land-allotment
   approvals and investor routing remain with human officers, so accountability stays with the institution.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 sources:
 - system: diffusion_cube_code

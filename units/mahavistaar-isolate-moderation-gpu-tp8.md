@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — isolate moderation onto its own GPU to unlock TP=8
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Moving the small moderation model off the shared 8-GPU node onto one dedicated H100 freed the
   node for TP=8 and roughly doubled concurrent users per node.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

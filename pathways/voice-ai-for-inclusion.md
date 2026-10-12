@@ -1,7 +1,7 @@
 ---
 name: Voice AI for Inclusion
 type: pathway
-schema_version: 1
+schema_version: 2
 aliases:
 - Voice AI for Inclusion
 summary: A cross-deployment synthesis of what MahaVISTAAR, Bharat Vistaar, Amul/Sarlaben, Jal Jeevan Mission
@@ -49,13 +49,11 @@ gaps:
 corpora:
 - grounding-corpus
 - library-corpus
-corpus_files: &id001
+doc_refs:
 - content/wiki/pathways/voice-ai-for-inclusion.md
 - content/library-wiki/pathways/voice-ai-for-inclusion.md
 lifecycle: published
 published_on: '2026-07-31'
-code_refs: *id001
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document
@@ -105,4 +103,4 @@ create its `units/`.
 - `content/wiki/pathways/voice-ai-for-inclusion.md`
 - `content/library-wiki/pathways/voice-ai-for-inclusion.md`
 
-Exists in **both** in-repo corpora as independently maintained documents (TD-02) — same slug, different text.
+Exists in **both** in-repo corpora as independently maintained documents — same slug, different text.

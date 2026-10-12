@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — Little's Law capacity model for concurrency planning
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Occupancy per active user = call rate x time per call, used to derive a node's safe concurrent-user
   ceiling from observed data.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

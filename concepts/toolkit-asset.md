@@ -1,7 +1,7 @@
 ---
 name: Toolkit Asset
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Toolkit Asset
 summary: An actual reusable artifact — a checklist, template, schema, test set, glossary, or built tool
@@ -14,11 +14,9 @@ definition: An actual reusable artifact — a checklist, template, schema, test 
 audience: internal-only
 what_makes_it_reusable: 'The artifact itself: what it is, what it''s for, and what makes it liftable as-is.'
 broader: unit
-code_identifier: Toolkit Asset
-code_refs:
+doc_refs:
 - content/framework.md
 - lib/dimensions.ts
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

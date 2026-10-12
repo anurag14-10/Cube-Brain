@@ -1,11 +1,11 @@
 ---
 name: Voice-first, feature-phone-first design as the non-negotiable inclusion constraint
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Design the primary interface around a phone call rather than a smartphone app, so farmers without
   data, digital literacy or reading ability are included — voice improves on the channel they already
   use.
-code_refs:
+doc_refs:
 - content/wiki/pathways/unififed-ai-driven-agri-ecosystem.md
 sources:
 - system: diffusion_cube_code

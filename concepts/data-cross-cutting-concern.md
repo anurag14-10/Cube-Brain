@@ -1,7 +1,7 @@
 ---
 name: Data (cross-cutting concern)
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Data
 concept_kind: cross-cutting-concern
@@ -9,9 +9,8 @@ summary: Data is examined in every dimension, differently in each.
 definition: Data is a concern that cuts across all four dimensions; each dimension asks a different data
   question.
 audience: public-vocabulary
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

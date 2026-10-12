@@ -1,10 +1,10 @@
 ---
 name: Personalise on demonstrated proficiency, not grade
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Drive each learner's pathway from what they can demonstrably do rather than grade, age or a fixed
   curriculum sequence — three simpler alternatives were explicitly evaluated and rejected.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

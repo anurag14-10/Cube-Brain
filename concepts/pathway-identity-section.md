@@ -1,7 +1,7 @@
 ---
 name: 'Pathway section: Pathway identity'
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Pathway identity
 - Section 1
@@ -12,9 +12,8 @@ definition: 'Names the deployment for retrieval. Contents: Deployment name, sect
   — Headline usage and outcome numbers, as-of date'
 audience: public-vocabulary
 broader: pathway-document
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

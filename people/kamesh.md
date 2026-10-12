@@ -1,20 +1,18 @@
 ---
 name: Kamesh
 type: person
-schema_version: 1
+schema_version: 2
 aliases:
 - BH Kameswara Rao
 - kameshbhr
 summary: EkStep's Solution Team lead per the Product Charter (Director, Solutions & Growth – Digital Transformation);
   created the diffusion-cube repo, edits pathway content, and is named Grievance Officer in the Terms
   of Use and Privacy Notice.
-code_refs:
-- content/legal/terms.md
-- lib/legal.ts
 doc_refs:
 - docs/wiki/diffusion-cube/business/business-overview.md
 - content/wiki/pathways/ai-assisted-job-matching.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
+- content/legal/terms.md
+- lib/legal.ts
 affiliations:
 - ekstep-foundation
 teams:
@@ -51,7 +49,7 @@ last_updated: '2026-10-08'
 
 ## Involvement
 
-- **Solution Team lead.** The charter's execution model names the Solution Team as "Kamesh + Tekdi Team". See [Solution Team](../teams/solution-team.md).
+- **Solution Team lead.** The charter's execution model names the Solution Team as "Kamesh + Tekdi Team". See Solution Team.
 - **Repository.** Made the initial commit on 2026-06-29. Edited content directly: `framework.md`, `mahavistaar.md`, `unififed-ai-driven-agri-ecosystem.md` and `assisted-language-math-learning.md`, and the African Voice AI entry in `lib/library-pathways.ts`. Merged PR #3 (`Terms`) on 2026-10-06.
 - **App-generated commits.** `publish pathway: axl / greensense / orange-dots / langchat` commits carry his identity. These come from the Contributor assemble step (GitHub Contents API commits take the token owner's identity). They show test or production publishes, not necessarily his authorship of those pathways.
 - **Legal.** Named Grievance Officer in `content/legal/terms.md` §10 and in the Privacy Notice. His address is the default support contact (`lib/legal.ts`).

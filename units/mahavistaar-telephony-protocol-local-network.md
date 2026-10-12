@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — match telephony protocol to local network realities
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Choose the telephony interface protocol from local network conditions (8kHz audio, PSTN, accents)
   — WebSocket APIs rather than the WebRTC some global guidance recommends.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

@@ -1,7 +1,7 @@
 ---
 name: Voice AI Adoption Barriers
 type: pathway
-schema_version: 1
+schema_version: 2
 aliases:
 - Voice AI Adoption Barriers
 summary: Why voice AI pilots stall even when price and vendor access are no longer the obstacle — a synthesis
@@ -55,13 +55,11 @@ gaps:
 corpora:
 - grounding-corpus
 - library-corpus
-corpus_files: &id001
+doc_refs:
 - content/wiki/pathways/voice-ai-adoption-barriers.md
 - content/library-wiki/pathways/voice-ai-adoption-barriers.md
 lifecycle: published
 published_on: '2026-07-31'
-code_refs: *id001
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document
@@ -112,4 +110,4 @@ create its `units/`.
 - `content/wiki/pathways/voice-ai-adoption-barriers.md`
 - `content/library-wiki/pathways/voice-ai-adoption-barriers.md`
 
-Exists in **both** in-repo corpora as independently maintained documents (TD-02) — same slug, different text.
+Exists in **both** in-repo corpora as independently maintained documents — same slug, different text.

@@ -1,7 +1,7 @@
 ---
 name: Crane AI Labs
 type: organisation
-schema_version: 1
+schema_version: 2
 org_kinds:
 - contributing-organisation
 sources:

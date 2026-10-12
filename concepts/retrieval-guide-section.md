@@ -1,7 +1,7 @@
 ---
 name: 'Pathway section: Retrieval guide'
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Retrieval guide
 - Section 6
@@ -11,9 +11,8 @@ definition: 'Helps the next adopter find what''s relevant fast. Contents: Organi
   (e.g. "I need to avoid vendor lock-in at Define stage") → points to relevant units and toolkit assets.'
 audience: public-vocabulary
 broader: pathway-document
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

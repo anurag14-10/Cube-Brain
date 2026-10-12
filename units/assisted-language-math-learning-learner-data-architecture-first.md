@@ -1,11 +1,11 @@
 ---
 name: Treat the learner-data architecture as harder to recover from than any model
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Invest in the competency structure, skill graph, prerequisite mapping and telemetry schema before
   optimising any model — models can be swapped later; a bad learner-data architecture corrupts all subsequent
   learner modelling.
-code_refs:
+doc_refs:
 - content/wiki/pathways/assisted-language-math-learning.md
 sources:
 - system: diffusion_cube_code

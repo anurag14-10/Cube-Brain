@@ -1,7 +1,7 @@
 ---
 name: GCMMF (Amul)
 type: organisation
-schema_version: 1
+schema_version: 2
 aliases:
 - Amul
 - Gujarat Cooperative Milk Marketing Federation

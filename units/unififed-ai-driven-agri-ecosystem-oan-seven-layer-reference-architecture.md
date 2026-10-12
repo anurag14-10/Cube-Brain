@@ -1,10 +1,10 @@
 ---
 name: OAN 7-layer open architecture (reference stack)
 type: unit
-schema_version: 1
+schema_version: 2
 summary: The open-source seven-layer OpenAgriNet stack — UI, language AI, AI module, registries, Beckn
   open network, provider services, data/ingestion pipeline — that every instance in the lineage runs on.
-code_refs:
+doc_refs:
 - content/wiki/pathways/unififed-ai-driven-agri-ecosystem.md
 sources:
 - system: diffusion_cube_code

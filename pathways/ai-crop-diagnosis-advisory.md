@@ -1,7 +1,7 @@
 ---
 name: DeepLeaf AI Crop Diagnosis and Advisory
 type: pathway
-schema_version: 1
+schema_version: 2
 aliases:
 - DeepLeaf AI Crop Diagnosis and Advisory
 summary: An agentic agricultural Vision-Language Model that orchestrates narrow AI models and live satellite,
@@ -19,11 +19,9 @@ contributing_organisations:
 - deepleaf
 corpora:
 - grounding-corpus
-corpus_files: &id001
+doc_refs:
 - content/wiki/pathways/ai-crop-diagnosis-advisory.md
 lifecycle: unindexed
-code_refs: *id001
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document
@@ -56,4 +54,4 @@ create its `units/`.
 
 - `content/wiki/pathways/ai-crop-diagnosis-advisory.md`
 
-On disk in the grounding corpus but **not linked from `content/wiki/pathways/index.md`**, so excluded from grounding and the /wiki listing (TD-07). It may still be live via `published_pathways` — check the DB before calling it unpublished.
+On disk in the grounding corpus but **not linked from `content/wiki/pathways/index.md`**, so excluded from grounding and the /wiki listing. It may still be live via `published_pathways` — check the DB before calling it unpublished.

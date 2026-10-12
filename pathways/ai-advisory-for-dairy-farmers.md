@@ -1,7 +1,7 @@
 ---
 name: Amul AI / Sarla Ben
 type: pathway
-schema_version: 1
+schema_version: 2
 aliases:
 - Amul AI / Sarla Ben
 summary: Amul's AI advisory assistant for 3.6 million dairy farmer-members - built in one month on 50+
@@ -20,11 +20,9 @@ contributing_organisations:
 - ekstep-foundation
 corpora:
 - grounding-corpus
-corpus_files: &id001
+doc_refs:
 - content/wiki/pathways/ai-advisory-for-dairy-farmers.md
 lifecycle: unindexed
-code_refs: *id001
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document
@@ -57,4 +55,4 @@ create its `units/`.
 
 - `content/wiki/pathways/ai-advisory-for-dairy-farmers.md`
 
-On disk in the grounding corpus but **not linked from `content/wiki/pathways/index.md`**, so excluded from grounding and the /wiki listing (TD-07). It may still be live via `published_pathways` — check the DB before calling it unpublished.
+On disk in the grounding corpus but **not linked from `content/wiki/pathways/index.md`**, so excluded from grounding and the /wiki listing. It may still be live via `published_pathways` — check the DB before calling it unpublished.

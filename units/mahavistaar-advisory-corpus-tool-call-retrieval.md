@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — advisory corpus chunked and metadata-tagged for tool-call retrieval
 type: unit
-schema_version: 1
+schema_version: 2
 summary: ICAR and state-university crop/pest/scheme knowledge structured so the advisory engine calls
   it as a tool, not via free-text search.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

@@ -1,7 +1,7 @@
 ---
 name: African Voice AI — Offline-First Voice for Kenya
 type: pathway
-schema_version: 1
+schema_version: 2
 aliases:
 - African Voice AI — Offline-First Voice for Kenya
 summary: Adapting an India-built voice-AI stack (Voicera Africa) for offline-first agricultural advisory
@@ -55,13 +55,11 @@ gaps:
 corpora:
 - grounding-corpus
 - library-corpus
-corpus_files: &id001
+doc_refs:
 - content/wiki/pathways/african-voice-ai.md
 - content/library-wiki/pathways/african-voice-ai.md
 lifecycle: published
 published_on: '2026-08-31'
-code_refs: *id001
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document
@@ -114,4 +112,4 @@ create its `units/`.
 - `content/wiki/pathways/african-voice-ai.md`
 - `content/library-wiki/pathways/african-voice-ai.md`
 
-Exists in **both** in-repo corpora as independently maintained documents (TD-02) — same slug, different text.
+Exists in **both** in-repo corpora as independently maintained documents — same slug, different text.

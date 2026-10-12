@@ -1,7 +1,7 @@
 ---
 name: Gaurav Gupta
 type: person
-schema_version: 1
+schema_version: 2
 summary: Chief Growth Officer, EkStep Foundation and Lead Architect of Blue Dots; contributed the open-questions
   list that forms the Blue Dots pathway's Gaps section.
 doc_refs:

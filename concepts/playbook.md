@@ -1,7 +1,7 @@
 ---
 name: Playbook
 type: concept
-schema_version: 1
+schema_version: 2
 aliases:
 - Playbook
 summary: A genuine multi-step, gated sequence — "do X, then don't proceed to Y until X clears, then Z."
@@ -13,11 +13,9 @@ audience: internal-only
 what_makes_it_reusable: The steps themselves, in order, with the gate between them — plus the common failure
   mode of skipping one.
 broader: unit
-code_identifier: Playbook
-code_refs:
+doc_refs:
 - content/framework.md
 - lib/dimensions.ts
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

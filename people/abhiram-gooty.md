@@ -1,7 +1,7 @@
 ---
 name: Abhiram Gooty
 type: person
-schema_version: 1
+schema_version: 2
 aliases:
 - abhiram-gooty-p-ai
 summary: 'Major early author of the app (git abhiram-gooty, 89 commits, plus abhiram-gooty-p-ai): Supabase

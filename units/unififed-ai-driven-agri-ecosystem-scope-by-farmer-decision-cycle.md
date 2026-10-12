@@ -1,11 +1,11 @@
 ---
 name: Scope defined by the farmer's decision cycle, not by departmental boundaries
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Scope advisory around every decision a smallholder actually faces — crops, weather, pests, prices,
   schemes — rather than one department's remit, which in turn requires a governance model that can hold
   many data relationships.
-code_refs:
+doc_refs:
 - content/wiki/pathways/unififed-ai-driven-agri-ecosystem.md
 sources:
 - system: diffusion_cube_code

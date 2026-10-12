@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — data connector governance templates
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Data-sharing MOU templates, consent architecture and an institutional ownership model validated
   under India's DPDP Act.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

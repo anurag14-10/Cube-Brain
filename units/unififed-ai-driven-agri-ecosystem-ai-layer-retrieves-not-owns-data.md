@@ -1,11 +1,11 @@
 ---
 name: Federated data ownership — the AI layer retrieves but does not own institutional data
 type: unit
-schema_version: 1
+schema_version: 2
 summary: When knowledge is embedded in the model or hardwired to one backend, every source change forces
   an AI-layer rebuild; separating the AI layer from a standardised ingestion pipeline and index keeps
   data accountability with each owner.
-code_refs:
+doc_refs:
 - content/wiki/pathways/unififed-ai-driven-agri-ecosystem.md
 sources:
 - system: diffusion_cube_code

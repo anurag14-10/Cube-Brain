@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — OpenAgriNet 7-layer architecture
 type: unit
-schema_version: 1
+schema_version: 2
 summary: DPG-licensed open architecture (Knowledge Engine, Memory, Trust, Agent Core, Action Gateway,
   Reach, Learning layers) as a starting point instead of designing the stack from scratch.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

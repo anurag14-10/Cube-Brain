@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — staged, gated institutional testing before public launch
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Builder team → small institutional group → wider institutional group across geographies/accents
   → limited district rollout; don't outsource testing to the vendor.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

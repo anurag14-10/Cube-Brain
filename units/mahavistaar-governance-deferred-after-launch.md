@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — governance deferred to after launch produces a system nobody stands behind
 type: unit
-schema_version: 1
+schema_version: 2
 summary: 'Cross-deployment failure: who owns, approves and reviews failures was left until after launch;
   answer these inside the institution before launch.'
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

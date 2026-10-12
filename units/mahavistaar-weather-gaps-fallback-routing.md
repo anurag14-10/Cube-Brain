@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — weather data gaps handled by fallback routing, not by fixing the data
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Rural weather-coverage gaps were handled with wider search radii and graceful fallback in the
   routing layer — tolerance for gaps, not demands for better data.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

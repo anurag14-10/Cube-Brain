@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — justify AI specifically for real-time cross-institutional synthesis
 type: unit
-schema_version: 1
+schema_version: 2
 summary: The AI-fit case is real-time synthesis of weather, soil, crop and scheme data at the moment of
   query — something no human extension system can do — not general efficiency.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

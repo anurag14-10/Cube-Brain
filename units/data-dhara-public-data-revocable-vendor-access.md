@@ -1,11 +1,11 @@
 ---
 name: Use only public, institution-owned data with revocable vendor access and version-traceable outputs
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Restricting the system to publicly available data owned by Invest UP meant no formal data-access
   approval was needed; the vendor's access is operational-only and revocable, and every AI output traces
   to a specific policy version.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/data-dhara.md
 sources:
 - system: diffusion_cube_code

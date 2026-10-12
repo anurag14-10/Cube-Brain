@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — architecture and field learning transfer; local trust mechanics don't
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Architecture, governance frameworks, language-pipeline method and failure-mode library are the
   transferable unit; farmer-trust mechanics had to be rebuilt locally.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

@@ -1,11 +1,11 @@
 ---
 name: Introduce AI as decision support before embedding it in routine workflows
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Keep experts as the decision-makers and introduce AI as decision support first, building trust
   through transparent sources and by letting officials compare forecasts against real outcomes over successive
   cycles, rather than through accuracy claims.
-code_refs:
+doc_refs:
 - content/library-wiki/pathways/ceew-climate-intelligence.md
 sources:
 - system: diffusion_cube_code

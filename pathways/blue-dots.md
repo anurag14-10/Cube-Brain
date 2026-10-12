@@ -1,7 +1,7 @@
 ---
 name: Blue Dots — Local Job, Talent, and Service Discovery
 type: pathway
-schema_version: 1
+schema_version: 2
 aliases:
 - Blue Dots — Local Job, Talent, and Service Discovery
 summary: Open voice-AI discovery infrastructure making local jobs, talent, and services findable within
@@ -51,13 +51,11 @@ gaps:
 corpora:
 - grounding-corpus
 - library-corpus
-corpus_files: &id001
+doc_refs:
 - content/wiki/pathways/blue-dots.md
 - content/library-wiki/pathways/blue-dots.md
 lifecycle: published
 published_on: '2026-07-31'
-code_refs: *id001
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document
@@ -109,4 +107,4 @@ create its `units/`.
 - `content/wiki/pathways/blue-dots.md`
 - `content/library-wiki/pathways/blue-dots.md`
 
-Exists in **both** in-repo corpora as independently maintained documents (TD-02) — same slug, different text.
+Exists in **both** in-repo corpora as independently maintained documents — same slug, different text.

@@ -1,7 +1,7 @@
 ---
 name: AI for Public Health Early-Warning — National
 type: pathway
-schema_version: 1
+schema_version: 2
 aliases:
 - AI for Public Health Early-Warning — National
 summary: Two AI systems built with the Council on Energy, Environment and Water (CEEW) — a conversational
@@ -17,12 +17,10 @@ sector: Public Health
 stage_reached: pilot
 corpora:
 - library-corpus
-corpus_files: &id001
+doc_refs:
 - content/library-wiki/pathways/ceew-climate-intelligence.md
 lifecycle: published
 published_on: '2026-09-01'
-code_refs: *id001
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

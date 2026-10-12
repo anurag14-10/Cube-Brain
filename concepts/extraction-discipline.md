@@ -1,7 +1,7 @@
 ---
 name: Extraction discipline
 type: concept
-schema_version: 1
+schema_version: 2
 summary: 'The rules for turning raw material into units: tag every unit, write the before→after, name
   the failure specifically, flag gaps against primary sub-categories, never fabricate.'
 concept_kind: method
@@ -9,9 +9,8 @@ definition: 'The rules for turning raw material into units: tag every unit, writ
   the failure specifically, flag gaps against primary sub-categories, never fabricate.'
 audience: internal-only
 broader: unit
-code_refs:
+doc_refs:
 - content/framework.md
-verified_at_commit: 28068b6d0667507325fa862f700089d4e91a1731
 sources:
 - system: diffusion_cube_code
   method: document

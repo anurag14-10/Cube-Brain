@@ -1,10 +1,10 @@
 ---
 name: MahaVISTAAR — treat the operating model as a staffing question
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Name explicitly who retrains the model, updates the advisory corpus and manages vendors — 'the
   people who built it' is not a valid answer.
-code_refs:
+doc_refs:
 - content/wiki/pathways/mahavistaar.md
 sources:
 - system: diffusion_cube_code

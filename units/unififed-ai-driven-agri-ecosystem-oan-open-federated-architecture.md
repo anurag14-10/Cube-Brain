@@ -1,11 +1,11 @@
 ---
 name: OAN 7-layer open architecture as the non-reversible foundation choice
 type: unit
-schema_version: 1
+schema_version: 2
 summary: Build on an open-source, modular, federated seven-layer architecture where provider institutions
   register independently on an open network, rather than a centralised platform owned by one institution
   — named as the hardest decision to reverse.
-code_refs:
+doc_refs:
 - content/wiki/pathways/unififed-ai-driven-agri-ecosystem.md
 sources:
 - system: diffusion_cube_code
