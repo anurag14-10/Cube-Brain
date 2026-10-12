@@ -11,6 +11,14 @@ sources:
   method: document
   date: '2026-10-08'
   ref: content/wiki/pathways/mahavistaar.md
+- system: diffusion_cube_code
+  method: document
+  date: '2026-10-12'
+  ref: content/wiki/pathways/mahavistaar.md — applies_when re-read from the unit's 'Reusable as-is' line (audit 2026-10-12)
+- system: diffusion_cube_code
+  method: derived
+  date: '2026-10-12'
+  ref: content/wiki/pathways/mahavistaar.md — sub_category inferred; the document tags each unit with dimension, stage and type only
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: mahavistaar
@@ -19,7 +27,7 @@ dimension: solution
 sub_category: solution-e
 stage: scale
 source_unit_id: Unit 23
-applies_when: Not documented in the source
+applies_when: Domain-general — any deployment that has its own call-rate and call-duration numbers.
 fails_when: Not documented in the source
 purpose: Turns observed call-rate and call-duration data into a defensible concurrency ceiling, instead
   of guessing at a load test.
@@ -36,7 +44,7 @@ According to the MahaVISTAAR pathway contributed by the Department of Agricultur
 
 ## Condition
 
-- **Applies when:** Not documented in the source
+- **Applies when:** Domain-general — any deployment that has its own call-rate and call-duration numbers.
 - **Fails when:** Not documented in the source
 
 ## Why it is reusable

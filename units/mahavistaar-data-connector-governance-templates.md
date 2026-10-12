@@ -11,6 +11,14 @@ sources:
   method: document
   date: '2026-10-08'
   ref: content/wiki/pathways/mahavistaar.md
+- system: diffusion_cube_code
+  method: document
+  date: '2026-10-12'
+  ref: content/wiki/pathways/mahavistaar.md — applies_when re-read from the unit's 'Reusable as-is' line (audit 2026-10-12)
+- system: diffusion_cube_code
+  method: derived
+  date: '2026-10-12'
+  ref: content/wiki/pathways/mahavistaar.md — sub_category inferred; the document tags each unit with dimension, stage and type only
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: mahavistaar
@@ -19,7 +27,7 @@ dimension: ecosystem
 sub_category: ecosystem-b
 stage: define
 source_unit_id: Unit 39
-applies_when: Not documented in the source
+applies_when: Reused via EkStep Foundation and customised to the specific departmental structures — the pathway says that customisation is explicitly required.
 fails_when: Not documented in the source
 purpose: Gives a new deployment a starting legal/governance template for negotiating external data-sharing
   agreements, instead of drafting from zero.
@@ -40,7 +48,7 @@ According to the MahaVISTAAR pathway contributed by the Department of Agricultur
 
 ## Condition
 
-- **Applies when:** Not documented in the source
+- **Applies when:** Reused via EkStep Foundation and customised to the specific departmental structures — the pathway says that customisation is explicitly required.
 - **Fails when:** Not documented in the source
 
 ## Why it is reusable

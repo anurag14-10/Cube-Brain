@@ -11,6 +11,10 @@ sources:
   method: document
   date: '2026-10-08'
   ref: content/wiki/pathways/mahavistaar.md
+- system: diffusion_cube_code
+  method: derived
+  date: '2026-10-12'
+  ref: content/wiki/pathways/mahavistaar.md — sub_category inferred; the document tags each unit with dimension, stage and type only
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: mahavistaar
