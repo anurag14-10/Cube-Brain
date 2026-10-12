@@ -16,6 +16,12 @@ sources:
   date: '2026-10-12'
   ref: sub_category assigned by reading the unit against content/framework.md — the document tags dimension,
     stage and type only
+- system: diffusion_cube_code
+  method: derived
+  date: '2026-10-12'
+  ref: fails_when taken from the document's Section 1 'Does not transfer when' (stated for the whole pathway);
+    applying that clause to this unit is a judgment, read with the unit's own statement of when a session can
+    complete
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: assisted-language-math-learning
@@ -28,7 +34,8 @@ also_relevant_at:
 source_unit_id: Unit 7
 applies_when: Deployment environment has intermittent rather than continuous internet; devices are heterogeneous
   and often ageing; cost-per-interaction must remain viable at millions of learners.
-fails_when: Not documented in the source
+fails_when: Schools lack functioning computer labs or internet connectivity — a session needs connectivity
+  at session start and when moving between question sets.
 decision: Group 10–20 questions into a question set and make a single API call only when the set is complete,
   rather than after every question; run nearly all compute on CPUs, with GPU calls limited to a small
   subset of operations; deliver via PWA/web to handle heterogeneous school hardware without installation
@@ -65,7 +72,7 @@ According to EkStep Foundation's AxL pathway, this is a tactical decision from t
 ## Condition
 
 - **Applies when:** Deployment environment has intermittent rather than continuous internet; devices are heterogeneous and often ageing; cost-per-interaction must remain viable at millions of learners.
-- **Fails when:** Not documented in the source
+- **Fails when:** Schools lack functioning computer labs or internet connectivity — a session needs connectivity at session start and when moving between question sets.
 
 ## Before → after
 

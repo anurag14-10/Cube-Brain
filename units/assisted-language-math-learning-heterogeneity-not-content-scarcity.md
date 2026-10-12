@@ -16,6 +16,11 @@ sources:
   date: '2026-10-12'
   ref: sub_category assigned by reading the unit against content/framework.md — the document tags dimension,
     stage and type only
+- system: diffusion_cube_code
+  method: derived
+  date: '2026-10-12'
+  ref: fails_when taken from the document's Section 1 'Does not transfer when' (stated for the whole pathway);
+    applying that clause to this unit is a judgment
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: assisted-language-math-learning
@@ -27,7 +32,7 @@ source_unit_id: Unit 1
 applies_when: The school system already has teachers, curriculum, and digital content; the limiting factor
   is the system's inability to continuously identify which content or skill each specific learner needs
   next.
-fails_when: Not documented in the source
+fails_when: Learners are already grouped by demonstrated ability.
 decision: Frame the foundational learning problem as continuous, unaddressed heterogeneity within the
   same classroom — not as a shortage of content, devices, or teachers — before deciding whether AI is
   the right intervention.
@@ -66,7 +71,7 @@ According to EkStep Foundation's AxL pathway, this is a strategic decision from 
 ## Condition
 
 - **Applies when:** The school system already has teachers, curriculum, and digital content; the limiting factor is the system's inability to continuously identify which content or skill each specific learner needs next.
-- **Fails when:** Not documented in the source
+- **Fails when:** Learners are already grouped by demonstrated ability.
 
 ## Before → after
 

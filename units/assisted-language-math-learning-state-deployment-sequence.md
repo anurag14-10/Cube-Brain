@@ -17,6 +17,12 @@ sources:
   date: '2026-10-12'
   ref: sub_category assigned by reading the unit against content/framework.md — the document tags dimension,
     stage and type only
+- system: diffusion_cube_code
+  method: derived
+  date: '2026-10-12'
+  ref: fails_when taken from the document's Section 1 'Does not transfer when' (stated for the whole pathway);
+    applying that clause to this unit is a judgment, combined with Unit 9's own Note on compressing or reordering
+    the sequence
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: assisted-language-math-learning
@@ -29,7 +35,8 @@ also_relevant_at:
 source_unit_id: Unit 9
 applies_when: Deploying in a new Indian state government context with an existing school system and computer
   lab infrastructure. Steps 1–3 may look different in non-government or international contexts.
-fails_when: Not documented in the source
+fails_when: No state-level leadership buy-in exists, or the sequence is compressed or reordered (without buy-in
+  timetable allocation does not happen; without infrastructure assessment the wrong schools are included).
 before: Based on Delhi observation, rigid weekly-period mandates were issued, which schools found difficult
   to execute consistently.
 after: Flexible cumulative-hours targets (8 hours by Diwali, 8 more by session end) replaced the fixed
@@ -82,7 +89,7 @@ According to EkStep Foundation's AxL pathway, this is a playbook from the deploy
 ## Condition
 
 - **Applies when:** Deploying in a new Indian state government context with an existing school system and computer lab infrastructure. Steps 1–3 may look different in non-government or international contexts.
-- **Fails when:** Not documented in the source
+- **Fails when:** No state-level leadership buy-in exists, or the sequence is compressed or reordered (without buy-in timetable allocation does not happen; without infrastructure assessment the wrong schools are included).
 
 ## Before → after
 

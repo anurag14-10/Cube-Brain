@@ -17,6 +17,11 @@ sources:
   date: '2026-10-12'
   ref: sub_category assigned by reading the unit against content/framework.md — the document tags dimension,
     stage and type only
+- system: diffusion_cube_code
+  method: document
+  date: '2026-10-12'
+  ref: before and the build-time part of after taken from Section 1 'Build effort' (9 months → 3 months → 3
+    weeks as the governance template matured)
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: unififed-ai-driven-agri-ecosystem
@@ -38,10 +43,10 @@ reason: A new instance that takes the code but not the governance template faces
   happens safely.
 context: 'The OAN material states: ''What travels each time is the same governance, the same institutional
   ownership, the same template — made local at every stop.'''
-before: Not documented in the source
+before: MahaVISTAAR, the state-level predecessor, was built from scratch in 9 months.
 after: MahaVISTAAR, Amul AI, Bihar Krishi, Ethiopia, Kenya and Sri Lanka all run on the same OAN governance
-  template; each required localised knowledge bases and language models, none required redesigning the
-  accountability structure.
+  template; each required localised knowledge bases and language models, none required redesigning the accountability
+  structure. Build time compressed to 3 months (Ethiopia) and 3 weeks (Amul AI) as the template matured.
 adopter_intents:
 - We want to expand to other states — how do we federate without losing governance?
 - What travels when this model is adopted in another country?
@@ -70,8 +75,8 @@ According to the Bharat Vistaar pathway contributed by COSS (Centre for Open Soc
 
 ## Before → after
 
-- **Before:** Not documented in the source
-- **After:** MahaVISTAAR, Amul AI, Bihar Krishi, Ethiopia, Kenya and Sri Lanka all run on the same OAN governance template; each required localised knowledge bases and language models, none required redesigning the accountability structure.
+- **Before:** MahaVISTAAR, the state-level predecessor, was built from scratch in 9 months.
+- **After:** MahaVISTAAR, Amul AI, Bihar Krishi, Ethiopia, Kenya and Sri Lanka all run on the same OAN governance template; each required localised knowledge bases and language models, none required redesigning the accountability structure. Build time compressed to 3 months (Ethiopia) and 3 weeks (Amul AI) as the template matured.
 
 ## Why it is reusable
 

@@ -17,6 +17,11 @@ sources:
   date: '2026-10-12'
   ref: dimension, sub_category, stage and unit_type assigned by best reading against content/framework.md
     — the library document is a conversational overview, not framework-structured
+- system: diffusion_cube_code
+  method: derived
+  date: '2026-10-12'
+  ref: applies_when read from 'rather than waiting for a complete centralised policy repository' (Operating
+    Model, Define) and the named drawback in Operating Model, Scale
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: data-dhara
@@ -24,7 +29,8 @@ unit_type: Strategic Decision
 dimension: institution
 sub_category: institution-f
 stage: define
-applies_when: Not documented in the source
+applies_when: No complete, centralised policy repository exists — the document names poor access to appropriate
+  data, with no central repositories or ownership structures, as a drawback of AI adoption at state scale.
 fails_when: Not documented in the source
 decision: Build iteratively as deployment revealed gaps, rather than waiting for a complete centralised
   policy repository; drive the work through in-person engagement with leadership (the CEO as central decision-maker),
@@ -51,7 +57,7 @@ According to the Data DHARA pathway's account of Nivesh Suvidha (Invest UP), thi
 
 ## Condition
 
-- **Applies when:** Not documented in the source
+- **Applies when:** No complete, centralised policy repository exists — the document names poor access to appropriate data, with no central repositories or ownership structures, as a drawback of AI adoption at state scale.
 - **Fails when:** Not documented in the source
 
 ## Before → after

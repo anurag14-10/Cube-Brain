@@ -17,6 +17,11 @@ sources:
   date: '2026-10-12'
   ref: sub_category assigned by reading the unit against content/framework.md — the document tags dimension,
     stage and type only
+- system: diffusion_cube_code
+  method: document
+  date: '2026-10-12'
+  ref: before taken from Unit 3's Why and 'What this looked like here' paragraphs (the unit has no explicit
+    Before → After line)
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: assisted-language-math-learning
@@ -43,7 +48,9 @@ reason: Teachers' responsibilities extend well beyond math or reading (midday me
   by explanation — teacher presence does not substitute for personalised, step-level practice.
 context: The AML design requires only that any adult in the school system be present in the lab — not
   the teacher specifically.
-before: Not documented in the source
+before: Teachers carried 10–20 struggling students inside a multi-level class while midday-meal schemes, vitamin
+  and iron supplementation tracking and student well-being competed for the same time — a psychological burden
+  they already carried.
 after: No teaching is required in the lab; removing 10–20 struggling students leaves a more homogeneous
   remaining class that is easier for the teacher to manage and reduces a psychological burden they already
   carry.
@@ -73,7 +80,7 @@ According to EkStep Foundation's AxL pathway, this is a strategic decision from 
 
 ## Before → after
 
-- **Before:** Not documented in the source
+- **Before:** Teachers carried 10–20 struggling students inside a multi-level class while midday-meal schemes, vitamin and iron supplementation tracking and student well-being competed for the same time — a psychological burden they already carried.
 - **After:** No teaching is required in the lab; removing 10–20 struggling students leaves a more homogeneous remaining class that is easier for the teacher to manage and reduces a psychological burden they already carry.
 
 ## Why it is reusable

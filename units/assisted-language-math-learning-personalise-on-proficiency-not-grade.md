@@ -16,6 +16,12 @@ sources:
   date: '2026-10-12'
   ref: sub_category assigned by reading the unit against content/framework.md — the document tags dimension,
     stage and type only
+- system: diffusion_cube_code
+  method: derived
+  date: '2026-10-12'
+  ref: fails_when taken from the document's Section 1 'Does not transfer when' (stated for the whole pathway);
+    applying that clause to this unit is a judgment; before taken from the unit's Why paragraph and Section
+    1 'Scope — applies when'
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: assisted-language-math-learning
@@ -30,7 +36,7 @@ source_unit_id: Unit 2
 applies_when: Learners within the same classroom are meaningfully different in actual proficiency; the
   delivery system can maintain a persistent learner model across sessions; teachers cannot provide continuous
   one-to-one diagnosis.
-fails_when: Not documented in the source
+fails_when: Learners are already grouped by demonstrated ability.
 decision: Personalise the learning pathway based on each learner's demonstrated proficiency — what they
   can actually do — rather than their administrative grade, age, or a fixed curriculum sequence.
 alternative_considered: 'Three alternatives were explicitly evaluated: (a) digitising the curriculum so
@@ -43,7 +49,8 @@ reason: 'Each alternative reproduces the core limitation of grade-based instruct
 context: AxL builds learner discovery and assessment, proficiency and milestone models, recommendation
   logic, adaptive practice, continuous telemetry, reassessment, and longitudinal analytics — all in service
   of that one question.
-before: Not documented in the source
+before: Classroom instruction was organised by grade and curriculum, assuming learners are at a similar level,
+  treating completion as learning, and unable to identify or respond to specific gaps.
 after: A student still struggling with one-digit addition is not served three-digit multiplication questions,
   regardless of their grade.
 adopter_intents:
@@ -70,11 +77,11 @@ According to EkStep Foundation's AxL pathway, this is a strategic decision from 
 ## Condition
 
 - **Applies when:** Learners within the same classroom are meaningfully different in actual proficiency; the delivery system can maintain a persistent learner model across sessions; teachers cannot provide continuous one-to-one diagnosis.
-- **Fails when:** Not documented in the source
+- **Fails when:** Learners are already grouped by demonstrated ability.
 
 ## Before → after
 
-- **Before:** Not documented in the source
+- **Before:** Classroom instruction was organised by grade and curriculum, assuming learners are at a similar level, treating completion as learning, and unable to identify or respond to specific gaps.
 - **After:** A student still struggling with one-digit addition is not served three-digit multiplication questions, regardless of their grade.
 
 ## Why it is reusable

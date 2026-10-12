@@ -17,6 +17,10 @@ sources:
   date: '2026-10-12'
   ref: sub_category assigned by reading the unit against content/framework.md — the document tags dimension,
     stage and type only
+- system: diffusion_cube_code
+  method: document
+  date: '2026-10-12'
+  ref: before taken from Unit 2's Why paragraph (the unit has no explicit Before → After line)
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: unififed-ai-driven-agri-ecosystem
@@ -38,7 +42,8 @@ reason: Farmers do not experience decisions as departmentally siloed — a farme
   also needs to know whether a scheme covers the recommended input. Artificial scope limits would reproduce
   the fragmentation the system exists to solve and push farmers back to agrodealers and relatives.
 context: The OAN architecture routes each query to the appropriate data provider via the AI agent layer.
-before: Not documented in the source
+before: Advice was split by departmental remit, a fragmentation that pushed farmers to the informal networks
+  (agrodealers, relatives) they relied on.
 after: The platform integrates crop advisory, weather (IMD), mandi prices, soil health and government
   schemes (including PM Fasal Bima Yojana) into a single interface.
 adopter_intents:
@@ -67,7 +72,7 @@ According to the Bharat Vistaar pathway contributed by COSS (Centre for Open Soc
 
 ## Before → after
 
-- **Before:** Not documented in the source
+- **Before:** Advice was split by departmental remit, a fragmentation that pushed farmers to the informal networks (agrodealers, relatives) they relied on.
 - **After:** The platform integrates crop advisory, weather (IMD), mandi prices, soil health and government schemes (including PM Fasal Bima Yojana) into a single interface.
 
 ## Why it is reusable

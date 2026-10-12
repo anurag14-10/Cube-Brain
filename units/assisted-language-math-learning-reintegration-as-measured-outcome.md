@@ -17,6 +17,10 @@ sources:
   date: '2026-10-12'
   ref: sub_category assigned by reading the unit against content/framework.md — the document tags dimension,
     stage and type only
+- system: diffusion_cube_code
+  method: document
+  date: '2026-10-12'
+  ref: before taken from Unit 4's Why paragraph (the unit has no explicit Before → After line)
 first_logged: '2026-10-12'
 last_updated: '2026-10-12'
 pathway: assisted-language-math-learning
@@ -39,7 +43,8 @@ reason: 'The most significant early AML signal was behavioural reintegration: pr
 context: Students completing 1,000+ questions in a year — versus roughly 400–500 questions in a typical
   NCERT textbook across three years — provided the volume of successful repetition that built the confidence
   driving behavioural change.
-before: Not documented in the source
+before: Targeted students had been passive or absent in class, and pre- and post-diagnostic scores alone undercount
+  the change from avoiding problems to voluntarily attempting them.
 after: A teacher survey of 617 respondents reported an average improvement of 5+ behavioural traits per
   student (including attendance, effort and time on task); respondents also flagged real infrastructure
   and connectivity problems.
@@ -69,7 +74,7 @@ According to EkStep Foundation's AxL pathway, this is a strategic decision from 
 
 ## Before → after
 
-- **Before:** Not documented in the source
+- **Before:** Targeted students had been passive or absent in class, and pre- and post-diagnostic scores alone undercount the change from avoiding problems to voluntarily attempting them.
 - **After:** A teacher survey of 617 respondents reported an average improvement of 5+ behavioural traits per student (including attendance, effort and time on task); respondents also flagged real infrastructure and connectivity problems.
 
 ## Why it is reusable
