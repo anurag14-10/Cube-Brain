@@ -33,9 +33,15 @@ it.
 repo: anurag14-10/Cube-Brain     # GitHub owner/name of the brain
 branch: main
 commit_prefix: "cube-brain:"
-local_brain: /home/ttpl-rt-259/brain/Cube-Brain     # env CUBE_BRAIN overrides
-local_project: /home/ttpl-rt-259/brain/diffusion-cube   # env CUBE_REPO overrides
+local_brain: $CUBE_BRAIN, else the repo this skill sits in, else ~/brain/Cube-Brain
+local_project: $CUBE_REPO, else diffusion-cube beside the brain
 ```
+
+Resolve `local_brain` once: `$CUBE_BRAIN` if set; otherwise the git root of
+this skill's own directory if it contains `SCHEMA.yml` (an install that is a
+symlink or a clone of the brain); otherwise `~/brain/Cube-Brain`. The project
+repo is `$CUBE_REPO`, else `../diffusion-cube` relative to the brain. Never
+assume another person's absolute paths.
 
 ## Pick the storage for this surface
 
@@ -58,6 +64,16 @@ If both are available, prefer the local clone.
 1. Local clone: `cd $CUBE_BRAIN && git pull --rebase` if it has a remote
    (others write here). Connector: nothing to pull — fetch each file fresh
    right before you rely on it.
+   **Then check the brain against the project** — nothing else tells anyone a
+   pathway landed or changed. `git -C "$CUBE_REPO" fetch --quiet` (a fetch
+   only: never pull, checkout or touch its working tree), then
+   `python3 scripts/check_corpus_drift.py --ref <ref>` with the branch the
+   corpus is merged into (`HEAD` by default; `origin/cube-dev` also shows
+   pathways only assembled, which are `lifecycle: assembled`, not published).
+   Mention any `missing`, `changed` or `not-ingested` rows to the user once,
+   in one line, and offer Mode C. If `SUPABASE_URL` and `SUPABASE_ANON_KEY` are
+   in the environment, also run `python3 scripts/probe_published_pathways.py`
+   for DB-only pathways.
 2. Read `CONVENTIONS.md` (rules, slugs, edge directions, body skeletons) and
    skim `SCHEMA.yml` (the entity model — each type's `description:` says what
    that type MEANS and may be used for). Read `MASTERS.md` before writing any
@@ -165,9 +181,10 @@ Y — log them?"). Do not interrupt; do not re-offer after a no.
 
 ## Mode C — Ingest a pathway into units
 
-When a new or revised pathway document lands (new file in
-`content/wiki/pathways/`, a `publish pathway:` commit, or the user pastes a
-pathway), follow **`references/ingest-pathway.md`**: seed/refresh the
+When a new or revised pathway document lands — the drift check (Step 0)
+lists it as `missing` / `changed` / `not-ingested`, the Supabase probe lists
+it as `MISSING`, or the user pastes a pathway — follow
+**`references/ingest-pathway.md`**: seed/refresh the
 pathway entity, then extract one `unit` per micro-innovation with full tags
 and condition, toolkit assets and playbooks, Section 5 patterns, and the
 organisations/people it names.
@@ -185,7 +202,9 @@ commit if a dimension, stage, sub-category or unit type changed.
 | Need | Command |
 |---|---|
 | Is the brain valid? | `python3 scripts/validate_wiki.py .` (`--stats` for model + coverage) |
-| Whole-project status | `python3 scripts/cube_report.py` |
+| Whole-project status | `python3 scripts/cube_report.py` (`--section grid`: coverage maps vs units) |
+| Brain behind the project corpus? | `python3 scripts/check_corpus_drift.py [--ref REF]` |
+| Pathways live only in Supabase | `python3 scripts/probe_published_pathways.py` (anon key from env; metadata only, GET only) |
 | Duplicates | grep `INDEX.md`; `python3 scripts/find_duplicates.py .` |
 | Re-derive framework from the repo | `python3 scripts/seed_from_repo.py --only framework --dry-run` (then `--force` deliberately) |
 | Every entry on the current schema? | `python3 scripts/migrate_v1_to_v2.py . --check` |

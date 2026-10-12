@@ -6,6 +6,8 @@ Sections:
   corpus      units per dimension × stage across the whole corpus (the corpus's
               own 4×4 coverage, counted from units by stage of ORIGIN — the
               same rule the framework uses), pathways with no units yet
+  grid        each pathway's `coverage` map against its units: missing maps,
+              dense cells with no unit, units in cells the grid calls empty
   delivery    open risks (with days to due), milestones, decisions by status
 
 Usage:
@@ -80,6 +82,41 @@ def corpus(b):
     print()
 
 
+def grid(b):
+    """Each pathway's stated coverage against the units extracted from it.
+
+    The two answer different questions -- `coverage` is the document's own
+    grid, units are what the brain extracted -- so disagreement is not always
+    a fault. But a dense cell with no unit usually means extraction is
+    incomplete, and a unit in a cell the grid calls empty means a mis-tag or a
+    stale grid. Nothing else puts the two side by side.
+    """
+    units = [u for u in b.get("units", []) if u.get("unit_type") != "Problem-Solution Pattern"]
+    print("## Grid consistency — pathway coverage vs units by stage of origin\n")
+    clean = True
+    for p in b.get("pathways", []):
+        slug, cov = p["_slug"], p.get("coverage") or {}
+        have = collections.Counter(f"{u.get('dimension')}:{str(u.get('stage') or '').title()}"
+                                   for u in units if u.get("pathway") == slug)
+        notes = []
+        if have and not cov:
+            notes.append(f"{sum(have.values())} units but no `coverage` map")
+        if cov and not have:
+            notes.append("`coverage` map but no units")
+        if cov and have:
+            dense = [k for k, v in cov.items() if (v or 0) >= 2 and not have.get(k)]
+            empty = [k for k in have if not cov.get(k)]
+            if dense:
+                notes.append("density ≥2, no unit: " + ", ".join(sorted(dense)))
+            if empty:
+                notes.append("unit in a cell the grid calls 0: " + ", ".join(sorted(empty)))
+        for n in notes:
+            clean = False
+            print(f"  {slug:<40} {n}")
+    print("  consistent" if clean else "")
+    print()
+
+
 def delivery(b):
     today = dt.date.today()
     print("## Delivery\n")
@@ -98,11 +135,11 @@ def main() -> int:
     here = Path(__file__).resolve().parent.parent
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--brain", default=str(here))
-    ap.add_argument("--section", choices=["counts", "corpus", "delivery"])
+    ap.add_argument("--section", choices=["counts", "corpus", "grid", "delivery"])
     a = ap.parse_args()
     b = load(Path(a.brain))
     print(f"# Cube-Brain report — {dt.date.today()}\n")
-    for name, fn in (("counts", counts), ("corpus", corpus), ("delivery", delivery)):
+    for name, fn in (("counts", counts), ("corpus", corpus), ("grid", grid), ("delivery", delivery)):
         if a.section in (None, name):
             fn(b)
     return 0

@@ -73,6 +73,12 @@ jobs:
       # Advisory: the open human-judgment queues. Read-only by contract, so it
       # can run anywhere. Write it somewhere outside the entity folders --
       # `reports/` is what the script itself excludes from its own scan.
+      # Advisory: a pathway's `coverage` map against the units extracted from
+      # it. Disagreement is not always a fault, so it reports and never blocks.
+      - name: Grid consistency
+        if: always()
+        run: python3 scripts/cube_report.py --section grid
+
       - name: Quality report
         if: always()
         run: python3 scripts/quality_report.py . --out reports/quality.md

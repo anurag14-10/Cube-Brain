@@ -252,6 +252,7 @@ entities:
 
   person:
     folder: people
+    orphan_exempt_when: teams    # team membership is the connection (a variable, so no edge can point at it)
     description: >
       An individual involved with the Cube — solution/program team member,
       pathway contributor, stakeholder. Professional role and involvement
@@ -270,6 +271,7 @@ entities:
 
   decision:
     folder: decisions
+    orphan_exempt: true          # a decision record justifies itself; only a successor points at it
     description: >
       A decision record about the Cube's framework, corpus or programme: what
       was decided, when, the context, the alternatives, and the
@@ -328,7 +330,8 @@ role_masters: {}
 
 # ---------------------------------------------------------------------------
 # Rules — shapes: require, forbid, one_of, pattern, not_self, unique,
-# stale_after; narrowed by when:, applies_to:, each:. severity: warn | error.
+# stale_after, prefixed_by; narrowed by when:, applies_to:, each:.
+# severity: warn | error.
 # ---------------------------------------------------------------------------
 
 rules:
@@ -380,6 +383,12 @@ rules:
     require: [pathway, dimension, sub_category, stage]
     severity: error
     message: "every framework unit is tagged pathway + dimension + sub-category + stage — no untagged units"
+
+  - id: sub-category-outside-dimension
+    applies_to: units
+    prefixed_by: { field: sub_category, prefix_field: dimension, sep: "-" }
+    severity: error
+    message: "`sub_category` must belong to the unit's `dimension` (persona-c only with persona)"
 
   - id: unit-condition-applies-when
     applies_to: units

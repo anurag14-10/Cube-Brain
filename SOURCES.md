@@ -27,7 +27,8 @@ renaming one orphans every reference to it.
 | **Access** | `read` |
 | **Cost** | cheap |
 | **Probe** | `test -f <repo>/lib/dimensions.ts && git -C <repo> rev-parse HEAD` — a SHA and the file both present |
-| **Local path** | `/home/ttpl-rt-259/brain/diffusion-cube` (override with `CUBE_REPO`) |
+| **Local path** | `diffusion-cube` beside the brain clone (override with `CUBE_REPO`) |
+| **Freshness** | `python3 scripts/check_corpus_drift.py --ref <ref>` after a `git fetch` — read via `git show`, never touching the working tree |
 
 **Trust for:** everything about how the app behaves — routes, access
 enforcement, tables, migrations, chat modes, prompts, env var names, module
@@ -75,9 +76,9 @@ its own last edit.
 | | |
 |---|---|
 | **What** | The live Supabase project (Postgres + Auth + Storage) |
-| **Access** | `read` — schema and aggregate counts only |
-| **Cost** | expensive (needs credentials; production data) |
-| **Probe** | `select count(*) from published_pathways` returns a row |
+| **Access** | `read` — schema, `published_pathways` metadata and aggregate counts only |
+| **Cost** | moderate (needs the project URL and ANON key in the environment; production data) |
+| **Probe** | `python3 scripts/probe_published_pathways.py` returns a row count. It reads only slug, title, sector, stage, contributor_org and created_at through the REST API with the anon key (the table's RLS is `select using (true)`), refuses a service-role key, makes GET requests only, and never reads `.env` files |
 
 **Trust for:** which pathways are actually published (`published_pathways`
 slugs, titles, sectors, stages), counts.

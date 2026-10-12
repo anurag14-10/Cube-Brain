@@ -277,11 +277,12 @@ These are the framework's own extraction discipline, applied to `units/`.
 1. **Tag every unit**: dimension + sub_category + stage + unit_type +
    condition (applies_when / fails_when). No untagged units. All three tags
    are variables (MASTERS 2, 4, 3). The `sub_category` must belong to the
-   unit's `dimension` (`persona-c` only with `persona`) — the validator
-   cannot check this cross-field rule, so you must; the dimension's concept
-   page lists its sub-categories and their stage weights.
+   unit's `dimension` (`persona-c` only with `persona`) — the validator's
+   `sub-category-outside-dimension` rule fails the build otherwise; the
+   dimension's concept page lists its sub-categories and their stage weights.
 2. **`stage` is the stage of origin** (where the evidence was found) and is
-   what counts in a pathway's coverage grid. `also_relevant_at` is retrieval
+   what counts in a pathway's coverage grid (`python3 scripts/cube_report.py
+   --section grid` puts each pathway's `coverage` map beside its units). `also_relevant_at` is retrieval
    only and never counts. Never merge the two, and never list the origin
    stage in `also_relevant_at`.
 3. **Write the before→after** for every Strategic/Tactical Decision.

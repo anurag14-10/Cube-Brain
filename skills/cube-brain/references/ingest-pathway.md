@@ -11,7 +11,7 @@ every step — this file applies it to the brain.
 |---|---|
 | Grounding corpus | `$CUBE_REPO/content/wiki/pathways/<slug>.md` (framework-structured — primary) |
 | Library corpus only | `$CUBE_REPO/content/library-wiki/pathways/<slug>.md` (overview tone — extract only substantive units; mark inferred tags `method: derived`) |
-| DB only (`published_pathways`) | the document the user supplies, or the DB with permission — never user rows |
+| DB only (`published_pathways`) | the document the user supplies, or, with the user's go-ahead, `python3 scripts/probe_published_pathways.py --content <slug>` (anon key from env; the published document only — never user rows). Record `sources: {system: supabase_db, method: queried}` and add `published-pathways-corpus` to `corpora` |
 
 The slug is the corpus file's stem, typos included (`unififed-ai-driven-agri-ecosystem`).
 
@@ -87,5 +87,7 @@ copy contact details.
 
 `python3 scripts/validate_wiki.py .` (fix all errors and the unit-rule warnings
 you introduced) → `python3 scripts/cube_report.py --section corpus` to show the
-new coverage → activity entry → one commit:
+new coverage and `--section grid` to check the pathway's `coverage` map against
+its units → `python3 scripts/check_corpus_drift.py` shows it no longer
+`not-ingested` → activity entry → one commit:
 `cube-brain: ingest pathway <slug> (<n> units, <m> patterns)`.

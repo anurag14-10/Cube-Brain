@@ -33,6 +33,8 @@ questions) and its four grid cells; each stage has its own concept page.
 pip install pyyaml                              # once
 python3 scripts/validate_wiki.py .              # must exit 0 before every commit
 python3 scripts/cube_report.py                  # project status: corpus coverage, risks, milestones
+python3 scripts/check_corpus_drift.py            # pathways added/changed in diffusion-cube since they were ingested
+python3 scripts/probe_published_pathways.py     # DB-only pathways in Supabase (needs SUPABASE_URL + SUPABASE_ANON_KEY in env)
 python3 scripts/seed_from_repo.py --dry-run     # re-derive framework concepts / pathway stubs from the repo
 python3 scripts/migrate_v1_to_v2.py . --check   # every entry is on schema v2
 python3 scripts/build_skill.py                  # dist/cube-brain.skill for Claude Desktop / web upload

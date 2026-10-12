@@ -236,6 +236,7 @@ class Model:
     external_edges: set[tuple[str, str]]       # (folder, field) may point outside
     orphan_exempt: set[str]                    # folders the orphan rule skips
     orphan_needs_inbound: set[str]             # folders where outbound does not count
+    orphan_exempt_when: dict[str, tuple[str, ...]]  # folder -> fields whose presence connects an entry
     rules: list[dict]                          # constraints the brain declared
     descriptions: dict[str, str]               # folder -> what the type MEANS
     source: str                                # "SCHEMA.yml" or "product default"
@@ -271,6 +272,7 @@ def default_model() -> Model:
         external_edges=set(EXTERNAL_REFERENCE_FIELDS),
         orphan_exempt=set(DEFAULT_ORPHAN_EXEMPT),
         orphan_needs_inbound=set(),
+        orphan_exempt_when={},
         rules=[],          # the product ships none, on purpose
         descriptions={},
         source="product default",
@@ -307,6 +309,7 @@ def read_model(root: Path) -> tuple[Model, str | None]:
     external_edges: set[tuple[str, str]] = set()
     orphan_exempt: set[str] = set()
     orphan_needs_inbound: set[str] = set()
+    orphan_exempt_when: dict[str, tuple[str, ...]] = {}
     declared: dict[str, set[str]] = {}
     for type_name, spec in entities.items():
         if not isinstance(spec, dict):
@@ -339,6 +342,11 @@ def read_model(root: Path) -> tuple[Model, str | None]:
         # readings are defensible, which is exactly why the brain decides.
         if spec.get("orphan_needs_inbound"):
             orphan_needs_inbound.add(str(folder))
+        # A variable can be the connection. A team member whose only tie to the
+        # graph is `teams: [program-team]` is not a half-finished entry -- team
+        # is a MASTERS variable, not a folder, so no edge could ever point at it.
+        if spec.get("orphan_exempt_when"):
+            orphan_exempt_when[str(folder)] = as_targets(spec.get("orphan_exempt_when"))
         vocabs: dict[str, str] = {}
         refs: dict[str, tuple[str, ...]] = {}
         for name, fspec in fields.items():
@@ -397,6 +405,7 @@ def read_model(root: Path) -> tuple[Model, str | None]:
                  external_edges=external_edges or set(EXTERNAL_REFERENCE_FIELDS),
                  orphan_exempt=orphan_exempt or set(DEFAULT_ORPHAN_EXEMPT),
                  orphan_needs_inbound=orphan_needs_inbound,
+                 orphan_exempt_when=orphan_exempt_when,
                  rules=[r for r in (schema.get("rules") or [])
                         if isinstance(r, dict)],
                  descriptions=descriptions,
@@ -1087,6 +1096,21 @@ def apply_rule(rule: dict, fm: dict, entity: "Entity") -> list[str]:
                                    "more than once")
             seen.add(str(key))
 
+    # One field's value must start with another field's value -- a child code
+    # that names its parent (`persona-c` only under `persona`). Two vocab checks
+    # pass each value on its own; only this sees that they disagree.
+    prefixed = rule.get("prefixed_by")
+    if isinstance(prefixed, dict):
+        field, parent = prefixed.get("field"), prefixed.get("prefix_field")
+        sep = str(prefixed.get("sep", ""))
+        parents = [str(p) for p in rule_values(fm.get(parent)) if rule_present(p)]
+        for v in rule_values(fm.get(field)):
+            if not rule_present(v) or not parents:
+                continue
+            if not any(str(v).startswith(p + sep) for p in parents):
+                out.append(said or f"`{field}` is {v!r}, which does not belong to "
+                                   f"`{parent}` {', '.join(parents)}")
+
     stale = rule.get("stale_after")
     if isinstance(stale, dict):
         out.extend(rule_staleness(stale, fm, said))
@@ -1144,7 +1168,7 @@ def check_rule_declarations(wiki: Wiki) -> list[Issue]:
     issues: list[Issue] = []
     rel = "SCHEMA.yml"
     actions = ("require", "forbid", "one_of", "pattern", "not_self", "unique",
-               "stale_after")
+               "stale_after", "prefixed_by")
     seen: set[str] = set()
 
     for i, rule in enumerate(wiki.model.rules):
@@ -1198,6 +1222,9 @@ def check_rule_declarations(wiki: Wiki) -> list[Issue]:
                 rule.get("when"), dict) else []
             named += rule_values(rule.get("require")) + rule_values(rule.get("forbid"))
             named += rule_values(rule.get("not_self"))
+            if isinstance(rule.get("prefixed_by"), dict):
+                named += [rule["prefixed_by"].get("field"),
+                          rule["prefixed_by"].get("prefix_field")]
             for field in [f for f in named if f]:
                 if str(field) not in declared:
                     issues.append(Issue("warn", "rule-for-undeclared-field", rel,
@@ -1703,6 +1730,9 @@ def check_orphans(wiki: Wiki, inbound: dict[tuple, set[tuple]], outbound: dict[t
         if folder in wiki.model.orphan_exempt or entity.broken:
             continue
         if folder not in referenceable:
+            continue
+        if any(rule_present(entity.frontmatter.get(f))
+               for f in wiki.model.orphan_exempt_when.get(folder, ())):
             continue
         # An entity that states its own connections is part of the graph, even
         # if nothing points back at it. This was a people-only exception --
