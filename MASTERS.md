@@ -2,7 +2,12 @@
 
 The controlled vocabularies every `vocab:` / `list_vocab:` field in
 `SCHEMA.yml` is checked against. The number in each heading is the id
-`SCHEMA.yml` uses (`vocab: "7"` → master 7).
+`SCHEMA.yml` uses (`vocab: "10"` → master 10).
+
+Since schema v2 the framework's closed sets — dimensions, stages,
+sub-categories, grid keys — and the corpora and teams are **variables**
+here, not folders. What each one means is defined in `concepts/` (one page
+per dimension, one per stage) or in the explanation beside the term.
 
 ## Writing terms so they can be checked
 
@@ -22,36 +27,115 @@ value — it looks authoritative and matches nothing.
 
 ## Values that mirror the code
 
-Where a master mirrors an enum in the diffusion-cube code (unit types, doc
-types, weights), the code is the source of truth. If the code changes, change
-the master in the same commit as the entities that use the new value.
+Where a master mirrors an enum in the diffusion-cube code (unit types,
+dimensions, sub-categories, grid keys), the code is the source of truth. If
+the code changes, change the master in the same commit as the entities that
+use the new value.
 
 ---
 
 ## 1. Unit types
 
-Mirrors `UNIT_TYPES` in `lib/dimensions.ts`. Definitions live in `concepts/`.
+The first five mirror `UNIT_TYPES` in `lib/dimensions.ts`; definitions live
+in `concepts/`. The sixth is the brain's own: a pathway document's Section 5
+pattern, stored as a unit so it sits beside its evidence.
 
 - Strategic Decision — framing, governance or design decision that shaped what got built
 - Tactical Decision — stack, sequence, cost or implementation decision specific enough to reuse
 - Failure and Fix — what broke, the fix, and what the fix revealed
 - Playbook — a genuine multi-step gated sequence
 - Toolkit Asset — an actual reusable artifact someone else can lift and adapt
+- Problem-Solution Pattern — problem → root cause → solution → result → condition, built from units, may span pathways
 
 ---
 
-## 2. Sub-category stage weights
+## 2. Dimensions
 
-Mirrors `SubCategoryWeight` in `lib/dimensions.ts`.
+The framework's four lenses on one deployment — four questions, never four
+phases. Closed set; adding one is a framework change. Defined in
+`concepts/<dimension>.md`.
 
-- primary — ask or check directly at this stage
-- secondary — only if relevant or surfaced by the core question
-- dormant — never initiate; follow only if the user raises it
+- persona — Are we solving the right problem for the right person?
+- solution — Are we building the right system to solve it?
+- institution — Can the institution own, absorb, govern, and sustain it?
+- ecosystem — Can the required network of actors execute and support it?
 
 ---
 
-## 3. Concept kinds
+## 3. Stages
 
+The four adopter stages, in order. Closed set. Defined in
+`concepts/<stage>.md`. A deployment's stage is only ever taken from what the
+user states.
+
+- explore — Is AI appropriate, and what would it take?
+- define — What must be true before building?
+- pilot — What breaks with real users and real institutional conditions?
+- scale — Can the institution own, sustain, and continuously improve it?
+
+---
+
+## 4. Sub-categories
+
+`<dimension>-<letter>`, 22 in all. A unit's `sub_category` must belong to
+its `dimension`. Each one's stage weights and questions are on its
+dimension's concept page. The codes are internal-only — never in
+user-facing prose.
+
+- persona-a — Problem and Persona
+- persona-b — Current Journey and Friction
+- persona-c — Outcome and Success
+- persona-d — Scope, Inclusion, and Trust
+- solution-a — AI Fit and Comparative Advantage
+- solution-b — UX, Channel, and Integration
+- solution-c — Model, Architecture, and Infrastructure
+- solution-d — Data and Knowledge Readiness
+- solution-e — Performance, Reliability, and Scale
+- institution-a — Mandate, Ownership, and Decision Rights
+- institution-b — Workforce and Change
+- institution-c — Governance, Safety, and Redress
+- institution-d — Accountability, Liability, and Compliance
+- institution-e — Data Stewardship
+- institution-f — Operating Model and Sustainability
+- institution-g — Institutionalisation and Continuous Improvement
+- ecosystem-a — Partner Architecture and Roles
+- ecosystem-b — External Data and Infrastructure Dependencies
+- ecosystem-c — Delivery, Distribution, and Trust
+- ecosystem-d — Coordination, Procurement, and Incentives
+- ecosystem-e — Resilience, Portability, and Contingencies
+- ecosystem-f — Ecosystem Learning and Diffusion
+
+---
+
+## 5. Grid keys
+
+The 16 dimension × stage cells, spelled exactly as the app stores them in
+`designs.grid_state`. They are the keys of a pathway's `coverage` map. Each
+cell's core question is on its dimension's concept page.
+
+- persona:Explore
+- persona:Define
+- persona:Pilot
+- persona:Scale
+- solution:Explore
+- solution:Define
+- solution:Pilot
+- solution:Scale
+- institution:Explore
+- institution:Define
+- institution:Pilot
+- institution:Scale
+- ecosystem:Explore
+- ecosystem:Define
+- ecosystem:Pilot
+- ecosystem:Scale
+
+---
+
+## 6. Concept kinds
+
+- dimension — one of the four dimensions (page carries its sub-categories and cells)
+- stage — one of the four stages
 - unit-type — one of the five unit types
 - cross-cutting-concern — Data, Trust
 - pathway-section — a section of the pathway document (0–6, Source Trace)
@@ -59,20 +143,18 @@ Mirrors `SubCategoryWeight` in `lib/dimensions.ts`.
 - weight-level — primary / secondary / dormant as concepts
 - thesis — the 30/70 thesis and similar framing claims
 - method — extraction discipline, synthesis test, matching test
-- product-term — a word the app or team uses (Adoption, Flow, flowStep, Assemble …)
-- ai-term — a model/LLM-side term (grid_update, explorerAction, conversation mode …)
-- role-term — persona words (Explorer, Contributor, Adopter)
+- rule — a product or business rule the Cube must keep (matching discipline, suggestions not recommendations …)
 
 ---
 
-## 4. Thesis groups (30/70)
+## 7. Thesis groups (30/70)
 
 - build-the-right-thing — Persona + Solution (the ~30%)
 - enable-adoption — Institution + Ecosystem (the ~70%)
 
 ---
 
-## 5. Audience
+## 8. Audience
 
 The framework-naming rule: what may appear in user-facing prose.
 
@@ -82,7 +164,7 @@ The framework-naming rule: what may appear in user-facing prose.
 
 ---
 
-## 6. Pathway kinds
+## 9. Pathway kinds
 
 - single-deployment — one deployment's journey
 - cross-deployment-synthesis — lessons drawn across several deployments (e.g. Voice AI for Inclusion)
@@ -90,7 +172,7 @@ The framework-naming rule: what may appear in user-facing prose.
 
 ---
 
-## 7. Sectors
+## 10. Sectors
 
 Normalised from pathway frontmatter. Write the qualifier (e.g. "skill
 development and employment support") in `use_case_category`, not here.
@@ -108,34 +190,37 @@ development and employment support") in `use_case_category`, not here.
 
 ---
 
-## 8. Pathway lifecycle
+## 11. Pathway lifecycle
 
-- drafting — a contributor workspace exists (`pathways` row), no assembled document
-- assembled — contributor "assemble" committed it to GitHub; NOT live
-- published — admin publish copied it to `published_pathways`, or it is committed in an in-repo corpus and linked from its index
+- drafting — a contributor workspace exists, no assembled document
+- assembled — the contributor's document is committed to GitHub but NOT live
+- published — live through admin publish, or committed in an in-repo corpus and linked from its index
 - unindexed — on disk in the grounding corpus but not linked from index.md, so excluded from grounding
 - retired — removed or superseded
 
 ---
 
-## 9. Asset kinds
+## 12. Asset kinds
 
-Mirrors `contribution_units.asset_kind`.
-
-- file — stored in the private `toolkit-assets` bucket
+- file — stored in the app's private toolkit-assets storage
 - link — an https URL
 
 ---
 
-## 10. Corpus kinds
+## 13. Corpora
 
-- static-repo — markdown committed in the diffusion-cube repo
-- database — rows in a Supabase table
-- merged-view — a read-time merge of the above
+The bodies of pathway documents the app grounds the model in. They are NOT
+one source of truth: the same slug can hold different text in each. A
+pathway's `corpora` names where its copies live; the file paths go in its
+`doc_refs`.
+
+- grounding-corpus — `content/wiki/pathways`, framework-structured documents, whole-corpus grounding for the Explorer and Contributor flows, discovered only through `index.md`
+- library-corpus — `content/library-wiki/pathways`, conversational overview documents behind the public Diffusion Library, grounded one document at a time
+- published-pathways-corpus — the `published_pathways` table, community pathways made live by admin publish and merged into both in-repo corpora by slug (the database copy wins)
 
 ---
 
-## 11. Organisation kinds
+## 14. Organisation kinds
 
 - product-owner
 - implementation-partner
@@ -149,137 +234,19 @@ Mirrors `contribution_units.asset_kind`.
 
 ---
 
-## 12. Implementation status
+## 15. Teams
 
-Shared by features, workflows, pages, endpoints, chat modes, prompts, tables,
-modules and environments.
+From the Product Charter's execution model. Members are the `people/`
+entries whose `teams` names the team. Both teams meet weekly to review
+against the current milestone, and hold a formal milestone review with
+senior management at each milestone boundary.
 
-- live — in use on the deployed path
-- in-progress — being built, partially present
-- planned — intent only; nothing in code
-- inert — exists in code or schema, nothing uses it
-- dead-code — present and referenced, but broken or unreachable (e.g. queries a dropped table)
-- dropped — removed (tables)
-- retired — deliberately removed or replaced
+- solution-team — "Kamesh + Tekdi Team": solution functionality, UI/UX, data and technical architecture, builds and maintains the web app and the planned Claude Skill channel, handles product and technical user issues
+- program-team — "David, Anupama + Team": stakeholder communication, the pathway content lifecycle (review and publish contributor submissions), onboarding adopters, relaying user feedback to the Solution Team
 
 ---
 
-## 13. Workflow kinds
-
-- user-journey
-- admin-process
-- system-process
-- llm-pipeline
-- dev-process
-
----
-
-## 14. Access levels
-
-What actually gates a page or endpoint.
-
-- public — no session needed
-- signed-in — any authenticated session
-- role-gated — a specific role from `roles/`
-- admin-only — admin role row or ADMIN_EMAILS allow-list
-- webhook-secret — called by Supabase with a shared secret
-- service-role — server-only, never called by a browser
-
----
-
-## 15. HTTP methods
-
-- GET
-- POST
-- PUT
-- PATCH
-- DELETE
-
----
-
-## 16. Generated document types
-
-Mirrors `design_documents.doc_type`, plus non-persisted outputs.
-
-- analysis — Explorer Analysis Document
-- plan — Executive Summary / Plan Document
-- draft — Contributor pathway document draft
-- none — produces no stored document
-
----
-
-## 17. Contract kinds
-
-- llm-output — a block the model must emit (grid_update)
-- json-state — JSON persisted in a jsonb column (meta, grid_state, messages)
-- api-payload — request/response body of an endpoint
-- document-format — markdown/frontmatter structure of a document
-- storage-layout — object paths and naming in a bucket
-- email-hook — a payload exchanged with Supabase Auth hooks
-
----
-
-## 18. Store kinds
-
-- table
-- storage-bucket
-- auth-schema
-- view
-
----
-
-## 19. Module kinds
-
-- lib
-- component
-- page-file
-- route-handler
-- middleware
-- script
-- content
-- config
-- ci
-
----
-
-## 20. Integration kinds
-
-- llm
-- database
-- auth
-- object-storage
-- email
-- version-control
-- spreadsheet-logging
-- hosting
-- ci-cd
-- document-parsing
-- pdf-generation
-
----
-
-## 21. Environment kinds
-
-- production
-- staging
-- local
-- container
-
----
-
-## 22. Enforcement layers
-
-- prompt — an instruction to the model only
-- code — application logic
-- rls — Postgres row-level security
-- db-constraint — check / unique / FK constraint
-- storage-policy — bucket limits and policies
-- data — encoded in a data structure (e.g. weights)
-- process — a human step (admin review)
-
----
-
-## 23. Decision status
+## 16. Decision status
 
 - proposed
 - accepted
@@ -289,25 +256,7 @@ Mirrors `design_documents.doc_type`, plus non-persisted outputs.
 
 ---
 
-## 24. Requirement types
-
-- functional
-- non-functional
-
----
-
-## 25. Requirement status
-
-Mirrors the Product Charter's Requirements tab.
-
-- not-started
-- in-progress
-- complete
-- dropped
-
----
-
-## 26. Milestone status
+## 17. Milestone status
 
 - planned
 - in-progress
@@ -317,25 +266,7 @@ Mirrors the Product Charter's Requirements tab.
 
 ---
 
-## 27. Tech-debt severity
-
-- P0 — critical
-- P1 — high
-- P2 — medium
-- P3 — low
-
----
-
-## 28. Tech-debt status
-
-- open
-- in-progress
-- resolved
-- wont-fix
-
----
-
-## 29. Risk status
+## 18. Risk status
 
 - open
 - mitigated
@@ -344,26 +275,9 @@ Mirrors the Product Charter's Requirements tab.
 
 ---
 
-## 30. Likelihood and impact
+## 19. Likelihood and impact
 
 - low
 - medium
 - high
 - critical
-
----
-
-## 31. Incident severity
-
-- sev1 — production down or data loss
-- sev2 — a core flow broken for users
-- sev3 — degraded or silent failure
-- sev4 — cosmetic or dev-only
-
----
-
-## 32. Incident status
-
-- open
-- monitoring
-- fixed

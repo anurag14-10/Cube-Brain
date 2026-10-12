@@ -96,6 +96,10 @@ jobs:
       #     if: always()
       #     run: python3 scripts/sync_schema_vocab.py . --check
       #
+      - name: Activity digest drift
+        if: always()
+        run: python3 scripts/build_activity_log.py . --check
+
       # ---------------------------------------------------------------------
       # Schema version drift, and the one gate that needs editing on every bump.
       #
@@ -114,3 +118,7 @@ jobs:
       #   - name: Schema version drift
       #     if: always()
       #     run: python3 scripts/migrate_v<n>_to_v<n+1>.py . --check
+
+      - name: Schema version drift
+        if: always()
+        run: python3 scripts/migrate_v1_to_v2.py . --check

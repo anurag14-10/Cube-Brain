@@ -3,14 +3,15 @@
 
 What it generates (all derivable from files, no judgment needed):
 
-  framework  dimensions/ sub-categories/ stages/ cells/ concepts/
+  framework  concepts/ — one page per dimension (with its sub-categories and
+             grid cells), one per stage, the unit types, sections, methods
              from content/framework.md + lib/dimensions.ts
   corpus     pathways/ (identity stubs: title, sector, stage, coverage grid,
-             gaps, corpus copies) and corpora/
+             gaps, corpus copies)
              from content/wiki/pathways + content/library-wiki/pathways
   actors     organisations/ named as pathway contributors
 
-What it deliberately does NOT generate: units, patterns, decisions, or
+What it deliberately does NOT generate: units (patterns included), decisions, or
 anything whose content needs reading and judgment. Those are the cube-brain
 skill's job ("ingest pathway", "capture").
 
@@ -33,7 +34,7 @@ from pathlib import Path
 import yaml
 
 TODAY = dt.date.today().isoformat()
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 
 # ---------------------------------------------------------------------------
@@ -85,14 +86,14 @@ def split_frontmatter(text: str) -> tuple[dict, str]:
 
 
 class Writer:
-    def __init__(self, brain: Path, commit: str, force: bool, dry: bool):
-        self.brain, self.commit, self.force, self.dry = brain, commit, force, dry
+    def __init__(self, brain: Path, force: bool, dry: bool):
+        self.brain, self.force, self.dry = brain, force, dry
         self.written: list[str] = []
         self.skipped: list[str] = []
 
     def write(self, folder: str, slug: str, etype: str, name: str,
               fields: dict, body: str, sources: list[dict],
-              code_refs: list[str] | None = None, doc_refs: list[str] | None = None) -> None:
+              doc_refs: list[str] | None = None) -> None:
         path = self.brain / folder / f"{slug}.md"
         rel = f"{folder}/{slug}.md"
         if path.exists() and not self.force:
@@ -102,9 +103,6 @@ class Writer:
         for k, v in fields.items():
             if v not in (None, "", [], {}):
                 fm[k] = v
-        if code_refs:
-            fm["code_refs"] = code_refs
-            fm["verified_at_commit"] = self.commit
         if doc_refs:
             fm["doc_refs"] = doc_refs
         fm["sources"] = sources
@@ -218,141 +216,177 @@ def parse_framework(md: str) -> dict:
     return out
 
 
+DIMENSION_NAMES = {"persona": "Persona", "solution": "Solution",
+                   "institution": "Institution", "ecosystem": "Ecosystem"}
+
+
+def render_dimension(d: dict) -> tuple[dict, str]:
+    """Frontmatter fields and body of a dimension's concept page.
+
+    The dimension's lettered sub-categories (stage weights + questions) and its
+    four grid cells live on this one page since schema v2 — they are closed
+    sets, so they are vocabulary (MASTERS 4 and 5), not entities.
+
+    `d` keys: code, name, central_question, shift, intro, thesis_group, data,
+    trust, order, subs [{code, name, weights{Stage: weight}, questions}],
+    cells {Stage: {core_question, listening_for, insight_form, corpus_example,
+    example_pathway}}.
+    """
+    code = d["code"]
+    weights = "\n".join(
+        f"| {s['code']} | `{code}-{s['code'].lower()}` | {s['name']} | "
+        + " | ".join(s["weights"].get(st, "") for st in STAGES) + " |"
+        for s in d["subs"])
+    questions = "\n\n".join(
+        f"### {s['code']}. {s['name']}\n\n"
+        + ("\n".join("- " + q for q in s["questions"]) or "Not documented in the source.")
+        for s in d["subs"])
+    cells = []
+    for st in STAGES:
+        c = d["cells"].get(st)
+        if not c:
+            continue
+        primary = [s["code"] for s in d["subs"] if s["weights"].get(st) == "primary"]
+        example = c["corpus_example"]
+        if c.get("example_pathway"):
+            example += f" ([pathway](../pathways/{c['example_pathway']}.md))"
+        cells.append(f"""### {d['name']} × {st} — `{code}:{st}`
+
+- **Core question:** {c['core_question']}
+- **Listening for:** {c['listening_for']}
+- **Insight form:** {c['insight_form']}
+- **Corpus example:** {example}
+- **Primary sub-categories here:** {', '.join(primary) or 'none'}""")
+    body = f"""## Definition
+
+{d['central_question']}
+
+*{d.get('shift') or ''}*
+
+{d.get('intro') or ''}
+
+## Sub-categories
+
+Units are tagged `sub_category: {code}-<letter>`. Weight per stage: primary =
+ask directly, secondary = only if surfaced, dormant = never initiate. The
+letters are internal-only.
+
+| Code | Variable | Sub-category | Explore | Define | Pilot | Scale |
+|---|---|---|---|---|---|---|
+{weights}
+
+{questions}
+
+## Grid cells
+
+Keyed `{code}:<Stage>` in a pathway's `coverage` and in the app's `designs.grid_state`.
+
+{(chr(10) * 2).join(cells)}
+
+## Data and trust here
+
+- **Data:** {d.get('data') or 'Not documented in the source'}
+- **Trust:** {d.get('trust') or 'Not documented in the source'}
+
+## How it is used
+
+Every unit carries `dimension: {code}`; the dimension name is public
+vocabulary, the sub-category letters are not.
+"""
+    body = re.sub(r"\n{3,}", "\n\n", body)
+    aliases = [d["name"], f"{d['name']} dimension"]
+    for s in d["subs"]:
+        aliases += [f"{code}-{s['code'].lower()}", f"{d['name']} {s['code']}", s["name"]]
+    aliases += [f"{code}:{st}" for st in STAGES if st in d["cells"]]
+    fields = {
+        "aliases": aliases, "summary": d["central_question"], "concept_kind": "dimension",
+        "definition": f"{d['name']} — {d['central_question']}", "audience": "public-vocabulary",
+        "broader": "grid", "central_question": d["central_question"], "shift": d.get("shift"),
+        "thesis_group": d.get("thesis_group"), "order": d.get("order"),
+    }
+    return fields, body
+
+
+def render_stage(s: dict) -> tuple[dict, str]:
+    """Frontmatter fields and body of a stage's concept page.
+
+    `s` keys: name, order, central_question, done_when, previous, next,
+    cells {dimension code: core question}.
+    """
+    order = []
+    if s.get("previous"):
+        order.append(f"after [{s['previous'].title()}]({s['previous']}.md)")
+    if s.get("next"):
+        order.append(f"before [{s['next'].title()}]({s['next']}.md)")
+    cells = "\n".join(f"- **[{DIMENSION_NAMES[dim]}]({dim}.md)** (`{dim}:{s['name']}`) — {q}"
+                       for dim, q in s["cells"].items())
+    body = f"""## Definition
+
+{s['central_question']}
+
+Stage {s['order']} of 4{', ' + ' and '.join(order) if order else ''}.
+
+## Done when
+
+{chr(10).join('- ' + x for x in s.get('done_when') or []) or 'Not documented in the source.'}
+
+## What changes for each dimension
+
+{cells}
+
+## How it is used
+
+Units carry `stage: {s['name'].lower()}` as their stage of ORIGIN (what counts in a
+grid); `also_relevant_at` is retrieval only. A deployment's stage is only
+ever taken from the user's own statement — never assigned by the model.
+"""
+    fields = {
+        "aliases": [s["name"], f"{s['name']} stage"], "summary": s["central_question"],
+        "concept_kind": "stage", "definition": f"{s['name']} — {s['central_question']}",
+        "audience": "public-vocabulary", "broader": "grid",
+        "central_question": s["central_question"], "done_when": s.get("done_when"),
+        "order": s["order"],
+    }
+    return fields, body
+
+
 def seed_framework(w: Writer, repo: Path) -> None:
     fw_ref, dim_ref = "content/framework.md", "lib/dimensions.ts"
     dims = parse_dimensions_ts((repo / dim_ref).read_text(encoding="utf-8"))
     fw = parse_framework((repo / fw_ref).read_text(encoding="utf-8"))
     s_code = [src("diffusion_cube_code", "queried", dim_ref), src("diffusion_cube_code", "document", fw_ref)]
 
-    # -- dimensions --------------------------------------------------------
+    # -- dimensions (with their sub-categories and cells) -------------------
     for order, code in enumerate(DIMENSION_ORDER, 1):
         d = dims[code]
-        subs_md = "\n".join(f"- [{s['code']}. {s['name']}](../sub-categories/{code}-{s['code'].lower()}.md)"
-                            for s in d["subs"])
-        body = f"""## What it asks
-
-{d['central_question']}
-
-*{fw['shift'].get(code, '')}*
-
-{fw.get('dim_intro', {}).get(code, '')}
-
-## Sub-categories
-
-{subs_md}
-
-## Data and trust here
-
-- **Data:** {fw['concerns']['data'].get(code, 'Not documented in the source')}
-- **Trust:** {fw['concerns']['trust'].get(code, 'Not documented in the source')}
-
-## How the companion uses it
-
-Grid cells for this dimension are keyed `{code}:<Stage>` in `designs.grid_state`.
-Which sub-categories the companion probes at a given stage is set by each
-sub-category's stage weight. The dimension name is public vocabulary; the
-sub-category letters are internal-only.
-"""
-        w.write("dimensions", code, "dimension", d["name"], {
-            "aliases": [code], "summary": d["central_question"], "code": code,
-            "central_question": d["central_question"], "shift": fw["shift"].get(code),
-            "thesis_group": THESIS[code], "ui_color": d["color"],
-            "data_concern": fw["concerns"]["data"].get(code),
-            "trust_concern": fw["concerns"]["trust"].get(code), "order": order,
-        }, body, s_code, code_refs=[dim_ref, fw_ref])
-
-        # -- sub-categories ------------------------------------------------
-        for s in d["subs"]:
-            slug = f"{code}-{s['code'].lower()}"
-            qs = fw["questions"].get((code, s["code"]), [])
-            weights_tbl = "\n".join(f"| {st} | {s['weights'][st]} |" for st in STAGES)
-            primary_at = [st for st in STAGES if s["weights"][st] == "primary"]
-            body = f"""## What it covers
-
-{d['name']} › **{s['code']}. {s['name']}** — part of "{d['central_question']}"
-
-## Questions
-
-{chr(10).join('- ' + q for q in qs) or 'Not documented in the source.'}
-
-## Stage weighting
-
-| Stage | Weight |
-|---|---|
-{weights_tbl}
-
-Primary at: {', '.join(primary_at) or 'no stage'}. Primary = ask directly;
-secondary = only if surfaced; dormant = never initiate.
-"""
-            w.write("sub-categories", slug, "sub_category", s["name"], {
-                "aliases": [f"{d['name']} {s['code']}", f"{code}:{s['code']}"],
-                "summary": f"{d['name']} sub-category {s['code']}: {s['name']}.",
-                "dimension": code, "code": s["code"],
-                "weight_explore": s["weights"]["Explore"], "weight_define": s["weights"]["Define"],
-                "weight_pilot": s["weights"]["Pilot"], "weight_scale": s["weights"]["Scale"],
-                "questions": qs,
-            }, body, s_code, code_refs=[dim_ref, fw_ref])
+        cells = {}
+        for st in STAGES:
+            c = fw["cells"].get((code, st))
+            if c:
+                ex_name = c["corpus_example"].split(":", 1)[0].strip()
+                cells[st] = dict(c, example_pathway=PATHWAY_NAME_TO_SLUG.get(ex_name))
+        fields, body = render_dimension({
+            "code": code, "name": d["name"], "central_question": d["central_question"],
+            "shift": fw["shift"].get(code), "intro": fw.get("dim_intro", {}).get(code),
+            "thesis_group": THESIS[code], "data": fw["concerns"]["data"].get(code),
+            "trust": fw["concerns"]["trust"].get(code), "order": order,
+            "subs": [dict(s, questions=fw["questions"].get((code, s["code"]), [])) for s in d["subs"]],
+            "cells": cells,
+        })
+        w.write("concepts", code, "concept", d["name"], fields, body, s_code, doc_refs=[dim_ref, fw_ref])
 
     # -- stages ------------------------------------------------------------
     for i, st in enumerate(STAGES):
         info = fw["stages"].get(st, {})
-        slug = st.lower()
-        body = f"""## Central question
-
-{info.get('central_question', '')}
-
-## Done when
-
-{chr(10).join('- ' + x for x in info.get('done_when', []))}
-
-## What changes for each dimension
-
-See the four cells: {', '.join(f'[{d.title()}](../cells/{d}-{slug}.md)' for d in DIMENSION_ORDER)}.
-
-A deployment's stage is only ever taken from the user's own statement —
-never assigned by the model (`designs.meta.stage`).
-"""
-        w.write("stages", slug, "stage", st, {
-            "summary": info.get("central_question"), "order": i + 1,
-            "central_question": info.get("central_question"),
+        fields, body = render_stage({
+            "name": st, "order": i + 1, "central_question": info.get("central_question", ""),
             "done_when": info.get("done_when"),
-            "previous_stage": STAGES[i - 1].lower() if i else None,
-            "next_stage": STAGES[i + 1].lower() if i < 3 else None,
-        }, body, s_code, code_refs=[dim_ref, fw_ref])
-
-    # -- cells -------------------------------------------------------------
-    for code in DIMENSION_ORDER:
-        for st in STAGES:
-            c = fw["cells"].get((code, st))
-            if not c:
-                continue
-            ex_name = c["corpus_example"].split(":", 1)[0].strip()
-            ex_slug = PATHWAY_NAME_TO_SLUG.get(ex_name)
-            primary = [f"{code}-{s['code'].lower()}" for s in dims[code]["subs"]
-                       if s["weights"][st] == "primary"]
-            body = f"""## Core question
-
-{c['core_question']}
-
-## Listening for
-
-{c['listening_for']}
-
-## Insight form
-
-{c['insight_form']}
-
-## Corpus example
-
-{c['corpus_example']}
-"""
-            w.write("cells", f"{code}-{st.lower()}", "cell", f"{dims[code]['name']} × {st}", {
-                "aliases": [f"{code}:{st}"], "summary": c["core_question"],
-                "dimension": code, "stage": st.lower(), "grid_key": f"{code}:{st}",
-                "core_question": c["core_question"], "listening_for": c["listening_for"],
-                "insight_form": c["insight_form"], "corpus_example": c["corpus_example"],
-                "example_pathway": ex_slug, "primary_sub_categories": primary,
-            }, body, s_code, code_refs=[fw_ref])
+            "previous": STAGES[i - 1].lower() if i else None,
+            "next": STAGES[i + 1].lower() if i < 3 else None,
+            "cells": {code: fw["cells"][(code, st)]["core_question"]
+                      for code in DIMENSION_ORDER if (code, st) in fw["cells"]},
+        })
+        w.write("concepts", st.lower(), "concept", st, fields, body, s_code, doc_refs=[dim_ref, fw_ref])
 
     # -- concepts ----------------------------------------------------------
     s_fw = [src("diffusion_cube_code", "document", fw_ref)]
@@ -361,9 +395,8 @@ never assigned by the model (`designs.meta.stage`).
             "aliases": [ut["name"]], "summary": ut["definition"], "concept_kind": "unit-type",
             "definition": ut["definition"], "audience": "internal-only",
             "what_makes_it_reusable": ut["reusable"], "broader": "unit",
-            "code_identifier": ut["name"],
         }, f"## Definition\n\n{ut['definition']}\n\n## How it is used\n\nOne of the five types every corpus unit is tagged with (`unit_type` on `units/`).\n\n**What makes it reusable:** {ut['reusable']}\n",
-            s_fw, code_refs=[fw_ref, dim_ref])
+            s_fw, doc_refs=[fw_ref, dim_ref])
 
     for key, label in (("data", "Data"), ("trust", "Trust")):
         lines = "\n".join(f"- **{d.title()}** — {fw['concerns'][key].get(d, '')}" for d in DIMENSION_ORDER)
@@ -373,7 +406,7 @@ never assigned by the model (`designs.meta.stage`).
             "definition": f"{label} is a concern that cuts across all four dimensions; each dimension asks a different {label.lower()} question.",
             "audience": "public-vocabulary",
         }, f"## Definition\n\n{label} cuts across all four dimensions.\n\n## How it is used\n\n{lines}\n", s_fw,
-            code_refs=[fw_ref])
+            doc_refs=[fw_ref])
 
     for sec in fw["sections"]:
         name = sec["name"]
@@ -386,7 +419,7 @@ never assigned by the model (`designs.meta.stage`).
             "definition": md_clean(f"{sec['purpose']}. Contents: {sec['contents']}"),
             "audience": audience, "broader": "pathway-document",
         }, f"## Definition\n\n**Section {num or '—'} — {name}.** {sec['purpose']}\n\n## How it is used\n\n{sec['contents']}\n",
-            s_fw, code_refs=[fw_ref])
+            s_fw, doc_refs=[fw_ref])
 
     extra = [
         ("unit", "Unit (micro-innovation)", "method",
@@ -425,7 +458,7 @@ never assigned by the model (`designs.meta.stage`).
         w.write("concepts", slug, "concept", name, {
             "aliases": aliases, "summary": definition, "concept_kind": kind, "definition": definition,
             "audience": audience, "broader": broader,
-        }, f"## Definition\n\n{definition}\n", s_fw, code_refs=[fw_ref])
+        }, f"## Definition\n\n{definition}\n", s_fw, doc_refs=[fw_ref])
 
 
 # ---------------------------------------------------------------------------
@@ -569,10 +602,10 @@ def seed_corpus(w: Writer, repo: Path) -> None:
         notes = []
         if lifecycle == "unindexed":
             notes.append("On disk in the grounding corpus but **not linked from `content/wiki/pathways/index.md`**, "
-                         "so excluded from grounding and the /wiki listing (TD-07). It may still be live via "
+                         "so excluded from grounding and the /wiki listing. It may still be live via "
                          "`published_pathways` — check the DB before calling it unpublished.")
         if len(d["copies"]) > 1:
-            notes.append("Exists in **both** in-repo corpora as independently maintained documents (TD-02) — "
+            notes.append("Exists in **both** in-repo corpora as independently maintained documents — "
                          "same slug, different text.")
         body_md = f"""## Identity
 
@@ -606,9 +639,9 @@ create its `units/`.
             "pathway_kind": PATHWAY_KIND.get(slug, "single-deployment"),
             "sector": sector, "use_case_category": use_case, "stage_reached": stage,
             "contributing_organisations": org_slugs, "coverage": grid or None, "gaps": gaps,
-            "corpora": sorted(set(d["corpora"])), "corpus_files": d["copies"],
+            "corpora": sorted(set(d["corpora"])),
             "lifecycle": lifecycle, "published_on": published_on, "document_version": fm.get("version"),
-        }, body_md, sources, code_refs=d["copies"])
+        }, body_md, sources, doc_refs=d["copies"])
 
     for oslug, (oname, oalias) in orgs.items():
         kinds = ["contributing-organisation"]
@@ -621,63 +654,6 @@ create its `units/`.
         }, "## Relationship to the Cube\n\nNamed as a contributor on one or more corpus pathways "
            "(see the generated Related section).\n",
             [src("diffusion_cube_code", "document", "content/wiki/pathways/*.md frontmatter `contributor`")])
-
-    # -- corpora -----------------------------------------------------------
-    w.write("corpora", "grounding-corpus", "corpus", "Grounding corpus", {
-        "aliases": ["content/wiki/pathways", "wiki corpus"],
-        "summary": "In-repo pathway documents the Explorer and Contributor flows are grounded in, whole-corpus.",
-        "corpus_kind": "static-repo", "location": "content/wiki/pathways",
-        "index_file": "content/wiki/pathways/index.md", "grounding_scope": "whole corpus (~22K tokens with framework)",
-        "voice": "advisory, framework-tagged, drives <grid_update>", "merges_with": ["published-pathways-corpus"],
-    }, """## What it is
-
-The framework-structured pathway documents (Sections 0–6 + Source Trace) committed in the repo.
-
-## How it is loaded
-
-`lib/wiki-loader.ts` reads files linked from `index.md` (the sole discovery path), merges
-`published_pathways` rows by slug (DB wins). `lib/wiki-content.ts` is a second read path for
-`/wiki` browsing, stripping frontmatter and the Source Trace appendix.
-
-## Divergence from other corpora
-
-Shares several slugs with the library corpus but the documents are maintained independently (TD-02).
-""", [src("diffusion_cube_code", "queried", "lib/wiki-loader.ts"), src("diffusion_cube_docs", "document", "docs/wiki/diffusion-cube/integrations/ai-llm.md")],
-        code_refs=["content/wiki/pathways", "lib/wiki-loader.ts", "lib/wiki-content.ts"])
-    w.write("corpora", "library-corpus", "corpus", "Library corpus", {
-        "aliases": ["content/library-wiki/pathways", "Diffusion Library"],
-        "summary": "In-repo, conversational-tone pathway documents behind the public /explore library, grounded one document at a time.",
-        "corpus_kind": "static-repo", "location": "content/library-wiki/pathways",
-        "grounding_scope": "one document at a time", "voice": "conversational, no grid",
-        "merges_with": ["published-pathways-corpus"],
-    }, """## What it is
-
-Overview-style pathway documents for the public, no-login Diffusion Library (`/explore`).
-
-## How it is loaded
-
-`lib/library-wiki-loader.ts`; no index file. Merged with `published_pathways` by slug (DB wins).
-
-## Divergence from other corpora
-
-Not the same documents as the grounding corpus even where slugs match (TD-02).
-""", [src("diffusion_cube_code", "queried", "lib/library-wiki-loader.ts")],
-        code_refs=["content/library-wiki/pathways", "lib/library-wiki-loader.ts"])
-    w.write("corpora", "published-pathways-corpus", "corpus", "Published pathways (database corpus)", {
-        "aliases": ["published_pathways"],
-        "summary": "Community-contributed pathways made live by admin publish; merged into both in-repo corpora at read time.",
-        "corpus_kind": "database", "location": "published_pathways",
-        "grounding_scope": "merged into both corpora by slug",
-    }, """## What it is
-
-Rows in the `published_pathways` table, public-read. The only place community content goes live —
-written by `POST /api/admin/pathways/publish`, no redeploy needed.
-
-## Who reads it
-
-All three corpus loaders. A DB row overrides an in-repo file with the same slug.
-""", [src("diffusion_cube_code", "queried", "supabase/migrations/0012_published_pathways.sql")],
-        code_refs=["supabase/migrations/0012_published_pathways.sql", "app/api/admin/pathways/publish/route.ts"])
 
 
 # ---------------------------------------------------------------------------
@@ -696,9 +672,7 @@ def main() -> int:
     if not (repo / "lib/dimensions.ts").is_file():
         print(f"not a diffusion-cube checkout: {repo}", file=sys.stderr)
         return 2
-    commit = subprocess.run(["git", "-C", str(repo), "rev-parse", "HEAD"],
-                            capture_output=True, text=True).stdout.strip()
-    w = Writer(brain, commit, args.force, args.dry_run)
+    w = Writer(brain, args.force, args.dry_run)
     if args.only in (None, "framework"):
         seed_framework(w, repo)
     if args.only in (None, "corpus"):

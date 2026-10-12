@@ -1,7 +1,7 @@
 # Ingest a pathway into the Cube-Brain
 
-Turns one pathway document into a `pathways/` entry, its `units/`, any
-`patterns/`, and the organisations/people it names. The framework's own
+Turns one pathway document into a `pathways/` entry, its `units/` (Section 5
+patterns included), and the organisations/people it names. The framework's own
 extraction discipline (content/framework.md § Extraction discipline) governs
 every step — this file applies it to the brain.
 
@@ -36,7 +36,7 @@ For every unit in Section 3 (keep its number in `source_unit_id`):
 | Field | How |
 |---|---|
 | `unit_type` | Exact MASTERS 1 term. A single procedural-sounding decision is a Decision, not a Playbook. A decision about how to structure something is a Decision, not a Toolkit Asset. |
-| `dimension`, `sub_category` | The sub-category MUST belong to the dimension (`institution-c` only with `institution`). Read `sub-categories/<slug>.md` names when unsure. |
+| `dimension`, `sub_category` | The sub-category MUST belong to the dimension (`institution-c` only with `institution`). The dimension's concept page (`concepts/<dimension>.md`) lists its sub-categories, their names and stage weights. All three tags are MASTERS variables (2, 4, 3). |
 | `stage` | Stage of ORIGIN — where the evidence came from. This is what counts in the grid. |
 | `also_relevant_at` | Retrieval only. Never includes the origin stage. |
 | `applies_when` / `fails_when` | The condition tag. Required. `Not documented in the source` if absent — never invent. |
@@ -59,10 +59,15 @@ unit via `related_units`.
 
 ## 3. Patterns
 
-From Section 5 (problem → root cause → solution → result → condition). Grep
-`patterns/` first — if the same problem exists, extend its `evidence_units`
-and `pathways` instead of creating a duplicate. A pattern with one piece of
-evidence is fine to record but say so in the body.
+From Section 5 (problem → root cause → solution → result → condition). A
+pattern is a unit with `unit_type: Problem-Solution Pattern`, carrying
+`problem`, `root_cause`, `solution`, `result`, `condition`, `evidence_units`
+and the `pathways` / `dimensions` / `stages` it spans. Grep
+`grep -l "^unit_type: Problem-Solution Pattern" units/*.md` first — if the same
+problem exists, extend its `evidence_units` and `pathways` instead of creating
+a duplicate. Slug `<pathway>-<short-name>`, or `pattern-<short-name>` once it
+spans pathways. A pattern with one piece of evidence is fine to record but say
+so in the body.
 
 ## 4. Actors
 

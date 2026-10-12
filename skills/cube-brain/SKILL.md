@@ -3,30 +3,30 @@ name: cube-brain
 description: >
   Reads and writes the Cube-Brain — the structured knowledge graph of the
   Diffusion Cube / 100 Pathways project (repo `diffusion-cube`). Use it to
-  ANSWER any question about the project: the AI Diffusion Pathway Framework
-  (dimensions, sub-categories, stages, grid cells, unit types), the pathway
-  corpus (pathways, micro-innovation units, patterns, who contributed what),
-  the app (features, flows, pages, API routes, chat modes, prompts, the
-  grid_update contract, tables, migrations, env vars, integrations,
-  deployment), and delivery (decisions, requirements, milestones, releases,
-  tech debt, risks, incidents) — "how does publish work", "which units cover
-  Institution at Pilot", "what reads published_pathways", "why did we drop
-  pathway_submissions", "what's due before the next milestone". Use it to
-  CAPTURE whenever project knowledge appears — a decision made, a feature or
-  PR shipped, a migration added, a new pathway contributed, an incident, a
-  risk or deadline — and when the user says "log this to the cube brain",
-  "update the brain", "sync the brain", "ingest this pathway". Also runs the
-  brain's validation, reports and local site.
+  ANSWER any question about the project's knowledge: the AI Diffusion Pathway
+  Framework (dimensions, sub-categories and their stage weights, stages, grid
+  cells, unit types, product rules), the pathway corpus (pathways,
+  micro-innovation units, problem→solution patterns, who contributed what),
+  the people and organisations involved, and delivery (decisions, risks,
+  milestones) — "which units cover Institution at Pilot", "what does
+  Persona C weigh at Define", "who contributed MahaVISTAAR", "what is due
+  before the next milestone". Use it to CAPTURE whenever such knowledge
+  appears — a framework or programme decision, a new pathway contributed, a
+  risk or deadline, a milestone — and when the user says "log this to the
+  cube brain", "update the brain", "ingest this pathway". Also runs the
+  brain's validation, reports and local site. The app's code level (routes,
+  tables, migrations, env vars) is NOT in this brain — answer those from the
+  repo directly.
 metadata:
   version: 1.0.0
-  brain_schema: 1
+  brain_schema: 2
 ---
 
 # Cube-Brain
 
 The Cube-Brain is a git repository of markdown entities with YAML frontmatter
-that models the whole Diffusion Cube project as one graph — 34 entity types in
-six layers. This skill is how an agent reads it faithfully and writes to it
+that models the Diffusion Cube project's knowledge as one graph — 8 entity
+types in three layers, with the framework's closed sets as variables. This skill is how an agent reads it faithfully and writes to it
 without degrading it.
 
 ## Locations
@@ -51,18 +51,23 @@ exist, say so and stop — never write brain entries anywhere else.
 
 ## The model in one table
 
-| Layer | Types (folder) |
-|---|---|
-| Framework | dimension (`dimensions/`), sub_category (`sub-categories/`), stage (`stages/`), cell (`cells/`), concept (`concepts/`) |
-| Corpus | pathway (`pathways/`), unit (`units/`), pattern (`patterns/`), corpus (`corpora/`) |
-| Actors | organisation, person (`people/`), team, role |
-| Product | feature, workflow, page, endpoint, chat_mode (`chat-modes/`), prompt, contract, table, migration, module, integration, config_var (`config/`), environment |
-| Knowledge | rule, decision |
-| Delivery | requirement, milestone, release, tech_debt (`tech-debt/`), risk, incident |
+| Layer | Types (folder) | Variables (MASTERS.md) |
+|---|---|---|
+| Framework + corpus | concept (`concepts/`), pathway (`pathways/`), unit (`units/`) | dimension (2), stage (3), sub-category (4), grid key (5), corpus (13) |
+| Actors | organisation (`organisations/`), person (`people/`) | team (15) |
+| Delivery | decision (`decisions/`), risk (`risks/`), milestone (`milestones/`) | — |
 
-Fixed framework slugs: `persona|solution|institution|ecosystem`,
+Fixed framework values: `persona|solution|institution|ecosystem`,
 `explore|define|pilot|scale`, sub-categories `persona-a` … `ecosystem-f`,
-cells `<dimension>-<stage>`.
+grid keys `<dimension>:<Stage>`. Each dimension's concept page
+(`concepts/persona.md` …) holds its sub-categories (weights + questions) and
+its four cells; each stage has `concepts/<stage>.md`. A problem→solution
+pattern is a unit with `unit_type: Problem-Solution Pattern`; a product rule
+is a concept with `concept_kind: rule`.
+
+Out of scope: the app's code level. Its last brain model is commit `0296ca8`
+of this repo — read it there (`git show 0296ca8:endpoints/chat.md`) if a
+question needs the old record, but trust the current code over it.
 
 ---
 
@@ -71,8 +76,8 @@ cells `<dimension>-<stage>`.
 Use whenever the user asks what the project has, does, decided, or knows.
 
 1. **Locate**: grep `INDEX.md` for names/aliases; then `grep -rl` across
-   folders for terms. For graph questions ("what touches table X", "which
-   units are Ecosystem/Scale"), grep frontmatter fields:
+   folders for terms. For graph questions ("which units are Ecosystem/Scale",
+   "which pathways sit in the library corpus"), grep frontmatter fields:
    `grep -l "^stage: scale" units/*.md | xargs grep -l "^dimension: ecosystem"`.
    For whole-brain state run `python3 scripts/cube_report.py`.
 2. **Read** the entries you will rely on — frontmatter AND body.
@@ -80,21 +85,15 @@ Use whenever the user asks what the project has, does, decided, or knows.
    each claim rests on, so it can be checked.
 4. **Never upgrade a record's standing.** Carry each type's meaning into the
    answer:
-   - a `requirement`, a `milestone`, a `planned` feature/workflow is INTENT —
-     never describe it as built;
+   - a `milestone` and its `deliverables` are INTENT — never describe them as
+     built;
    - a `unit` / `pathway` is the CONTRIBUTOR's account — attribute it
      ("According to EkStep Foundation's Blue Dots pathway…"), never state it
      as the Cube's own fact, and always carry its condition tag;
-   - status `dead-code` / `inert` / `dropped` means present-but-not-working —
-     say so;
    - a `contested` field holds a live disagreement — show both readings.
-5. **Check freshness when it matters.** Product facts carry
-   `verified_at_commit`; if the repo HEAD has moved (`cube_report.py
-   --section freshness`), verify the specific claim against the code before
-   asserting it, and offer to sync.
-6. **Say what the brain does not hold.** If nothing matches, say so plainly;
+5. **Say what the brain does not hold.** If nothing matches, say so plainly;
    then (optionally) answer from the repo directly and offer to capture it.
-7. **Respect the product's own rules** when the answer is user-facing copy:
+6. **Respect the product's own rules** when the answer is user-facing copy:
    sub-category codes, densities and unit-type labels are internal-only
    (`concept.audience`); Source Trace content is contributor-only.
 
@@ -102,25 +101,26 @@ Use whenever the user asks what the project has, does, decided, or knows.
 
 Triggered by "log/add/update this", or when the user agrees to an offer. When
 you merely *notice* something worth capturing mid-task, finish the task, then
-offer once in one line ("Worth logging to the Cube-Brain: decision X, release
-PR #4 — log them?"). Do not interrupt; do not re-offer after a no.
+offer once in one line ("Worth logging to the Cube-Brain: decision X, risk
+Y — log them?"). Do not interrupt; do not re-offer after a no.
 
 1. **Classify** — pick the type with the "Choosing the right type" table in
    `CONVENTIONS.md` (a Cube-team choice is a `decision`, not a `unit`; a
-   corpus lesson is a `unit`, not a `decision`; something that broke in the
-   app is an `incident`).
+   corpus lesson is a `unit`, not a `decision`; a rule the Cube always keeps
+   is a `concept`; a dimension, stage, corpus or team is a variable, never a
+   new entity; code-level facts are out of scope).
 2. **Resolve** — grep `INDEX.md` and the folder; an existing entry under
    another name is common. Update rather than duplicate.
-3. **Corroborate** — product facts against the code in `$CUBE_REPO` (trust
-   the code over any doc); framework facts against `content/framework.md` /
-   `lib/dimensions.ts`; pathway facts against the pathway document. Record
+3. **Corroborate** — framework facts against `content/framework.md` /
+   `lib/dimensions.ts`; pathway facts against the pathway document; delivery
+   facts against the Product Charter or the document that states them. Record
    each in `sources` with the right `method` (`queried`, `document`,
    `stated`, `derived`). A thing only said in conversation is `stated`.
 4. **Propose** — short and scannable, naming the brain, new vs update, and
    what each item rests on:
    > Worth logging to the **Cube-Brain**:
-   > - **New decision:** move corpus loading to … — *code-confirmed at a1b2c3d*
-   > - **Update:** `features/toolkit-asset-files` → live — *route + migration 0034 present*
+   > - **New decision:** weight Institution C primary at Pilot — *framework.md updated*
+   > - **Update:** `pathways/blue-dots` → 6 new units — *pathway document v2*
    > - **New risk:** … *(asserted — no source)*
    >
    > Log these? (yes / edit / skip)
@@ -131,8 +131,7 @@ PR #4 — log them?"). Do not interrupt; do not re-offer after a no.
    **Every slug in a ref field must exist after this commit** — create it in
    the same commit or keep the name in prose. Respect edge directions (store
    the reference on the side `CONVENTIONS.md` § Edge directions says).
-   Set `last_updated` to today; set `verified_at_commit` to the repo HEAD on
-   any product entry you checked against code.
+   Set `last_updated` to today.
 6. **Log** — one activity entry per capture:
    `python3 scripts/log_activity.py . --scope "$(git config user.name)" --text "- $(date +%F): [decision] <name> — <one line>"`
 7. **Regenerate + validate**:
@@ -155,13 +154,13 @@ pathway entity, then extract one `unit` per micro-innovation with full tags
 and condition, toolkit assets and playbooks, Section 5 patterns, and the
 organisations/people it names.
 
-## Mode D — Sync the brain after code changes
+## Mode D — Re-derive after the framework changes
 
-When the user says "sync the brain", after merging a PR, or when Mode A finds
-the brain stale, follow **`references/sync-from-code.md`**. It starts with
-`python3 scripts/cube_sync_plan.py`, which lists every changed file since the
-brain's last verified commit, the entries describing it, and files with no
-entry yet.
+When `content/framework.md` or `lib/dimensions.ts` changes in the repo, run
+`python3 scripts/seed_from_repo.py --only framework --dry-run`, compare, then
+re-seed deliberately (`--force` overwrites — read the existing concept pages
+first and keep any hand-written enrichment). Update MASTERS 1–5 in the same
+commit if a dimension, stage, sub-category or unit type changed.
 
 ## Mode E — Maintain and report
 
@@ -170,7 +169,8 @@ entry yet.
 | Is the brain valid? | `python3 scripts/validate_wiki.py .` (`--stats` for model + coverage) |
 | Whole-project status | `python3 scripts/cube_report.py` |
 | Duplicates | grep `INDEX.md`; `python3 scripts/find_duplicates.py .` |
-| Re-derive framework from code | `python3 scripts/seed_from_repo.py --only framework --dry-run` (then `--force` deliberately) |
+| Re-derive framework from the repo | `python3 scripts/seed_from_repo.py --only framework --dry-run` (then `--force` deliberately) |
+| Every entry on the current schema? | `python3 scripts/migrate_v1_to_v2.py . --check` |
 | Local website (graph, tabs, search) | `python3 scripts/add_site.py .` once, then `python3 scripts/build_site.py . && python3 -m http.server -d site 8000` |
 | Schema change | see `references/schema-change.md` |
 
@@ -181,8 +181,8 @@ never set it up as a side effect.
 
 ## Rules that are never relaxed
 
-- **No secrets, no values.** Config entries hold variable NAMES only. Never
-  read `.env.local` into the brain. No tokens or keys in any file or commit.
+- **No secrets, no values.** Never read `.env.local` into the brain. No
+  tokens or keys in any file or commit.
 - **No personal data.** People entries: professional role and involvement
   only — no emails, phones, personal details. No production user data
   (adoptions, chats, registrations): count, never copy.
@@ -191,8 +191,9 @@ never set it up as a side effect.
   `Not documented in the source`; other unknowns stay blank.
 - **Don't invent vocabulary.** A value missing from `MASTERS.md` is proposed
   there (same commit, with a reason), never used uncontrolled.
-- **Trust the code** for product facts; record doc-vs-code disagreements in
-  `contested` instead of silently choosing.
+- **Trust the source.** Framework facts come from `content/framework.md` /
+  `lib/dimensions.ts`, pathway facts from the pathway document; record
+  disagreements in `contested` instead of silently choosing.
 - **Never write to the project repo, its database, or GitHub from this skill.**
   The brain is updated from them, never the reverse.
 - **Scope.** Knowledge about other Tekdi projects belongs in the company brain
@@ -205,5 +206,4 @@ never set it up as a side effect.
 | File | When |
 |---|---|
 | `references/ingest-pathway.md` | Mode C — turning a pathway document into units/patterns |
-| `references/sync-from-code.md` | Mode D — bringing the brain level with the repo |
 | `references/schema-change.md` | Adding a type/field/vocab term or bumping the schema version |

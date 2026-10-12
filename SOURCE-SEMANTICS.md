@@ -25,13 +25,13 @@ hard way.
   generated developer docs (`docs/wiki/diffusion-cube`). Say which.
 - **"organisations"** is both a DB table (a registry rows found-or-created at
   join) and, in this brain, an entity type for real organisations. The table
-  is `tables/organisations-table`.
+  is app code and out of this brain's scope.
 
 ### Structural facts that bite
 
 - `content/wiki/pathways/index.md` is the **sole discovery path** for the
   grounding corpus: a file on disk but not linked from it is excluded from
-  grounding and the `/wiki` listing. (docs wiki TD-07, 2026-09-28)
+  grounding and the `/wiki` listing. (docs wiki, 2026-09-28)
 - Two in-repo corpora hold **independently maintained** documents under the
   same slugs (`mahavistaar`, `blue-dots`, …). Same slug ≠ same text.
 - `published_pathways` rows override in-repo files **by slug** at read time.
