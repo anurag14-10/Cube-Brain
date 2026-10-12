@@ -25,12 +25,12 @@ sources:
   date: '2026-10-08'
   ref: git log author anurag14-10
 first_logged: '2026-10-08'
-last_updated: '2026-10-08'
+last_updated: '2026-10-12'
 ---
 
 ## Relationship to the Cube
 
-The Product Charter's execution model names the **Solution Team** as "Kamesh + Tekdi Team". It owns solution functionality, UI/UX and the data and technical architecture, builds and maintains the web app and the planned Claude Skill integration, and handles product and technical user issues. See Solution Team.
+The Product Charter's execution model names the **Solution Team** as "Kamesh + Tekdi Team". It owns solution functionality, UI/UX and the data and technical architecture, builds and maintains the web app and the planned Claude Skill integration, and handles product and technical user issues. See [Two-team execution model](../decisions/two-team-execution-model.md).
 
 ## Notes
 

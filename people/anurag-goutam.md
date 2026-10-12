@@ -2,9 +2,7 @@
 name: Anurag Goutam
 type: person
 schema_version: 2
-summary: Tekdi developer on the Solution Team (git anurag14-10). Built the Docker/AWS EC2 path, the Supabase
-  Send Email hook for OTP over SMTP, self-serve account deletion, the Terms of Use / Privacy Notice work
-  and toolkit asset files.
+summary: Tekdi developer on the Solution Team (git anurag14-10). Owner of the Toolkit Asset Files work; also built the AWS deployment path, email delivery of sign-in codes, self-serve account deletion and the Terms of Use / Privacy Notice work.
 doc_refs:
 - specs/TOOLKIT_ASSETS_SPEC.md
 - docs/tasks/toolkit-asset-files/requirement.md
@@ -26,17 +24,17 @@ sources:
   date: '2026-10-08'
   ref: 'specs/TOOLKIT_ASSETS_SPEC.md (Owner: Anurag Goutam)'
 first_logged: '2026-10-08'
-last_updated: '2026-10-08'
+last_updated: '2026-10-12'
 ---
 
 ## Involvement
 
-Commits authored as `anurag14-10` in diffusion-cube, all reaching main through Swanand Kulkarni's fork PRs:
+A Solution Team developer whose work reaches main through [Swanand Kulkarni](swanand-kulkarni.md)'s fork pull requests. Between 2026-09-22 and 2026-10-06 the work covered several charter requirements for [the web app milestone](../milestones/web-app-with-20-pathways.md):
 
-- **2026-09-22** `b8c9a9c`: Docker support and an AWS EC2 deployment path. The path is built but not wired to CI.
-- **2026-09-24** `0f5aa10`: Supabase Auth Send Email hook. OTP and reset codes are delivered over SMTP via nodemailer (`app/api/auth/send-email/route.ts`). See OTP signup and reset.
-- **2026-09-28** `1be6f71`: self-serve account deletion (migration 0033), in-app confirm dialogs and toasts. See Account deletion.
-- **2026-09-28** `619aeff`: Terms and Conditions. See Terms and privacy.
-- **2026-09-29 → 2026-10-06** (`e0ede1b`, `7ac843a`, `3ded7ae`, `e51e555`, `28068b6`): the toolkit asset files requirement, plan and task list, then the implementation (migration 0034, upload/register/download routes, consent cards, admin publish). See Toolkit asset files.
+- a Docker / AWS deployment path, built but not wired to CI (see [AWS account expiry](../risks/aws-account-expiry.md));
+- delivery of sign-up and password-reset codes by email;
+- self-serve account deletion;
+- the Terms of Use and Privacy Notice;
+- toolkit asset files, from requirement to implementation.
 
-The toolkit-asset requirement records that he requested the work on 2026-09-29. `specs/TOOLKIT_ASSETS_SPEC.md` names him as owner.
+The toolkit-asset requirement records the request on 2026-09-29, and the spec names Anurag as owner. As owner, Anurag decided on 2026-09-30 that [third-party tools count as Toolkit Assets when the deployment built on them](../decisions/third-party-tools-count-as-toolkit-assets.md).

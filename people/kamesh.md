@@ -5,14 +5,11 @@ schema_version: 2
 aliases:
 - BH Kameswara Rao
 - kameshbhr
-summary: EkStep's Solution Team lead per the Product Charter (Director, Solutions & Growth – Digital Transformation);
-  created the diffusion-cube repo, edits pathway content, and is named Grievance Officer in the Terms
-  of Use and Privacy Notice.
+summary: EkStep's Solution Team lead per the Product Charter (Director, Solutions & Growth – Digital Transformation); created the diffusion-cube repo, edits pathway content, credited on the AI-assisted job matching pathway, and named Grievance Officer in the Terms of Use and Privacy Notice.
 doc_refs:
-- docs/wiki/diffusion-cube/business/business-overview.md
+- docs/raw_documents/AI DIffusion Cube - Product Charter.docx
 - content/wiki/pathways/ai-assisted-job-matching.md
 - content/legal/terms.md
-- lib/legal.ts
 affiliations:
 - ekstep-foundation
 teams:
@@ -26,8 +23,8 @@ github_handle: kameshbhr
 sources:
 - system: raw_documents
   method: document
-  date: '2026-10-08'
-  ref: Product Charter execution model (via docs/wiki/diffusion-cube/business/business-overview.md)
+  date: '2026-10-12'
+  ref: Product Charter § 4 Execution Approach (Team & Roles)
 - system: diffusion_cube_code
   method: queried
   date: '2026-10-08'
@@ -35,23 +32,21 @@ sources:
 - system: github_repo
   method: queried
   date: '2026-10-08'
-  ref: git log --author=kameshbhr (19 commits incl. initial commit 2026-06-29)
+  ref: git log --author=kameshbhr (initial commit 2026-06-29)
 contested:
 - field: aliases
   readings:
   - Kamesh (charter, git kameshbhr)
   - BH Kameswara Rao (Terms §10 Grievance Officer)
-  note: Identified as the same person because the Grievance Officer's contact address and NEXT_PUBLIC_SUPPORT_EMAIL's
-    default (lib/legal.ts) are Kamesh's EkStep address. This is derived, not stated anywhere.
+  note: Identified as the same person because the Grievance Officer's contact and the app's default support contact are the same EkStep address. This is derived, not stated anywhere.
 first_logged: '2026-10-08'
-last_updated: '2026-10-08'
+last_updated: '2026-10-12'
 ---
 
 ## Involvement
 
-- **Solution Team lead.** The charter's execution model names the Solution Team as "Kamesh + Tekdi Team". See Solution Team.
-- **Repository.** Made the initial commit on 2026-06-29. Edited content directly: `framework.md`, `mahavistaar.md`, `unififed-ai-driven-agri-ecosystem.md` and `assisted-language-math-learning.md`, and the African Voice AI entry in `lib/library-pathways.ts`. Merged PR #3 (`Terms`) on 2026-10-06.
-- **App-generated commits.** `publish pathway: axl / greensense / orange-dots / langchat` commits carry his identity. These come from the Contributor assemble step (GitHub Contents API commits take the token owner's identity). They show test or production publishes, not necessarily his authorship of those pathways.
-- **Legal.** Named Grievance Officer in `content/legal/terms.md` §10 and in the Privacy Notice. His address is the default support contact (`lib/legal.ts`).
-- **Corpus.** Credited, as "Kamesh · EkStep · Program Execution Partner", for units of the AI-assisted job matching pathway.
-- `.github/workflows/deploy.yml` notes that his own push was blocked by Vercel Hobby's commit-author check. That is the reason deploys go through a token-based CLI.
+- **Solution Team lead.** The charter's execution model names the Solution Team as "Kamesh + Tekdi Team" (see [Two-team execution model](../decisions/two-team-execution-model.md)).
+- **Repository and content.** Created the diffusion-cube repository on 2026-06-29. Edits framework and pathway content directly, including the framework document and the MahaVISTAAR, Unified AI-Driven Agri Ecosystem and Assisted Language & Math Learning pathways.
+- **Corpus.** Credited as "Kamesh · EkStep · Program Execution Partner" on the [AI-assisted job matching](../pathways/ai-assisted-job-matching.md) pathway.
+- **Legal.** Named Grievance Officer in the Terms of Use and the Privacy Notice.
+- Some `publish pathway:` commits in the project repo carry his identity. They come from the app's assemble step, which commits under the owner of the configured token, so they record test or production publishes, not authorship of those pathways.
