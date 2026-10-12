@@ -34,7 +34,10 @@ hard way.
   grounding and the `/wiki` listing. (docs wiki, 2026-09-28)
 - Two in-repo corpora hold **independently maintained** documents under the
   same slugs (`mahavistaar`, `blue-dots`, …). Same slug ≠ same text.
-- `published_pathways` rows override in-repo files **by slug** at read time.
+- `published_pathways` rows override a same-slug in-repo file **only in the
+  library** (`lib/library-wiki-loader.ts`). The grounding loader and the
+  `/wiki` list append them, so a shared slug appears twice there. (code,
+  28068b6, 2026-10-12)
 - `contribution_units` was inert until migration 0034 repurposed it for
   toolkit-asset files; it is no longer purely inert.
 - Migration 0008 is destructive (deleted old 7-dimension rows).

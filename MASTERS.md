@@ -216,7 +216,7 @@ pathway's `corpora` names where its copies live; the file paths go in its
 
 - grounding-corpus — `content/wiki/pathways`, framework-structured documents, whole-corpus grounding for the Explorer and Contributor flows, discovered only through `index.md`
 - library-corpus — `content/library-wiki/pathways`, conversational overview documents behind the public Diffusion Library, grounded one document at a time
-- published-pathways-corpus — the `published_pathways` table, community pathways made live by admin publish and merged into both in-repo corpora by slug (the database copy wins)
+- published-pathways-corpus — the `published_pathways` table, community pathways made live by admin publish, appended to the grounding corpus and the /wiki list, and replacing a same-slug file in the library (see concepts/pathway-lifecycle)
 
 ---
 
