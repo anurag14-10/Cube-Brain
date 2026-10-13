@@ -16,7 +16,7 @@ create/update-file or push-files tool). They are separate permissions.
 | No GitHub tools at all | Connector not added | **Settings → Connectors → Add custom connector**, URL `https://api.githubcopilot.com/mcp/`, OAuth. Added once per account; covers Desktop, web and mobile. |
 | Tools work, `repo` returns 404 | Private repo not granted — for an org-owned repo, the org has not approved the OAuth app | The repo owner / org admin approves the GitHub app for that repo or org. The repo exists; never say it does not. |
 | Reads work, write rejected | Credential lacks write scope | Re-authorise the connector with write (`repo`) access. |
-| Write to `repo` refused (403) but the scope is fine | The writer is not a collaborator — expected for everyone outside `admins` | Not a fault: take the Fork route in `references/write-route.md`. |
+| Write to `repo` refused (403, often "Resource not accessible by integration") | The writer is not in `admins` — expected | Not a fault and not a reason to ask for collaborator access: take the PR route in `references/write-route.md`. Only an admin's 403 needs fixing — the connector's GitHub App must be installed on `repo`. |
 
 If you cannot write, say so plainly, claim nothing was saved, and give the
 drafted markdown inline so the user can paste it. Never fall back to local or

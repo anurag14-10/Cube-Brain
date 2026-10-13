@@ -90,7 +90,18 @@ Then `git switch main`.
    and write them with the activity entry in **one multi-file push** to the
    branch.
 5. Create the pull request on `repo`: base `branch`, head `<login>:<branch>`
-   (Fork) or `<branch>` (Branch).
+   (Fork) or `<branch>` (Branch). If that call is refused (403 "Resource not
+   accessible by integration" — the connector's GitHub App is not installed
+   on `repo`'s owner), the branch is already pushed: give the user the compare
+   link from §4 and the PR body to paste, and say the PR is not open until
+   they press **Create pull request**.
+
+A 403 on step 2's fork, or on writing to the fork, means the connector's
+GitHub App cannot reach the writer's own account or the new fork: they open
+GitHub → Settings → Applications → the connector's app → Repository access
+→ **All repositories** (a fork created later is not in a "selected" list),
+then ask again. Never tell a non-admin to become a collaborator — the PR route
+exists so they do not have to.
 
 ## 6. PR body
 
