@@ -241,7 +241,9 @@ def main() -> int:
     ])
 
     if args.out:
-        Path(args.out).write_text(report, encoding="utf-8")
+        out = Path(args.out)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(report, encoding="utf-8")
         print(f"wrote {args.out}")
     else:
         print(report)
