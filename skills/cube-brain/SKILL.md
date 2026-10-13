@@ -15,7 +15,7 @@ description: >
   clone or, on Claude Desktop/web, through the GitHub connector. The app's
   code level (routes, tables, env vars) is not in this brain.
 metadata:
-  version: 2.0.0
+  version: 2.1.0
   brain_schema: 2
 ---
 
@@ -33,6 +33,8 @@ it.
 repo: anurag14-10/Cube-Brain     # GitHub owner/name of the brain
 branch: main
 commit_prefix: "cube-brain:"
+admins: [anurag14-10]            # push straight to `branch`; everyone else opens a PR
+pr_branch_prefix: capture/
 local_brain: $CUBE_BRAIN, else the repo this skill sits in, else ~/brain/Cube-Brain
 local_project: $CUBE_REPO, else diffusion-cube beside the brain
 ```
@@ -42,6 +44,12 @@ this skill's own directory if it contains `SCHEMA.yml` (an install that is a
 symlink or a clone of the brain); otherwise `~/brain/Cube-Brain`. The project
 repo is `$CUBE_REPO`, else `../diffusion-cube` relative to the brain. Never
 assume another person's absolute paths.
+
+**Who writes where:** a login in `admins` commits to `branch` directly;
+everyone else writes through a pull request an admin reviews and merges —
+from a branch in `repo` if they have write access, from their own fork if not.
+Follow **`references/write-route.md`** for every non-admin write, on any
+surface.
 
 ## Pick the storage for this surface
 
@@ -165,19 +173,22 @@ Y — log them?"). Do not interrupt; do not re-offer after a no.
    the reference on the side `CONVENTIONS.md` § Edge directions says).
    Set `last_updated` to today.
    On the connector, steps 6–8 are different — follow the adapter file
-   (one multi-file push; CI regenerates and validates).
-6. **Log** — one activity entry per capture:
-   `python3 scripts/log_activity.py . --scope "$(git config user.name)" --text "- $(date +%F): [decision] <name> — <one line>"`
+   (one multi-file push; CI regenerates and validates). Not an admin? Start
+   from a capture branch first — `references/write-route.md`.
+6. **Log** — one activity entry per capture, scoped by GitHub login:
+   `python3 scripts/log_activity.py . --scope <github-login> --text "- $(date +%F): [decision] <name> — <one line>"`
 7. **Regenerate + validate**:
    ```bash
    python3 scripts/build_index.py . && python3 scripts/build_backlinks.py . \
      && python3 scripts/build_activity_log.py . && python3 scripts/validate_wiki.py .
    ```
    Validation must exit 0. Fix errors you introduced; never commit a red brain.
-8. **Commit** — one commit per logging event, message prefixed `cube-brain:`;
-   push if a remote exists and the user has not said otherwise. Confirm in one
-   line what was written and what it rests on. Only claim success if the
-   commit (and push) succeeded.
+8. **Commit** — one commit per logging event, message prefixed `cube-brain:`.
+   Admin: push to `branch` if a remote exists and the user has not said
+   otherwise. Anyone else: commit only your own files on the capture branch,
+   push, and open the PR (`references/write-route.md`). Confirm in one line
+   what was written and what it rests on. Only claim success if the commit
+   and push succeeded — and a PR is "opened, pending review", never "saved".
 
 ## Mode C — Ingest a pathway into units
 
@@ -232,8 +243,9 @@ never set it up as a side effect.
 - **Trust the source.** Framework facts come from `content/framework.md` /
   `lib/dimensions.ts`, pathway facts from the pathway document; record
   disagreements in `contested` instead of silently choosing.
-- **Never write to the project repo, its database, or GitHub from this skill.**
-  The brain is updated from them, never the reverse.
+- **Never write to the project repo, its database, or anything on GitHub
+  except the brain `repo` and the writer's fork of it.** The brain is updated
+  from the project, never the reverse.
 - **Scope.** Knowledge about other Tekdi projects belongs in the company brain
   (`company-brain-capture` skill), not here; a pathway in the Cube's corpus
   belongs here even if the company brain also has it (link via
@@ -246,3 +258,4 @@ never set it up as a side effect.
 | `references/ingest-pathway.md` | Mode C — turning a pathway document into units/patterns |
 | `references/schema-change.md` | Adding a type/field/vocab term or bumping the schema version |
 | `references/adapter-github-connector.md` | No shell or no local clone — reading and writing through the GitHub connector |
+| `references/write-route.md` | Any write by someone not in `admins` — capture branch, fork, pull request |

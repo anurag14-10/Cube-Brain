@@ -44,6 +44,15 @@ python3 scripts/add_site.py . && python3 scripts/build_site.py . && python3 -m h
 
 Set `CUBE_REPO` if diffusion-cube is not checked out beside this repo.
 
+## Contributing
+
+Use the `cube-brain` skill with your own GitHub account (Claude Code, or the
+GitHub connector on Claude Desktop / web). Admins push to `main`; everyone else
+gets a pull request opened for them — from a branch here if you have write
+access, from your fork if not — which an admin reviews and merges. CI
+validates every PR and regenerates `INDEX.md` and the activity digest after
+the merge. Details: [`skills/cube-brain/references/write-route.md`](skills/cube-brain/references/write-route.md).
+
 ## Rules in one breath
 
 Trust the source document. Blank beats plausible. No secrets, no config values, no

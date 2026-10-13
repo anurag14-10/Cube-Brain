@@ -39,14 +39,20 @@ jobs:
       # hostage to an unrelated error, so it runs first and validation then
       # checks the regenerated result.
       #
+      # It also runs on pull requests, where nothing is committed: PRs carry
+      # only entity files and an activity entry (derived pages would make
+      # every two open PRs conflict), so the checks below need the pages
+      # rebuilt in the workspace to judge the merged result.
+      #
       # [skip ci] stops the bot's own commit triggering this workflow again.
       - name: Refresh derived pages
-        if: github.event_name == 'push'
         run: |
           python3 scripts/build_backlinks.py .
           python3 scripts/build_index.py .
           python3 scripts/build_activity_log.py .
-          if [ -n "$(git status --porcelain -- '*.md')" ]; then
+          if [ "${{ github.event_name }}" != "push" ]; then
+            echo "pull request: derived pages rebuilt for the checks, not committed"
+          elif [ -n "$(git status --porcelain -- '*.md')" ]; then
             git config user.name  "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add -A -- '*.md'

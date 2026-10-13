@@ -16,6 +16,7 @@ create/update-file or push-files tool). They are separate permissions.
 | No GitHub tools at all | Connector not added | **Settings → Connectors → Add custom connector**, URL `https://api.githubcopilot.com/mcp/`, OAuth. Added once per account; covers Desktop, web and mobile. |
 | Tools work, `repo` returns 404 | Private repo not granted — for an org-owned repo, the org has not approved the OAuth app | The repo owner / org admin approves the GitHub app for that repo or org. The repo exists; never say it does not. |
 | Reads work, write rejected | Credential lacks write scope | Re-authorise the connector with write (`repo`) access. |
+| Write to `repo` refused (403) but the scope is fine | The writer is not a collaborator — expected for everyone outside `admins` | Not a fault: take the Fork route in `references/write-route.md`. |
 
 If you cannot write, say so plainly, claim nothing was saved, and give the
 drafted markdown inline so the user can paste it. Never fall back to local or
@@ -51,7 +52,9 @@ draft). Then:
    login from the connector's own identity call. Never write
    `activities/{YYYY-MM}.md` or `INDEX.md` — CI regenerates both.
 3. **One multi-file push per logging event** — the entity files and the
-   activity entry together, commit message starting `cube-brain:`. Several
+   activity entry together, commit message starting `cube-brain:`. Only a
+   login in `admins` pushes to `branch`; anyone else pushes to a capture
+   branch and opens a PR — `references/write-route.md` §5. Several
    single-file commits leave half-written states and an unreadable history.
 4. **Validation runs in CI, not here.** The whole-brain validator needs the
    full tree. Check by hand what it would check: required fields for the type,
@@ -74,5 +77,5 @@ steps; write the pathway and all its units in one push.
 ## 5. Report only what happened
 
 Confirm success only against a successful push result, naming the files
-written and the commit. A failed or partial push that goes unmentioned is the
+written and the commit — or, for a PR, its number and link, as pending review. A failed or partial push that goes unmentioned is the
 worst outcome this skill can produce.
