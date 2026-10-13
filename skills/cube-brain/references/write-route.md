@@ -89,6 +89,18 @@ Open the PR:
   `--head <branch>`.
 - Else with GitHub connector tools in the session: their create-pull-request
   call.
+- Else, if the push used a token from the environment (`GH_TOKEN` or
+  `GITHUB_TOKEN`), open it through the REST API with that same token — never
+  print, echo or commit the token:
+
+  ```bash
+  curl -sf -X POST -H "Authorization: Bearer $GH_TOKEN" \
+    -H "Accept: application/vnd.github+json" \
+    https://api.github.com/repos/<repo>/pulls \
+    -d '{"title":"cube-brain: <summary>","base":"main","head":"<login>:<branch>","body":"<body, JSON-escaped>"}'
+  ```
+
+  The response's `html_url` is the PR link. Branch route: `"head":"<branch>"`.
 - Else hand the user the link to press **Create pull request** on, plus the
   body to paste:
   Fork `https://github.com/<repo>/compare/main...<login>:Cube-Brain:<branch>?expand=1`,
