@@ -16,6 +16,7 @@ there (§5), not here.
 
 | Symptom | Cause | Fix to name |
 |---|---|---|
+| Only the built-in **"GitHub Integration"** is connected | That one attaches repo files for reading; it gives no branch, push, fork or PR tools | Add the GitHub MCP server as well: **Settings → Connectors → Add → Add custom connector**, URL `https://api.githubcopilot.com/mcp/`, sign in with your own GitHub account, then switch it on in a new chat. |
 | No GitHub tools at all | Connector not added, or added but switched off for this chat | **Settings → Connectors → Add custom connector**, URL `https://api.githubcopilot.com/mcp/`, OAuth — once per account, covers Desktop, web and mobile. Already added? Switch it on in this chat's tools menu, then start a new chat. Do not clone the repo into a sandbox instead. |
 | Tools work, `repo` returns 404 | Private repo not granted — for an org-owned repo, the org has not approved the OAuth app | The repo owner / org admin approves the GitHub app for that repo or org. The repo exists; never say it does not. |
 | Write to `repo` refused (403, often "Resource not accessible by integration"), writer **not** in `admins` | Expected — they are not a collaborator | Not a fault, never a reason to ask for collaborator access: take the Fork route, `references/write-route.md` §5. |

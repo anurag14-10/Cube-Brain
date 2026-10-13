@@ -15,7 +15,7 @@ description: >
   clone or, on Claude Desktop/web, through the GitHub connector. The app's
   code level (routes, tables, env vars) is not in this brain.
 metadata:
-  version: 2.2.0
+  version: 2.2.1
   brain_schema: 2
 ---
 
