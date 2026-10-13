@@ -1,7 +1,10 @@
 # Changing the Cube-Brain's model
 
 A schema change alters the shape everyone writes against. Do it with a person
-present, never as a side effect of a capture.
+present, never as a side effect of a capture. Commits follow
+`write-route.md`: anyone not in `admins` proposes it as a PR, and
+`SCHEMA.yml`, `CONVENTIONS.md` and `MASTERS.md` always need the admin's
+review (CODEOWNERS).
 
 ## Adding a vocabulary term (no version bump)
 

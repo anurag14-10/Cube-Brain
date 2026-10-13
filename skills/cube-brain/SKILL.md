@@ -15,7 +15,7 @@ description: >
   clone or, on Claude Desktop/web, through the GitHub connector. The app's
   code level (routes, tables, env vars) is not in this brain.
 metadata:
-  version: 2.1.1
+  version: 2.2.0
   brain_schema: 2
 ---
 
@@ -55,13 +55,18 @@ surface.
 
 - **A shell AND a local clone exist** (Claude Code in a terminal, VS Code, or
   the Desktop app's Code tab): work in `$CUBE_BRAIN` (else `local_brain`)
-  with git. Every command below runs from the brain root.
+  with git. Every command below runs from the brain root. The clone must be
+  the user's own, with push credentials. A repo you cloned yourself into a
+  chat sandbox does not count: it vanishes between tasks and cannot push — on
+  such a surface use the connector, or the "Neither" route below.
 - **No shell, or no local clone** (Claude Desktop chat, web, mobile): read and
   write `repo` on `branch` through the GitHub connector. Follow
   **`references/adapter-github-connector.md`** — it replaces the shell steps
   (git pull, scripts, commit) with connector calls.
-- **Neither** (no shell and no GitHub tools): say so, name the fix (add the
-  GitHub connector — see the adapter file), and offer drafted markdown inline.
+- **Neither** (no GitHub write tools, and no clone of the user's own): say so
+  before drafting anything, name the fix — the GitHub connector added in
+  Settings → Connectors *and* switched on for this chat in the tools menu —
+  and offer drafted markdown inline.
   **Never write brain entries to local or sandbox files as a fallback** — on a
   chat surface they vanish and the user believes the knowledge was saved.
 
@@ -69,11 +74,14 @@ If both are available, prefer the local clone.
 
 ## Step 0 — Orient (once per session)
 
-1. Local clone: `cd $CUBE_BRAIN && git pull --rebase` if it has a remote
-   (others write here). Connector: nothing to pull — fetch each file fresh
-   right before you rely on it.
-   **Then check the brain against the project** — nothing else tells anyone a
-   pathway landed or changed. `git -C "$CUBE_REPO" fetch --quiet` (a fetch
+1. Local clone: `cd $CUBE_BRAIN`, `git switch main` (a capture branch may be
+   left checked out), then `git pull --rebase` from the remote whose URL is
+   `repo` (others write here). Connector: nothing to pull — fetch each file
+   fresh right before you rely on it.
+   **Then, local clone only, check the brain against the project** — nothing
+   else tells anyone a pathway landed or changed. If `$CUBE_REPO` (else
+   `../diffusion-cube`) does not exist, skip this check and say so once in
+   passing; it is not an error. `git -C "$CUBE_REPO" fetch --quiet` (a fetch
    only: never pull, checkout or touch its working tree), then
    `python3 scripts/check_corpus_drift.py --ref <ref>` with the branch the
    corpus is merged into (`HEAD` by default; `origin/cube-dev` also shows
@@ -88,6 +96,9 @@ If both are available, prefer the local clone.
    vocab field. Do not rely on memory of these files; they evolve.
 3. `INDEX.md` lists every slug and alias — search it before creating
    anything (on the connector, fetch it and search the text).
+4. **Before the first write** of the session, settle who is writing and where
+   (`references/write-route.md` §1–2; on the connector, the adapter's tool
+   check too). If the write cannot happen, say so before drafting.
 
 ## The model in one table
 
@@ -183,10 +194,13 @@ Y — log them?"). Do not interrupt; do not re-offer after a no.
      && python3 scripts/build_activity_log.py . && python3 scripts/validate_wiki.py .
    ```
    Validation must exit 0. Fix errors you introduced; never commit a red brain.
+   `ModuleNotFoundError: yaml` → `pip install pyyaml` (or `pip install --user
+   pyyaml`) and run it again.
 8. **Commit** — one commit per logging event, message prefixed `cube-brain:`.
-   Admin: push to `branch` if a remote exists and the user has not said
-   otherwise. Anyone else: commit only your own files on the capture branch,
-   push, and open the PR (`references/write-route.md`). Confirm in one line
+   Admin: `git pull --rebase` then push to `branch` (CI's own commits make a
+   plain push fail as non-fast-forward) unless the user said otherwise.
+   Anyone else: commit only your own files on the capture branch, push, and
+   open the PR. Both: `references/write-route.md` §4. Confirm in one line
    what was written and what it rests on. Only claim success if the commit
    and push succeeded — and a PR is "opened, pending review", never "saved".
 

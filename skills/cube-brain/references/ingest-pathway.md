@@ -90,4 +90,7 @@ you introduced) → `python3 scripts/cube_report.py --section corpus` to show th
 new coverage and `--section grid` to check the pathway's `coverage` map against
 its units → `python3 scripts/check_corpus_drift.py` shows it no longer
 `not-ingested` → activity entry → one commit:
-`cube-brain: ingest pathway <slug> (<n> units, <m> patterns)`.
+`cube-brain: ingest pathway <slug> (<n> units, <m> patterns)`, written by the
+route in `write-route.md` — straight to `main` for an admin, otherwise a
+capture branch and a PR holding only the pathway, unit, actor and activity
+entry files (§3).
